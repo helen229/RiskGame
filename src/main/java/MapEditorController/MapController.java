@@ -8,7 +8,6 @@ public class MapController {
 
     private MapModel mapModel;
 
-
     public MapController() {
         this.mapModel= new MapModel();
     }
@@ -108,19 +107,22 @@ public class MapController {
     private void addNeighbor(String arg, String arg1) {
     }
 
-    private void addCountry(String arg, String arg1) {
-    }
+    private void addCountry(String countrytName, String continentName) {
 
-    private void removeContinent(String continentName) {
-
-        if (this.mapModel.removeContinent(continentName)){
-            System.out.println("Remove succeed");
+        if (this.mapModel.addCountry(countrytName, continentName)){
+            System.out.println("Add succeed");
         }
         else{
-            System.out.println("Remove failed");
+            System.out.println("Add failed");
         }
 
     }
+
+    private void removeCountry(String countrytName) {
+
+    }
+
+
 
     private void addContinent(String continentName , int continentValue) {
 
@@ -129,6 +131,18 @@ public class MapController {
         }
         else{
             System.out.println("Add failed");
+        }
+
+    }
+
+
+    private void removeContinent(String continentName) {
+
+        if (this.mapModel.removeContinent(continentName)){
+            System.out.println("Remove succeed");
+        }
+        else{
+            System.out.println("Remove failed");
         }
 
     }

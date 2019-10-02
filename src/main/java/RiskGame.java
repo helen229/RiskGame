@@ -7,8 +7,9 @@ public class RiskGame {
     static String phase="MapEditor";
     public static void main(String[] args) {
 
-        Scanner input = new Scanner(System.in);
         MapController mapController = new MapController();
+
+        Scanner input = new Scanner(System.in);
         System.out.println("Please enter command");
         while(input.hasNext()){
             String command= input.nextLine();

@@ -62,12 +62,13 @@ public class MapModel {
 
     public boolean removeContinent(String continentName){
 
-        if(isRemoveContinentValid(continentName) != -1){
-            this.continentList.remove(isRemoveContinentValid(continentName));
+        if(isRemoveContinentValid(continentName)){
+            this.continentList.remove(indexOfContinent(continentName));
             return true;
         }
 
         return false;
+
     }
 
     public ArrayList<CountryModel> getCountryList() {
@@ -80,8 +81,48 @@ public class MapModel {
 
     public boolean addCountry(String countryName, String continentName){
 
-        return true;
+        //to check if the continentName exist or not and the countryName, also return the continent index
+        if (indexOfContinent(continentName)!=-1 && indexOfCountry(countryName)==-1){
+            CountryModel country = new CountryModel(this.countryList.size(), countryName, continentName);
+            this.continentList.get(indexOfContinent(continentName)).addCountryToList(countryName);
+            this.countryList.add(country);
+            return true;
+        }
+
+        return false;
     }
+
+    private int indexOfCountry(String countryName) {
+        if (this.countryList.isEmpty())
+            return -1;
+
+        for (int i = 0; i < this.countryList.size(); i++){
+            if(this.countryList.get(i).getCountryName().equals(countryName)){
+                System.out.println("Country Name already exist, please enter another one");
+                return i;
+            }
+        }
+
+        return -1;
+
+    }
+
+    private int indexOfContinent(String continentName) {
+        if (this.continentList.isEmpty()){
+            return -1;
+        }
+
+        for (int i = 0; i < this.continentList.size(); i++){
+            if(this.continentList.get(i).getContinentName().equals(continentName)){
+                return i;
+            }
+        }
+
+        System.out.println("Continent Name is not exist, please enter another one");
+        return -1;
+
+    }
+
     public boolean isMapValid() {
         return isValid;
     }
@@ -95,7 +136,7 @@ public class MapModel {
         for (int i = 0; i < this.continentList.size(); i++){
             if(this.continentList.get(i).getContinentName().equals(continentName) ||
                     this.continentList.get(i).getContinentValue()==continentValue){
-                System.out.println("Continent Name is repeat, please enter another one");
+                System.out.println("Continent Name already exist, please enter another one");
                 return false;
             }
         }
@@ -104,20 +145,13 @@ public class MapModel {
 
     }
 
-    public int isRemoveContinentValid(String continentName) {
+    public boolean isRemoveContinentValid(String continentName) {
 
-        if (this.continentList.isEmpty()){
-            return -1;
+        if (indexOfContinent(continentName)==-1){
+            System.out.println("Continent Name is not exist, please enter another one");
+            return false;
         }
-
-        for (int i = 0; i < this.continentList.size(); i++){
-            if(this.continentList.get(i).getContinentName().equals(continentName)){
-                return i;
-            }
-        }
-
-        System.out.println("Continent Name is not exist, please enter another one");
-        return -1;
+        return true;
 
     }
 

@@ -10,9 +10,8 @@ public class ContinentModel {
     /** The continent name. */
     private int continentValue;
 
-
     /** The countries list. */
-    private ArrayList<CountryModel> countriesList;
+    private ArrayList<String> countriesList;
 
 
     /**
@@ -23,7 +22,7 @@ public class ContinentModel {
     public ContinentModel(String continentName, int continentValue) {
         this.setContinentName(continentName);
         this.setContinentValue(continentValue);
-        this.countriesList = new ArrayList<CountryModel>();
+        this.countriesList = new ArrayList<String>();
     }
 
     public String getContinentName() {
@@ -42,11 +41,15 @@ public class ContinentModel {
         this.continentValue = continentValue;
     }
 
-    public ArrayList<CountryModel> getCountriesList() {
+    public ArrayList<String> getCountriesList() {
         return countriesList;
     }
 
-    public void setCountriesList(ArrayList<CountryModel> countriesList) {
+    public void addCountryToList(String countryName) {
+        this.countriesList.add(countryName);
+    }
+
+    public void setCountriesList(ArrayList<String> countriesList) {
         this.countriesList = countriesList;
     }
 }
