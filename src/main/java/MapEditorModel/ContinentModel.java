@@ -1,4 +1,4 @@
-package MapModel;
+package MapEditorModel;
 
 import java.util.ArrayList;
 
@@ -6,6 +6,10 @@ public class ContinentModel {
 
     /** The continent name. */
     private String continentName;
+
+    /** The continent name. */
+    private int continentValue;
+
 
     /** The countries list. */
     private ArrayList<CountryModel> countriesList;
@@ -16,8 +20,9 @@ public class ContinentModel {
      *
      * @param continentName name of the new continent
      */
-    public ContinentModel(String continentName) {
+    public ContinentModel(String continentName, int continentValue) {
         this.setContinentName(continentName);
+        this.setContinentValue(continentValue);
         this.countriesList = new ArrayList<CountryModel>();
     }
 
@@ -27,6 +32,14 @@ public class ContinentModel {
 
     public void setContinentName(String continentName) {
         this.continentName = continentName;
+    }
+
+    public int getContinentValue() {
+        return continentValue;
+    }
+
+    public void setContinentValue(int continentValue) {
+        this.continentValue = continentValue;
     }
 
     public ArrayList<CountryModel> getCountriesList() {

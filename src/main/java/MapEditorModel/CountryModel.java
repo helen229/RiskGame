@@ -1,4 +1,4 @@
-package MapModel;
+package MapEditorModel;
 
 import java.util.ArrayList;
 
