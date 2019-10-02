@@ -1,22 +1,24 @@
 package MapEditorModel;
 
+import sun.awt.SunHints;
+
 import java.util.ArrayList;
 
 public class CountryModel {
 
-    private int countryID;
+    private int countryValue;
 
     private String countryName;
 
     private String continentName;
 
-    private ArrayList<CountryModel> neighbours;
+    private ArrayList<Integer> neighbours;
 
     public CountryModel(int countryID, String countryName, String continentName) {
-        this.countryID = countryID;
+        this.countryValue = countryID;
         this.countryName = countryName;
         this.continentName = continentName;
-        this.neighbours = new ArrayList<CountryModel>();
+        this.neighbours = new ArrayList<Integer>();
     }
 
     public String getCountryName() {
@@ -27,27 +29,36 @@ public class CountryModel {
         this.countryName = countryName;
     }
 
-    public int getCountryID() {
-        return countryID;
-    }
-
-    public void setCountryID(int countryID) {
-        this.countryID = countryID;
-    }
 
     public String getContinentName() {
         return continentName;
     }
 
-    public void setContinent(String continentName) {
-        this.continentName = continentName;
+    public int getCountryValue() {
+        return countryValue;
     }
 
-    public ArrayList<CountryModel> getNeighbours() {
+    public void setCountryValue(int countryValue) {
+        this.countryValue = countryValue;
+    }
+
+    public void addNeighbour(int countryValue) {
+
+        this.neighbours.add(countryValue);
+
+    }
+
+    public void removeNeighbour(int countryValue) {
+
+        this.neighbours.remove(countryValue);
+
+    }
+
+    public ArrayList<Integer> getNeighbours() {
         return neighbours;
     }
 
-    public void setNeighbours(ArrayList<CountryModel> neighbours) {
+    public void setNeighbours(ArrayList<Integer> neighbours) {
         this.neighbours = neighbours;
     }
 

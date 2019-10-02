@@ -25,6 +25,65 @@ public class MapModel {
         this.countryList = new ArrayList<CountryModel>();
     }
 
+    public void showMap(){
+        System.out.println("Continents: ");
+
+        for (int i = 0; i < this.continentList.size(); i++){
+            printContinent(this.continentList.get(i));
+            System.out.println("\n");
+        }
+
+        System.out.println("\nAll Countries: ");
+        for (int i = 0; i < this.countryList.size(); i++){
+            printCountry(this.countryList.get(i));
+        }
+    }
+
+    private void printContinent(ContinentModel continent){
+
+        System.out.print(
+                "Continent Name:" +
+                continent.getContinentName() + "\n" +
+                "Continent Value:" +
+                continent.getContinentValue() + "\n" +
+                "Countries List: ");
+
+        for (int i = 0; i < continent.getCountriesList().size(); i++){
+//            String countryName= continent.getCountriesList().get(i);
+//            printCountry(this.countryList.get(indexOfCountry(countryName)));
+            if (i==0)
+                System.out.print("[");
+            if (i == continent.getCountriesList().size()-1){
+                System.out.print(continent.getCountriesList().get(i)+"]");
+                break;
+            }
+            System.out.print(continent.getCountriesList().get(i)+",");
+        }
+
+    }
+
+    private void printCountry(CountryModel country){
+
+        System.out.print(
+                "Country Name:" +
+                country.getCountryName() + "\n" +
+                "Country Value:" +
+                country.getCountryValue() + "\n" +
+                "Neighbor Country List: ");
+
+        for (int i = 0; i < country.getNeighbours().size(); i++){
+            int neighbourValue= country.getNeighbours().get(i);
+            if (i==0)
+                System.out.print("[");
+            if (i==country.getNeighbours().size()-1){
+                System.out.println(this.countryList.get(indexOfCountry(neighbourValue)).getCountryName()+"]\n");
+                break;
+            }
+            System.out.print(this.countryList.get(indexOfCountry(neighbourValue)).getCountryName()+", ");
+        }
+
+    }
+
     public String getMapName() {
         return mapName;
     }
@@ -106,12 +165,62 @@ public class MapModel {
     }
 
 
+    public boolean addNeighbor(String countryName, String neighborCountryName){
+
+        //to check if the continentName exist or not and the countryName, also return the continent index
+        if (indexOfCountry(countryName)!=-1 && indexOfCountry(neighborCountryName)!=-1 ){
+            CountryModel country = this.countryList.get(indexOfCountry(countryName));
+            CountryModel neighborCountry = this.countryList.get(indexOfCountry(neighborCountryName));
+            if (country.getNeighbours().contains(neighborCountry.getCountryValue())){
+                System.out.println("This Neighbor Country already exist");
+                return false;
+            }
+            country.addNeighbour(neighborCountry.getCountryValue());
+            neighborCountry.addNeighbour(country.getCountryValue());
+            return true;
+        }
+        System.out.println("The country or the neighbor country not exists ");
+        return false;
+
+    }
+
+
+    public boolean removeNeighbor(String countryName, String neighborCountryName){
+
+        //to check if the continentName exist or not and the countryName, also return the continent index
+        if (indexOfCountry(countryName)!=-1 && indexOfCountry(neighborCountryName)!=-1 ){
+            CountryModel country = this.countryList.get(indexOfCountry(countryName));
+            CountryModel neighborCountry = this.countryList.get(indexOfCountry(neighborCountryName));
+            country.removeNeighbour(neighborCountry.getCountryValue());
+            neighborCountry.removeNeighbour(country.getCountryValue());
+            return true;
+        }
+        System.out.println("The country or the neighbor country not exists ");
+        return false;
+
+    }
+
     private int indexOfCountry(String countryName) {
         if (this.countryList.isEmpty())
             return -1;
 
         for (int i = 0; i < this.countryList.size(); i++){
             if(this.countryList.get(i).getCountryName().equals(countryName)){
+//                System.out.println("Country Name already exist, please enter another one");
+                return i;
+            }
+        }
+
+        return -1;
+
+    }
+
+    private int indexOfCountry(int countryValue) {
+        if (this.countryList.isEmpty())
+            return -1;
+
+        for (int i = 0; i < this.countryList.size(); i++){
+            if(this.countryList.get(i).getCountryValue()==(countryValue)){
 //                System.out.println("Country Name already exist, please enter another one");
                 return i;
             }

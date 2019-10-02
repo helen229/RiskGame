@@ -34,7 +34,7 @@ public class MapController {
                     parseCommandOption(args,args[0],args[1]);
                     break;
                 case "showmap":
-                    System.out.println("show map method");
+                    mapModel.showMap();
                     break;
                 case "validatemap":
                     System.out.println("valid map method");
@@ -89,7 +89,7 @@ public class MapController {
                     removeCountry(args[2]);
                     break;
                 case "editneighbor":
-                   // addContinent(args[2],args[3]);
+                    removeNeighbor(args[2],args[3]);
                     break;
                 default:
                     System.out.println("Invalid Command");
@@ -104,27 +104,46 @@ public class MapController {
 
     }
 
-    private void addNeighbor(String arg, String arg1) {
-    }
+    private void addNeighbor(String countryName, String neighborCountryName) {
 
-    private void addCountry(String countrytName, String continentName) {
-
-        if (this.mapModel.addCountry(countrytName, continentName)){
-            System.out.println("Add succeed");
+        if (this.mapModel.addNeighbor(countryName, neighborCountryName)){
+            System.out.println("Add Neighbor succeed");
         }
         else{
-            System.out.println("Add failed");
+            System.out.println("Add Neighbor failed");
         }
 
     }
 
-    private void removeCountry(String countrytName) {
+    private void removeNeighbor(String countryName, String neighborCountryName) {
 
-        if (this.mapModel.removeCountry(countrytName)){
-            System.out.println("Remove succeed");
+        if (this.mapModel.removeNeighbor(countryName, neighborCountryName)){
+            System.out.println("Remove Neighbor succeed");
         }
         else{
-            System.out.println("Remove failed");
+            System.out.println("Remove Neighbor failed");
+        }
+
+    }
+
+    private void addCountry(String countryName, String continentName) {
+
+        if (this.mapModel.addCountry(countryName, continentName)){
+            System.out.println("Add Country succeed");
+        }
+        else{
+            System.out.println("Add Country failed");
+        }
+
+    }
+
+    private void removeCountry(String countryName) {
+
+        if (this.mapModel.removeCountry(countryName)){
+            System.out.println("Remove Country succeed");
+        }
+        else{
+            System.out.println("Remove Country failed");
         }
 
     }
@@ -134,10 +153,10 @@ public class MapController {
     private void addContinent(String continentName , int continentValue) {
 
         if (this.mapModel.addContinent(continentName, continentValue)){
-            System.out.println("Add succeed");
+            System.out.println("Add Continent succeed");
         }
         else{
-            System.out.println("Add failed");
+            System.out.println("Add Continent failed");
         }
 
     }
