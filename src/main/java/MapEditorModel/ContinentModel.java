@@ -49,6 +49,10 @@ public class ContinentModel {
         this.countriesList.add(countryName);
     }
 
+    public void removeCountryFromList(String countryName) {
+        this.countriesList.remove(countryName);
+    }
+
     public void setCountriesList(ArrayList<String> countriesList) {
         this.countriesList = countriesList;
     }

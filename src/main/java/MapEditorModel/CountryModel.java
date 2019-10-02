@@ -8,14 +8,14 @@ public class CountryModel {
 
     private String countryName;
 
-    private String continent;
+    private String continentName;
 
     private ArrayList<CountryModel> neighbours;
 
-    public CountryModel(int countryID, String countryName, String continent) {
+    public CountryModel(int countryID, String countryName, String continentName) {
         this.countryID = countryID;
         this.countryName = countryName;
-        this.continent = continent;
+        this.continentName = continentName;
         this.neighbours = new ArrayList<CountryModel>();
     }
 
@@ -35,12 +35,12 @@ public class CountryModel {
         this.countryID = countryID;
     }
 
-    public String getContinent() {
-        return continent;
+    public String getContinentName() {
+        return continentName;
     }
 
-    public void setContinent(String continent) {
-        this.continent = continent;
+    public void setContinent(String continentName) {
+        this.continentName = continentName;
     }
 
     public ArrayList<CountryModel> getNeighbours() {

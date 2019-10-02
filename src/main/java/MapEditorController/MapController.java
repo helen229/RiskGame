@@ -86,7 +86,7 @@ public class MapController {
                     removeContinent(args[2]);
                     break;
                 case "editcountry":
-                    addContinent(args[2],Integer.parseInt(args[3]));
+                    removeCountry(args[2]);
                     break;
                 case "editneighbor":
                    // addContinent(args[2],args[3]);
@@ -119,6 +119,13 @@ public class MapController {
     }
 
     private void removeCountry(String countrytName) {
+
+        if (this.mapModel.removeCountry(countrytName)){
+            System.out.println("Remove succeed");
+        }
+        else{
+            System.out.println("Remove failed");
+        }
 
     }
 

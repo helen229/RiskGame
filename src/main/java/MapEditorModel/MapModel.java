@@ -92,13 +92,27 @@ public class MapModel {
         return false;
     }
 
+    public boolean removeCountry(String countryName){
+
+        //to check if the continentName exist or not and the countryName, also return the continent index
+        if (indexOfCountry(countryName)!=-1){
+            String continentName = this.countryList.get(indexOfCountry(countryName)).getContinentName();
+            this.continentList.get(indexOfContinent(continentName)).removeCountryFromList(countryName);
+            this.countryList.remove(indexOfCountry(countryName));
+            return true;
+        }
+
+        return false;
+    }
+
+
     private int indexOfCountry(String countryName) {
         if (this.countryList.isEmpty())
             return -1;
 
         for (int i = 0; i < this.countryList.size(); i++){
             if(this.countryList.get(i).getCountryName().equals(countryName)){
-                System.out.println("Country Name already exist, please enter another one");
+//                System.out.println("Country Name already exist, please enter another one");
                 return i;
             }
         }
@@ -118,7 +132,7 @@ public class MapModel {
             }
         }
 
-        System.out.println("Continent Name is not exist, please enter another one");
+//        System.out.println("Continent Name is not exist, please enter another one");
         return -1;
 
     }
