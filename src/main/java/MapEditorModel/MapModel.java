@@ -156,9 +156,15 @@ public class MapModel {
         //to check if the continentName exist or not and the countryName, also return the continent index
         if (indexOfCountry(countryName)!=-1){
             String continentName = this.countryList.get(indexOfCountry(countryName)).getContinentName();
+            CountryModel country = this.countryList.get(indexOfCountry(countryName));
             this.continentList.get(indexOfContinent(continentName)).removeCountryFromList(countryName);
-            //remove the neighbours
-            this.countryList.get(indexOfCountry(countryName)).getNeighbours().size();
+
+            //remove the country from its neighbours list
+            for (int i = 0; i < country.getNeighbours().size(); i++){
+                int neighbourValue = country.getNeighbours().get(i);
+                String neighbourName = this.countryList.get(indexOfCountry(neighbourValue)).getCountryName();
+                removeNeighbor(countryName, neighbourName);
+            }
 
             this.countryList.remove(indexOfCountry(countryName));
 

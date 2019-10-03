@@ -13,8 +13,8 @@ public class MapController {
     }
 
     //  TODO:-remove continent also remove the country list of the continent
-    //       -remove country also remove the neighbour list
-    //       
+    //       -remove country also remove the country in others neighbour list
+    //
 
 //        editcontinent -add continentname continentvalue -remove continentname
 //        editcountry -add countryname continentname -remove countryname
