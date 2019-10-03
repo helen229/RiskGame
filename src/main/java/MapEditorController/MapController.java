@@ -12,7 +12,7 @@ public class MapController {
         this.mapModel= new MapModel();
     }
 
-    //  TODO:-remove continent also remove the country list of the continent
+    //  TODO:-remove continent also remove all country of the continent
     //       -remove country also remove the country in others neighbour list
     //
 
@@ -26,6 +26,7 @@ public class MapController {
 
 //TODO: args array out of bounds exception
     public void commandHandler(String[] args) {
+
         try
         {
             switch (args[0]) {
@@ -59,7 +60,9 @@ public class MapController {
         }catch(ArrayIndexOutOfBoundsException e){
             System.out.println("Arguments number invalid");
         }
+
     }
+
 
     private void saveMap(String fileName) {
     }
@@ -69,6 +72,7 @@ public class MapController {
 
     //TODO: args array out of bounds exception
     public void parseCommandOption(String[] args, String command, String operation){
+
         if (operation.equals("-add")){
             switch (command){
                 case "editcontinent":
@@ -106,8 +110,8 @@ public class MapController {
             System.out.println("Invalid Option");
         }
 
-
     }
+
 
     private void addNeighbor(String countryName, String neighborCountryName) {
 
@@ -120,6 +124,7 @@ public class MapController {
 
     }
 
+
     private void removeNeighbor(String countryName, String neighborCountryName) {
 
         if (this.mapModel.removeNeighbor(countryName, neighborCountryName)){
@@ -130,6 +135,7 @@ public class MapController {
         }
 
     }
+
 
     private void addCountry(String countryName, String continentName) {
 
@@ -142,6 +148,7 @@ public class MapController {
 
     }
 
+
     private void removeCountry(String countryName) {
 
         if (this.mapModel.removeCountry(countryName)){
@@ -152,7 +159,6 @@ public class MapController {
         }
 
     }
-
 
 
     private void addContinent(String continentName , int continentValue) {

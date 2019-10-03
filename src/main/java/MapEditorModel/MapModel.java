@@ -122,6 +122,12 @@ public class MapModel {
     public boolean removeContinent(String continentName){
 
         if(isRemoveContinentValid(continentName)){
+            ContinentModel continent = this.continentList.get(indexOfContinent(continentName));
+            //remove the country of the continent first
+            for (int i = 0; i < continent.getCountriesList().size(); i++){
+                String countryName= continent.getCountriesList().get(i);
+                removeCountry(countryName);
+            }
             this.continentList.remove(indexOfContinent(continentName));
             return true;
         }
