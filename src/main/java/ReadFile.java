@@ -90,19 +90,18 @@ public class ReadFile {
         file.close();
     }
 
+
+
     /**
-     *  This classes return an arraylist containing the list of continents.
-     * @return
+     *  This class returns an arraylist containing the list of country and continents
+     * @return  Arraylists of continents and countries repectively.
      */
 
     public ArrayList<ContinentModel> getContinents() {
         return continents;
     }
 
-    /**
-     *  This class returns an arraylist containing the list of country
-     * @return  Arraylists of continents and countries repectively.
-     */
+
 
     public ArrayList<CountryModel> getCountries() {
         return countries;
