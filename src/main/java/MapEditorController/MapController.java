@@ -11,6 +11,11 @@ public class MapController {
     public MapController() {
         this.mapModel= new MapModel();
     }
+
+    //  TODO:-remove continent also remove the country list of the continent
+    //       -remove country also remove the neighbour list
+    //       
+
 //        editcontinent -add continentname continentvalue -remove continentname
 //        editcountry -add countryname continentname -remove countryname
 //        editneighbor -add countryname neighborcountryname -remove countryname neighborcountryname
@@ -19,7 +24,7 @@ public class MapController {
 //        savemap filename
 //        validatemap
 
-//TO DO: args array out of bounds exception
+//TODO: args array out of bounds exception
     public void commandHandler(String[] args) {
         try
         {
@@ -62,7 +67,7 @@ public class MapController {
     private void editMap(String fileName) {
     }
 
-    //TO DO: args array out of bounds exception
+    //TODO: args array out of bounds exception
     public void parseCommandOption(String[] args, String command, String operation){
         if (operation.equals("-add")){
             switch (command){
