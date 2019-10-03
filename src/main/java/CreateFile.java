@@ -1,3 +1,4 @@
+import MapEditorModel.CountryModel;
 import MapEditorModel.MapModel;
 
 import java.io.IOException;
@@ -40,9 +41,15 @@ public class CreateFile {
             stringBuilder.append(continentValue);
         });
         stringBuilder.append(NEW_LINE_DELIMITER);
-        mapModel.getCountryList().forEach(country -> {
-            String countryValue = String.format("%d %s %d %d %d"+   NEW_LINE_DELIMITER, null, country.getCountryName(), country.getContinentName(), null, null);
-        });
+          int size= mapModel.getTotalCountries();
+        for(int i=0;i< size;i++){
+            CountryModel country=  mapModel.getCountryList().get(i);
+            String countryValue= String.format(" %d %s %d" + NEW_LINE_DELIMITER, i,country.getCountryName(),country.getContinentName());
+            stringBuilder.append(countryValue);
+
+
+        }
+
 
         return stringBuilder.toString();
     }
