@@ -282,4 +282,6 @@ public class MapModel {
     public void setValid(boolean valid) {
         isValid = valid;
     }
+
+
 }
