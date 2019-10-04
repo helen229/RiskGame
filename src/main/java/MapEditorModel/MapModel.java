@@ -93,7 +93,7 @@ public class MapModel {
     }
 
     public int getTotalCountries() {
-        return totalCountries;
+        return this.countryList.size();
     }
 
     public void setTotalCountries(int totalCountries) {
@@ -233,7 +233,7 @@ public class MapModel {
 
     }
 
-    private int indexOfCountry(int countryValue) {
+    public int indexOfCountry(int countryValue) {
         if (this.countryList.isEmpty())
             return -1;
 

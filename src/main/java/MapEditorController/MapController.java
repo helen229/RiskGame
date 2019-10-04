@@ -1,5 +1,7 @@
 package MapEditorController;
 
+import MapEditorModel.ContinentModel;
+import MapEditorModel.CountryModel;
 import MapEditorModel.MapModel;
 
 import java.util.ArrayList;
@@ -8,23 +10,18 @@ public class MapController {
 
     private MapModel mapModel;
 
+    private static final String CONTINENT = "continent";
+    private static final String COUNTRY = "country";
+    private static final String BORDER = "border";
+    private static final String NEW_LINE_DELIMITER = "\n";
+
     public MapController() {
         this.mapModel= new MapModel();
     }
 
-    //  TODO:-remove continent also remove all country of the continent
-    //       -remove country also remove the country in others neighbour list
-    //
+    //  TODO: Unit TEST, add javadoc, add comments
 
-//        editcontinent -add continentname continentvalue -remove continentname
-//        editcountry -add countryname continentname -remove countryname
-//        editneighbor -add countryname neighborcountryname -remove countryname neighborcountryname
-//        showmap (show all continents and countries and their neighbors)
-//        editmap filename
-//        savemap filename
-//        validatemap
 
-//TODO: args array out of bounds exception
     public void commandHandler(String[] args) {
 
         try
@@ -65,49 +62,92 @@ public class MapController {
 
 
     private void saveMap(String fileName) {
+        //TODO: first check if the file exist or not, if not create a new file otherwise write the
+        //      string to the file (clear the file content first)
+        System.out.println(parseMapModel(mapModel));
+
     }
 
     private void editMap(String fileName) {
+        // TODO: Merge your Read file class here
+
     }
 
-    //TODO: args array out of bounds exception
+    public String parseMapModel(MapModel mapModel) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("["+CONTINENT+"]"+NEW_LINE_DELIMITER);
+
+        for (ContinentModel continent:mapModel.getContinentList()) {
+            String continentValue = String.format("%s %d %s"+NEW_LINE_DELIMITER, continent.getContinentName(), continent.getContinentValue(), null);
+            stringBuilder.append(continentValue);
+        }
+
+        stringBuilder.append("["+COUNTRY+"]"+NEW_LINE_DELIMITER);
+
+        for (CountryModel country:mapModel.getCountryList()) {
+            String countryValue= String.format("%d %s %s" + NEW_LINE_DELIMITER, country.getCountryValue(),country.getCountryName(), country.getContinentName());
+            stringBuilder.append(countryValue);
+        }
+
+        stringBuilder.append("["+BORDER+"]"+NEW_LINE_DELIMITER);
+        for (CountryModel country:mapModel.getCountryList()) {
+            String countryValue= String.format("%d ", country.getCountryValue());
+            stringBuilder.append(countryValue);
+            for (int neighbour:country.getNeighbours()) {
+                String neighbourValue= String.format(" %d", neighbour);
+                stringBuilder.append(neighbourValue);
+            }
+            stringBuilder.append(NEW_LINE_DELIMITER);
+        }
+        return stringBuilder.toString();
+
+    }
+
+
     public void parseCommandOption(String[] args, String command, String operation){
 
-        if (operation.equals("-add")){
-            switch (command){
-                case "editcontinent":
-                    addContinent(args[2],Integer.parseInt(args[3]));
-                    break;
-                case "editcountry":
-                    addCountry(args[2],args[3]);
-                    break;
-                case "editneighbor":
-                    addNeighbor(args[2],args[3]);
-                    break;
-                default:
-                    System.out.println("Invalid Command");
-                    break;
+        try
+        {
+            if (operation.equals("-add")){
+                switch (command){
+                    case "editcontinent":
+                        addContinent(args[2],Integer.parseInt(args[3]));
+                        break;
+                    case "editcountry":
+                        addCountry(args[2],args[3]);
+                        break;
+                    case "editneighbor":
+                        addNeighbor(args[2],args[3]);
+                        break;
+                    default:
+                        System.out.println("Invalid Command");
+                        break;
+                }
             }
-        }
-        else if(operation.equals("-remove")){
-            switch (command){
-                case "editcontinent":
-                    removeContinent(args[2]);
-                    break;
-                case "editcountry":
-                    removeCountry(args[2]);
-                    break;
-                case "editneighbor":
-                    removeNeighbor(args[2],args[3]);
-                    break;
-                default:
-                    System.out.println("Invalid Command");
-                    break;
+            else if(operation.equals("-remove")){
+                switch (command){
+                    case "editcontinent":
+                        removeContinent(args[2]);
+                        break;
+                    case "editcountry":
+                        removeCountry(args[2]);
+                        break;
+                    case "editneighbor":
+                        removeNeighbor(args[2],args[3]);
+                        break;
+                    default:
+                        System.out.println("Invalid Command");
+                        break;
+                }
+
+            }
+            else{
+                System.out.println("Invalid Option");
             }
 
-        }
-        else{
-            System.out.println("Invalid Option");
+        }catch(ArrayIndexOutOfBoundsException e){
+            System.out.println("Arguments number invalid");
         }
 
     }
