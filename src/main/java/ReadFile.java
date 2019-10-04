@@ -56,12 +56,18 @@ public class ReadFile {
             int size= line.length();
             switch (checker) {
                 case CONTINENT:
-
+                    ArrayList<String > CountryList= new ArrayList<>();
 
                     if (size >0){
                         String[] continentData = line.split(" ");
                         ContinentModel c1 = new ContinentModel(continentData[0], Integer.parseInt(continentData[1]));
-                        continents.add(c1);}
+                        continents.add(c1);
+                         CountryList= c1.getCountriesList();
+                        for (String country: CountryList) {
+                             c1.addCountryToList(country);
+                        }
+
+                    }
                     else{
                         continue;
                     }
@@ -70,12 +76,22 @@ public class ReadFile {
 
 
                 case COUNTRY:
-
+                     ArrayList<Integer> neigbour= new ArrayList<>();
                     if ( size>0){
                         String [] countryData= line.split(" ");
+
                         CountryModel country = new CountryModel( Integer.parseInt( countryData[0] ), countryData[1],countryData[2]);
-                        //  Country c2= new Country(Integer.parseInt(countryData[0]),)
-                        countries.add(country);}
+
+                        countries.add(country);
+
+                     neigbour=  country.getNeighbours();
+                        for ( int neighbourCountry: neigbour) {
+
+                            country.addNeighbour(neighbourCountry);
+                        }
+
+                    }
+
                     else{
                         continue;
                     }

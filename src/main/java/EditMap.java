@@ -7,7 +7,8 @@ import java.io.PrintWriter;
 /**
  * This class allows a user to create a new map file and write into a  map file
  */
-public class CreateFile {
+public class EditMap {
+
     private String FileName;
     private static final String CONTINENT = " continent";
     private static final String COUNTRY = " country";
@@ -20,7 +21,7 @@ public class CreateFile {
      * @param FileName the name of the File to be created
      * @throws IOException
      */
-    public CreateFile(String FileName) throws IOException {
+    public EditMap(String FileName) throws IOException {
 
         PrintWriter writer = new PrintWriter(FileName);
         writer.print(parseMapModel(new MapModel()));
@@ -28,7 +29,8 @@ public class CreateFile {
     }
 
     /**
-     * This method reads the MapModel and creates  String of all the details.
+     * This method reads the MapModel  that is parsed into it and creates  String of all the details of each country and
+     * each continent..
      * @param mapModel
      * @return
      */
@@ -49,6 +51,7 @@ public class CreateFile {
 
 
         }
+
 
 
         return stringBuilder.toString();
