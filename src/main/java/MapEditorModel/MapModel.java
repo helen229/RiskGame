@@ -93,7 +93,7 @@ public class MapModel {
     }
 
     public int getTotalCountries() {
-        return totalCountries;
+        return this.countryList.size();
     }
 
     public void setTotalCountries(int totalCountries) {
@@ -122,6 +122,12 @@ public class MapModel {
     public boolean removeContinent(String continentName){
 
         if(isRemoveContinentValid(continentName)){
+            ContinentModel continent = this.continentList.get(indexOfContinent(continentName));
+            //remove the country of the continent first
+            for (int i = 0; i < continent.getCountriesList().size(); i++){
+                String countryName= continent.getCountriesList().get(i);
+                removeCountry(countryName);
+            }
             this.continentList.remove(indexOfContinent(continentName));
             return true;
         }
@@ -156,8 +162,18 @@ public class MapModel {
         //to check if the continentName exist or not and the countryName, also return the continent index
         if (indexOfCountry(countryName)!=-1){
             String continentName = this.countryList.get(indexOfCountry(countryName)).getContinentName();
+            CountryModel country = this.countryList.get(indexOfCountry(countryName));
             this.continentList.get(indexOfContinent(continentName)).removeCountryFromList(countryName);
+
+            //remove the country from its neighbours list
+            for (int i = 0; i < country.getNeighbours().size(); i++){
+                int neighbourValue = country.getNeighbours().get(i);
+                String neighbourName = this.countryList.get(indexOfCountry(neighbourValue)).getCountryName();
+                removeNeighbor(countryName, neighbourName);
+            }
+
             this.countryList.remove(indexOfCountry(countryName));
+
             return true;
         }
 
@@ -167,8 +183,9 @@ public class MapModel {
 
     public boolean addNeighbor(String countryName, String neighborCountryName){
 
-        //to check if the continentName exist or not and the countryName, also return the continent index
-        if (indexOfCountry(countryName)!=-1 && indexOfCountry(neighborCountryName)!=-1 ){
+        //to check if the neighborCountryName exist or not and the countryName, also return the index of the country
+        if (indexOfCountry(countryName)!=-1 && indexOfCountry(neighborCountryName)!=-1
+            && !countryName.equals(neighborCountryName)){
             CountryModel country = this.countryList.get(indexOfCountry(countryName));
             CountryModel neighborCountry = this.countryList.get(indexOfCountry(neighborCountryName));
             if (country.getNeighbours().contains(neighborCountry.getCountryValue())){
@@ -188,7 +205,8 @@ public class MapModel {
     public boolean removeNeighbor(String countryName, String neighborCountryName){
 
         //to check if the continentName exist or not and the countryName, also return the continent index
-        if (indexOfCountry(countryName)!=-1 && indexOfCountry(neighborCountryName)!=-1 ){
+        if (indexOfCountry(countryName)!=-1 && indexOfCountry(neighborCountryName)!=-1
+            && !countryName.equals(neighborCountryName)){
             CountryModel country = this.countryList.get(indexOfCountry(countryName));
             CountryModel neighborCountry = this.countryList.get(indexOfCountry(neighborCountryName));
             country.removeNeighbour(neighborCountry.getCountryValue());
@@ -215,7 +233,7 @@ public class MapModel {
 
     }
 
-    private int indexOfCountry(int countryValue) {
+    public int indexOfCountry(int countryValue) {
         if (this.countryList.isEmpty())
             return -1;
 
