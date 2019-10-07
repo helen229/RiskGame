@@ -4,6 +4,7 @@ import MapEditorModel.ContinentModel;
 import MapEditorModel.CountryModel;
 import MapEditorModel.MapModel;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MapController {
@@ -61,15 +62,21 @@ public class MapController {
     }
 
 
-    private void saveMap(String fileName) {
+    private void saveMap(String fileName)  {
         //TODO: first check if the file exist or not, if not create a new file otherwise write the
         //      string to the file (clear the file content first)
-        System.out.println(parseMapModel(mapModel));
+
+       //  EditMap E1= new EditMap(fileName,mapModel);
+        //System.out.println(parseMapModel(mapModel));
 
     }
 
     private void editMap(String fileName) {
         // TODO: Merge your Read file class here
+
+
+
+
 
     }
 

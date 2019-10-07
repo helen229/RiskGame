@@ -1,3 +1,5 @@
+package MapEditorController;
+
 import MapEditorModel.ContinentModel;
 import MapEditorModel.CountryModel;
 
