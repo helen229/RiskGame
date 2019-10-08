@@ -65,19 +65,21 @@ public class MapController {
     private void saveMap(String fileName)  {
         //TODO: first check if the file exist or not, if not create a new file otherwise write the
         //      string to the file (clear the file content first)
-
-       //  EditMap E1= new EditMap(fileName,mapModel);
+        try {
+            SaveMap saveMap = new SaveMap(fileName, mapModel);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //  EditMap E1= new EditMap(fileName,mapModel);
         //System.out.println(parseMapModel(mapModel));
 
     }
 
     private void editMap(String fileName) {
         // TODO: Merge your Read file class here
-
-
-
-
-
+        ReadFile readFile = new ReadFile(fileName);
+        this.mapModel.setContinentList(readFile.getContinents());
+        this.mapModel.setCountryList(readFile.getCountries());
     }
 
     public String parseMapModel(MapModel mapModel) {
@@ -116,6 +118,7 @@ public class MapController {
 
         try
         {
+
             if (operation.equals("-add")){
                 switch (command){
                     case "editcontinent":
