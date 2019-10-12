@@ -35,7 +35,7 @@ public class Fortification {
 	String destinationCountryName;
 	private ArrayList countOfPlayer; 
 	static int army;
-	int playerNumber;
+	int playerName;
         Player currentPlayer;
 	CountryModel destinationCountry;
 	CountryModel sourceCountry;
