@@ -249,13 +249,13 @@ public class Player {
         modifyNumberOfArmies(countryArmyInfo);
     }
 
-    ///**
-    // * Reinforcement Phase method
-    // *
-    // * @param gameBoard Object of the GameBoard {@link models.GameBoard}
-    // */
-    //public void reinforcement(GameBoard gameBoard) {
-    //    new StrategyContext(this.strategy).initReinforce(gameBoard, this);
+    /**
+     * Reinforcement Phase method
+     *
+     * @param gameBoard Object of the GameBoard {@link models.GameBoard}
+     */
+    public void reinforcement(GameBoard gameBoard) {
+       //new StrategyContext(this.strategy).initReinforce(gameBoard, this);
 
     //    ReinforcementPhaseController rpc = new ReinforcementPhaseController();
 
@@ -285,7 +285,7 @@ public class Player {
     //    PhaseUpdateService.clearActions(gameBoard);
     //    gameBoard.stateChanged();
     //    fpc.startFortification(gameBoard, this);
-    //}
+    }
 
     /**
      * Modify the name of countries of the player
@@ -328,6 +328,7 @@ public class Player {
         for (String countryName : countryArmyInfo.keySet()) {
             countryList.add(countryName);
         }
+    
 
         HashMap<String, ArrayList<String>> continentCountries = gameBoard.getMap().getContinentCountries();
 
@@ -337,9 +338,9 @@ public class Player {
                 nameOfContinents.add(continentName);
             }
         }
-
+       
         setNameOfContinents(nameOfContinents);
-    }
+}
 
     /**
      * Modify number of continents of the player
@@ -382,5 +383,6 @@ public class Player {
 
         setNumberOfArmies(numberOfArmies);
     }
+    
     
 }
