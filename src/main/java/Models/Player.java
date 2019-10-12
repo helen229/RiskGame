@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import Models.GameBoard;
 import Models.GameMap;
-
 /**
  *
  * @author Ehsan
@@ -60,6 +59,7 @@ public class Player {
      * country name as key and its number of armies
      */
     public HashMap<String, Integer> countryArmyInfo = new HashMap<>();// country name and its num of armies
+    private int numberOfCountries;
 
 
     /**
