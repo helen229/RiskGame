@@ -4,8 +4,7 @@ import java.util.*;
 
 /**
  * This class is a fortification phase of risk game that each player can fortify during this phase
- * @author Maryam 
- * @param <sourceCountry>
+ * @author
  * @ version 4.5.2
  */
 
@@ -34,13 +33,13 @@ public class Fortification {
 
 	String sourceCountryName;
 	String destinationCountryName;
-	private ArrayList[] countOfPlayer; 
+	private ArrayList countOfPlayer; 
 	static int army;
 	int playerNumber;
-    Player currentPlayer;
-	Country destinationCountry;
-	Country sourceCountry;
-	Board boardMap;
+        Player currentPlayer;
+	CountryModel destinationCountry;
+	CountryModel sourceCountry;
+	MapModel boardMap;
 	
 	/**
 	 * this method is main method for fortification phase that check several condition for 
@@ -54,7 +53,7 @@ public class Fortification {
 	public String fortify(String sourceCountryName, String destinationCountryName) {
 
 		
-		  for(int i = 0; i < countOfPlayer.length; i++) {
+		  for(int i = 0; i < countOfPlayer.size(); i++) {
 			  
 			    sourceCountry = boardMap.getcountryName(sourceCountryName);
 				destinationCountry = boardMap.getcountryName(destinationCountryName);
