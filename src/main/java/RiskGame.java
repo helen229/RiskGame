@@ -4,7 +4,8 @@ import java.util.Scanner;
 
 public class RiskGame {
 
-    static String phase="MapEditor";
+    //static String phase="MapEditor";
+    static String phase="GamePlay";
     public static void main(String[] args) {
 
         MapController mapController = new MapController();
