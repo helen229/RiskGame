@@ -18,13 +18,6 @@ import Models.Player;
  * @author User
  */
 
-    /**
- * GameBoard Class stores all the information about the game.
- * <br> For Eg: numberOfPlayers, activePlayers, information about which country
- * is owned by which player and how many number of army in that country.
- *
- * @author daksh
- */
 public class GameBoard extends Observable implements Serializable {
 
     /**
