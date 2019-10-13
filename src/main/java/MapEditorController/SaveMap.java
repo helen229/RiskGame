@@ -100,7 +100,7 @@ public class SaveMap {
     public String generateContent(MapModel mapModel) {
         final String NEW_LINE = " \n";
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(" [Continents" + NEW_LINE);
+        stringBuilder.append(" [continents]" + NEW_LINE);
         for (ContinentModel continent : mapModel.getContinentList()) {
 
             String continentData = String.format(" %s %d", continent.getContinentName(), continent.getContinentValue());
@@ -111,22 +111,38 @@ public class SaveMap {
             stringBuilder.append(NEW_LINE);
 
         }
-        stringBuilder.append("[COUNTRIES" + NEW_LINE);
+        stringBuilder.append("[countries]" + NEW_LINE);
         int length = mapModel.getTotalCountries();
+        ArrayList<Integer> neighbour;
 
         for (CountryModel country : mapModel.getCountryList()) {
             String countryData = String.format(" %d %s %s", country.getCountryValue(), country.getCountryName(), country.getContinentName());
-            ArrayList<Integer> neighbour = country.getNeighbours();
+            neighbour = country.getNeighbours();
 
-            String neighbourString = ArrayCompiler(neighbour);
+
             stringBuilder.append(countryData);
-            stringBuilder.append(neighbour);
+
             stringBuilder.append(NEW_LINE);
 
 
         }
+
+        stringBuilder.append("[borders] " + NEW_LINE);
+        for (CountryModel country : mapModel.getCountryList()) {
+           neighbour=  country.getNeighbours();
+            String neighbourString = ArrayCompiler(neighbour);
+            stringBuilder .append(neighbourString);
+            stringBuilder.append(NEW_LINE);
+
+        }
+
         return stringBuilder.toString();
+
+
+
     }
+
+
 
 
     /**
@@ -142,6 +158,7 @@ public class SaveMap {
         for (int i = 0; i < Size; i++) {
 
             String Data = (list.get(i)).toString();
+            sb.append(i + " ");
             sb.append(Data);
             sb.append(" ");
 

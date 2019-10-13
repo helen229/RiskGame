@@ -1,6 +1,5 @@
 package MapEditorModel;
 
-import sun.awt.SunHints;
 
 import java.util.ArrayList;
 
@@ -63,14 +62,10 @@ public class CountryModel {
     }
 
 
-    public String getCountryFileFormat() {
-        return null; // 1 siberia 1 329 152
-    }
 
-    public String getBorderFileFormat() {
-        return null; // 1 20 32 2
 
-    }//    private int armyNum;
+
+    //    private int armyNum;
 //
 //    private PlayerModel owner;
 }
