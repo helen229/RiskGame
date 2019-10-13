@@ -2,6 +2,7 @@ package MapEditorController;
 
 import MapEditorModel.ContinentModel;
 import MapEditorModel.CountryModel;
+import MapEditorModel.MapModel;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -26,6 +27,7 @@ public class ReadFile {
     private ArrayList<ContinentModel> continents = new ArrayList<ContinentModel>();
     private ArrayList<CountryModel> countries = new ArrayList<CountryModel>();
 
+
     private final String fileDirectory;
 
 
@@ -44,6 +46,10 @@ public class ReadFile {
         String line = br.readLine();
         String[] splitLine = line.split(" ");
         String checker = " ";
+        MapModel mapModel= new MapModel();
+        mapModel.setContinentList(continents);
+        mapModel.setCountryList(countries);
+
         if(line!=null) {
             while (line != null) {
                 line = br.readLine();
@@ -58,7 +64,7 @@ public class ReadFile {
                         checker = BORDERS;
                         continue;
                     }
-                }
+
 
                 line.trim();
                 int size = line.length();
@@ -111,7 +117,10 @@ public class ReadFile {
                             for (int i = 1; i < borderData.length; i++) {
                                 adjacent.add(Integer.valueOf(borderData[i]));
                             }
-                            countries.get(id).setNeighbours(adjacent);
+
+                        int Index=   mapModel.indexOfCountry(id);
+
+                            countries.get(Index).setNeighbours(adjacent);
                         }else{
                             continue;
                         }
@@ -121,7 +130,7 @@ public class ReadFile {
                 }
 
             }
-        }
+        } }
         else{
             System.out.println(" File is Empty");
         }

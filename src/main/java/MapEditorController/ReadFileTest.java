@@ -1,21 +1,20 @@
 package MapEditorController;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import MapEditorModel.ContinentModel;
+import org.junit.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
 public class ReadFileTest {
-    @BeforeClass
-    public void runBeforeClass() {
 
-    }
+    ReadFile readfile;
+    @Before
 
-    @Test
-    public void checkFile() {
-        ReadFile readfile = new ReadFile(" C:\\Users\\Adeola Adeniji\\Desktop\\Game\\src\\main\\java\\MapEditorController\\ameroki.map");
+    public void runBefore() {
+        readfile = new ReadFile("C:\\Users\\Adeola Adeniji\\Desktop\\Game\\src\\main\\java\\MapEditorController\\ameroki.map");
         try {
             readfile.checkFile();
         } catch (IOException e) {
@@ -23,9 +22,20 @@ public class ReadFileTest {
         }
 
     }
+    @After
+     public void testAfter(){
+readfile=null;
+    }
+
+    @Test
+    public void checkFile() {
+
+    }
 
     @Test
     public void getContinents() {
+        ArrayList<ContinentModel> checkContinents= readfile.getContinents();
+        Assert.assertNotNull(checkContinents);
     }
 
     @Test
