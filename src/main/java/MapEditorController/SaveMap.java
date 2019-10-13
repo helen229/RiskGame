@@ -74,14 +74,16 @@ public class SaveMap {
             String continentData = String.format(" %s %d", continent.getContinentName(), continent.getContinentValue());
             ArrayList<String> countrylist = continent.getCountriesList();
             stringBuilder.append(continentData);
-            stringBuilder.append(" CountryList :");
-            stringBuilder.append(ArrayCompiler(countrylist));
+           // stringBuilder.append(" CountryList :");
+           // stringBuilder.append(ArrayCompiler(countrylist));
             stringBuilder.append(NEW_LINE);
 
         }
+        stringBuilder.append(NEW_LINE);
         stringBuilder.append("[countries]" + NEW_LINE);
         int length = mapModel.getTotalCountries();
         ArrayList<Integer> neighbour;
+
 
         for (CountryModel country : mapModel.getCountryList()) {
             String countryData = String.format(" %d %s %s", country.getCountryValue(), country.getCountryName(), country.getContinentName());
@@ -94,7 +96,7 @@ public class SaveMap {
 
 
         }
-
+          stringBuilder.append(NEW_LINE);
         stringBuilder.append("[borders] " + NEW_LINE);
         for (CountryModel country : mapModel.getCountryList()) {
            neighbour=  country.getNeighbours();

@@ -134,7 +134,7 @@ public class ReadFile {
         else{
             System.out.println(" File is Empty");
         }
-
+        mapModel.showMap();
         file.close();
     }
 

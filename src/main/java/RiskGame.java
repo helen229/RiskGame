@@ -7,11 +7,11 @@ public class RiskGame {
     static String phase = "MapEditor";
     public static void main(String[] args) {
         //uncomment those hardcode for testing phase
-        args[0]="start";
-        args[1]="new";
-        args[2]="game";
-
-        if (args[0].equals("start")&&args[1].equals("new")&&args[2].equals("game"))
+//        args[0]="start";
+//        args[1]="new";
+//        args[2]="game";
+//
+//        if (args[0].equals("start")&&args[1].equals("new")&&args[2].equals("game"))
             newGame();
     }
 
