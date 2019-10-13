@@ -1,45 +1,47 @@
-//package MapEditorController;
-//
-//import MapEditorModel.MapModel;
-//import org.junit.Assert;
-//import org.junit.BeforeClass;
-//import org.junit.Test;
-//
-//import java.io.IOException;
-//
-//public class SaveMapTest {
-////    MapModel mapModel;
-////    TestDataProvider dataProvider = new TestDataProvider();
-////    mapModel=dataProvider.setUpModel();
-//
-//    @BeforeClass
-//    public void runBeforeClass() {
-//
-//
-//        try {
-//            SaveMap savemap = new SaveMap("test", mapModel);
-//
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    @Test
-//    public void writeFile() {
-//
-//
-//    }
-//
-//    @Test
-//    public void generateContent() {
-//        String message = " ";
-//
-//        String content = savemap.generateContent(mapModel);
-//        Assert.assertEquals(message, savemap.generateContent(mapModel));
-//    }
-//
-//    @Test
-//    public void arrayCompiler() {
-//    }
-//}
+package MapEditorController;
+
+ import MapEditorModel.MapModel;
+ import org.junit.*;
+
+ import java.io.File;
+ import java.io.IOException;
+ import static junit.framework.TestCase.assertTrue;
+
+public class SaveMapTest {
+  MapModel mapModel;
+  String fileName;
+
+    @Before()
+    public void SetBeforeClass(){
+        TestDataProvider dataProvider = new TestDataProvider();
+        mapModel= dataProvider.setUpModel();
+        fileName= "test";
+
+    }
+    @After
+    public void setAfterClass(){
+        mapModel=null;
+        fileName=null;
+    }
+
+
+
+   @Test
+   public void writeFile() {
+        try{
+       SaveMap saveMap= new SaveMap( fileName,mapModel);
+        File file= saveMap.writeFile(fileName, mapModel);
+        boolean check= file.exists();
+      assertTrue(check);
+       Assert.assertNotNull(saveMap.writeFile(fileName,mapModel));
+
+
+
+   }
+        catch(IOException e){
+          e.printStackTrace();
+        }
+   }
+
+    
+}

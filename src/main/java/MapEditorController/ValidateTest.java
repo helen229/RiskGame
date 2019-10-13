@@ -19,6 +19,7 @@ public class ValidateTest {
 
     @After
     public void setAfterClass() {
+
         mapModel = null;
     }
 

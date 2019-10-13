@@ -30,41 +30,9 @@ public class SaveMap {
      */
     public SaveMap(String FileName, MapModel mapModel) throws IOException {
 
-        // PrintWriter writer = new PrintWriter(FileName);
-        //writer.print(parseMapModel(new MapModel()));
-
         writeFile(FileName, mapModel);
-
     }
 
-    /**
-     * This method reads the MapModel  that is parsed into it and creates  String of all the details of each country and
-     * each continent..
-     * @param mapModel
-     * @return
-     */
-
-   /* public String parseMapModel(MapModel mapModel) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("[continents]"+NEW_LINE_DELIMITER);
-        mapModel.getContinentList().forEach(continent -> {
-            String continentValue = String.format("%s %d %s"+NEW_LINE_DELIMITER, continent.getContinentName(), continent.getContinentValue(), null);
-            stringBuilder.append(continentValue);
-        });
-        stringBuilder.append(NEW_LINE_DELIMITER);
-          int size= mapModel.getTotalCountries();
-        for(int i=0;i< size;i++){
-            CountryModel country=  mapModel.getCountryList().get(i);
-            String countryValue= String.format(" %d %s %d" + NEW_LINE_DELIMITER, i,country.getCountryName(),country.getContinentName());
-            stringBuilder.append(countryValue);
-
-
-        }
-
-
-
-        return stringBuilder.toString();
- }  */
 
     /**
      * This method takes Stores the string generated from a map in a file
@@ -74,7 +42,7 @@ public class SaveMap {
      * @throws IOException
      */
 
-    public void writeFile(String FileName, MapModel mapModel) throws IOException {
+    public File writeFile(String FileName, MapModel mapModel) throws IOException {
         String Content = generateContent(mapModel);
         File file = new File(FileName);
         PrintWriter pw = new PrintWriter(file);
@@ -87,7 +55,7 @@ public class SaveMap {
         pw.print(Content);
         pw.close();
 
-
+ return file;
     }
 
     /**
@@ -133,15 +101,9 @@ public class SaveMap {
             String neighbourString = ArrayCompiler(neighbour);
             stringBuilder .append(neighbourString);
             stringBuilder.append(NEW_LINE);
-
         }
-
         return stringBuilder.toString();
-
-
-
     }
-
 
 
 
