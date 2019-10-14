@@ -12,14 +12,19 @@ public class MapController {
     private MapModel mapModel;
 
 
-
+    /**
+     * Constructor of the MapController Class
+     */
     public MapController() {
         this.mapModel= new MapModel();
     }
 
     //  TODO: Unit TEST, add javadoc, add comments
 
-
+    /**
+     * method to parse the command
+     * @param args command from user
+     */
     public void commandHandler(String[] args) {
 
         try
@@ -38,7 +43,7 @@ public class MapController {
                     mapModel.showMap();
                     break;
                 case "validatemap":
-                    System.out.println("valid map method");
+                    mapModel.isValid();
                     break;
                 case "editmap":
                     editMap(args[1]);
@@ -58,21 +63,32 @@ public class MapController {
 
     }
 
-
+    /**
+     * saveMap method is to run the command "savemap", first check if the file exist or not,
+     * if not create a new file otherwise write the string to the file (clear the file content first)
+     * @param fileName
+     */
     private void saveMap(String fileName) {
-        //TODO: first check if the file exist or not, if not create a new file otherwise write the
-        //      string to the file (clear the file content first)
+
+        if (!mapModel.isValid()){
+            return;
+        }
+
         try {
             SaveMap saveMap = new SaveMap(fileName, mapModel);
         } catch (IOException e) {
             System.out.println("Save Map fail");
+            return;
 //            e.printStackTrace();
         }
         System.out.println("Save Map Succeed");
 
-
     }
 
+    /**
+     *
+     * @param fileName
+     */
     private void editMap(String fileName) {
         // TODO: Merge your Read file class here
         EditMap readFile = new EditMap(fileName);
@@ -80,14 +96,26 @@ public class MapController {
             this.mapModel = readFile.checkFile();
         } catch (IOException e) {
             System.out.println("Edit Map fail, this file not exist");
+            return;
 //            e.printStackTrace();
         }
-        System.out.println("Edit Map Succeed");
+        if (mapModel.isValid()){
+            System.out.println("Edit Map Succeed");
+        }else {
+            /** not validate so clear all the content */
+            mapModel.getCountryList().clear();
+            mapModel.getContinentList().clear();
+        }
+
+
     }
 
-
-
-
+    /**
+     * parse the edit command option add or remove
+     * @param args
+     * @param command
+     * @param operation
+     */
     public void parseCommandOption(String[] args, String command, String operation){
 
         try
@@ -135,7 +163,11 @@ public class MapController {
 
     }
 
-
+    /**
+     * add the neighbor country and print out the result
+     * @param countryName
+     * @param neighborCountryName
+     */
     private void addNeighbor(String countryName, String neighborCountryName) {
 
         if (this.mapModel.addNeighbor(countryName, neighborCountryName)){
@@ -147,7 +179,11 @@ public class MapController {
 
     }
 
-
+    /**
+     * remove the neighbor country and print out the result
+     * @param countryName
+     * @param neighborCountryName
+     */
     private void removeNeighbor(String countryName, String neighborCountryName) {
 
         if (this.mapModel.removeNeighbor(countryName, neighborCountryName)){
@@ -159,7 +195,11 @@ public class MapController {
 
     }
 
-
+    /**
+     * add the country and print out the result
+     * @param countryName
+     * @param continentName
+     */
     private void addCountry(String countryName, String continentName) {
 
         if (this.mapModel.addCountry(countryName, continentName)){
@@ -171,7 +211,10 @@ public class MapController {
 
     }
 
-
+    /**
+     * remove the country and print out the result
+     * @param countryName
+     */
     private void removeCountry(String countryName) {
 
         if (this.mapModel.removeCountry(countryName)){
@@ -183,7 +226,11 @@ public class MapController {
 
     }
 
-
+    /**
+     * add the continent and print out the result
+     * @param continentName
+     * @param continentValue
+     */
     private void addContinent(String continentName , int continentValue) {
 
         if (this.mapModel.addContinent(continentName, continentValue)){
@@ -195,7 +242,10 @@ public class MapController {
 
     }
 
-
+    /**
+     * remove the continent and print out the result
+     * @param continentName
+     */
     private void removeContinent(String continentName) {
 
         if (this.mapModel.removeContinent(continentName)){
@@ -207,11 +257,18 @@ public class MapController {
 
     }
 
-
+    /**
+     * get the map model
+     * @return MapModel
+     */
     public MapModel getMapModel() {
         return mapModel;
     }
 
+    /**
+     * set the map model
+     * @param mapModel
+     */
     public void setMapModel(MapModel mapModel) {
         this.mapModel = mapModel;
     }
