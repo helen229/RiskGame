@@ -15,6 +15,10 @@ editneighbor -add countryname countryname1
 editneighbor -add countryname1 countryname2
 editneighbor -add countryname2 countryname3
 editneighbor -add countryname3 countryname2
+editneighbor -add countryname4 countryname3
+editneighbor -add countryname5 countryname6
+editneighbor -add countryname4 countryname5
+editneighbor -add countryname8 countryname9
 savemap filename
 showmap
 editcountry -remove countryname
