@@ -1,5 +1,6 @@
 package MapEditorController;
 
+
 import MapEditorModel.ContinentModel;
 import MapEditorModel.CountryModel;
 import MapEditorModel.MapModel;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 
 /**
  * This class allows a user to create a new map file and write into a  map file
+ *
  */
 public class SaveMap {
 
@@ -30,41 +32,9 @@ public class SaveMap {
      */
     public SaveMap(String FileName, MapModel mapModel) throws IOException {
 
-        // PrintWriter writer = new PrintWriter(FileName);
-        //writer.print(parseMapModel(new MapModel()));
-
         writeFile(FileName, mapModel);
-
     }
 
-    /**
-     * This method reads the MapModel  that is parsed into it and creates  String of all the details of each country and
-     * each continent..
-     * @param mapModel
-     * @return
-     */
-
-   /* public String parseMapModel(MapModel mapModel) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("[continents]"+NEW_LINE_DELIMITER);
-        mapModel.getContinentList().forEach(continent -> {
-            String continentValue = String.format("%s %d %s"+NEW_LINE_DELIMITER, continent.getContinentName(), continent.getContinentValue(), null);
-            stringBuilder.append(continentValue);
-        });
-        stringBuilder.append(NEW_LINE_DELIMITER);
-          int size= mapModel.getTotalCountries();
-        for(int i=0;i< size;i++){
-            CountryModel country=  mapModel.getCountryList().get(i);
-            String countryValue= String.format(" %d %s %d" + NEW_LINE_DELIMITER, i,country.getCountryName(),country.getContinentName());
-            stringBuilder.append(countryValue);
-
-
-        }
-
-
-
-        return stringBuilder.toString();
- }  */
 
     /**
      * This method takes Stores the string generated from a map in a file
@@ -74,7 +44,7 @@ public class SaveMap {
      * @throws IOException
      */
 
-    public void writeFile(String FileName, MapModel mapModel) throws IOException {
+    public File writeFile(String FileName, MapModel mapModel) throws IOException {
         String Content = generateContent(mapModel);
         File file = new File(FileName);
         PrintWriter pw = new PrintWriter(file);
@@ -87,7 +57,7 @@ public class SaveMap {
         pw.print(Content);
         pw.close();
 
-
+ return file;
     }
 
     /**
@@ -100,33 +70,45 @@ public class SaveMap {
     public String generateContent(MapModel mapModel) {
         final String NEW_LINE = " \n";
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(" [Continents" + NEW_LINE);
+        stringBuilder.append(" [continents]" + NEW_LINE);
         for (ContinentModel continent : mapModel.getContinentList()) {
 
             String continentData = String.format(" %s %d", continent.getContinentName(), continent.getContinentValue());
             ArrayList<String> countrylist = continent.getCountriesList();
             stringBuilder.append(continentData);
-            stringBuilder.append(" CountryList :");
-            stringBuilder.append(ArrayCompiler(countrylist));
+           // stringBuilder.append(" CountryList :");
+           // stringBuilder.append(ArrayCompiler(countrylist));
             stringBuilder.append(NEW_LINE);
 
         }
-        stringBuilder.append("[COUNTRIES" + NEW_LINE);
+        stringBuilder.append(NEW_LINE);
+        stringBuilder.append("[countries]" + NEW_LINE);
         int length = mapModel.getTotalCountries();
+        ArrayList<Integer> neighbour;
+
 
         for (CountryModel country : mapModel.getCountryList()) {
             String countryData = String.format(" %d %s %s", country.getCountryValue(), country.getCountryName(), country.getContinentName());
-            ArrayList<Integer> neighbour = country.getNeighbours();
+            neighbour = country.getNeighbours();
 
-            String neighbourString = ArrayCompiler(neighbour);
+
             stringBuilder.append(countryData);
-            stringBuilder.append(neighbour);
+
             stringBuilder.append(NEW_LINE);
 
 
         }
+          stringBuilder.append(NEW_LINE);
+        stringBuilder.append("[borders] " + NEW_LINE);
+        for (CountryModel country : mapModel.getCountryList()) {
+           neighbour=  country.getNeighbours();
+            String neighbourString = ArrayCompiler(neighbour);
+            stringBuilder .append(neighbourString);
+            stringBuilder.append(NEW_LINE);
+        }
         return stringBuilder.toString();
     }
+
 
 
     /**
@@ -142,6 +124,7 @@ public class SaveMap {
         for (int i = 0; i < Size; i++) {
 
             String Data = (list.get(i)).toString();
+            sb.append(i + " ");
             sb.append(Data);
             sb.append(" ");
 

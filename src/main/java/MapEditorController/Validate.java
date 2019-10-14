@@ -1,25 +1,64 @@
 package MapEditorController;
 
 import MapEditorModel.CountryModel;
+import MapEditorModel.MapModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class Validate {
-    ArrayList<CountryModel> countryList;
-    HashMap<CountryModel, Boolean> isValid=  new HashMap<>();
+    MapModel mapModel;
+    ArrayList<CountryModel> countries;
 
-    public Validate( ArrayList <CountryModel>countryList){
-        this.countryList= countryList;
+    HashMap<CountryModel, Boolean> visited = new HashMap<>();
+    HashMap<Integer, CountryModel> countryId = new HashMap<>();
 
-        int size= countryList.size();
-        for(int i=0;i< size;i++ ){
-             isValid.put(countryList.get(i), false);
+
+    public  Validate(MapModel mapModel) {
+        countries = mapModel.getCountryList();
+        this.mapModel = mapModel;
+        StoreData();
+        validator();
+
+    }
+
+    public void StoreData() {
+        for (CountryModel country : countries) {
+            visited.put(country, false);
+            countryId.put(country.getCountryValue(), country);
         }
+    }
+
+    public void validator() {
+
+        for (CountryModel country : countries) {
+
+            ArrayList<Integer> neighbours = country.getNeighbours();
+
+            for (int i : neighbours
+            ) {
+                CountryModel neighbour = countryId.get(i);
+
+                visited.put(neighbour, true);
+
+            }
+
+        }
+    }
+
+    public boolean isValid() {
 
 
 
+        for (boolean value : visited.values()) {
+            if (value == false) {
+                return false;
+            }
 
+
+        }
+        return true;
 
     }
 }
