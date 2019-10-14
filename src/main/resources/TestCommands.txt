@@ -6,6 +6,11 @@ editcountry -add countryname continentname
 editcountry -add countryname1 continentname
 editcountry -add countryname2 continentname
 editcountry -add countryname3 continentname
+editcountry -add countryname4 continentname
+editcountry -add countryname5 continentname
+editcountry -add countryname6 continentname2
+editcountry -add countryname8 continentname1
+editcountry -add countryname9 continentname1
 editneighbor -add countryname countryname1
 editneighbor -add countryname1 countryname2
 editneighbor -add countryname2 countryname3
