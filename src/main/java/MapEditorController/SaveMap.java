@@ -1,5 +1,6 @@
 package MapEditorController;
 
+
 import MapEditorModel.ContinentModel;
 import MapEditorModel.CountryModel;
 import MapEditorModel.MapModel;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 
 /**
  * This class allows a user to create a new map file and write into a  map file
+ *
  */
 public class SaveMap {
 

@@ -78,6 +78,11 @@ public class MapController {
     private void editMap(String fileName) {
         // TODO: Merge your Read file class here
         ReadFile readFile = new ReadFile(fileName);
+        try {
+            readFile.checkFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.mapModel.setContinentList(readFile.getContinents());
         this.mapModel.setCountryList(readFile.getCountries());
     }

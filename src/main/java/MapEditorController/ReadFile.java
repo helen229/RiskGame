@@ -33,6 +33,16 @@ public class ReadFile {
 
     public ReadFile (String fileDirectory) {
         this. fileDirectory = fileDirectory;
+        try{
+        checkFile();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        getContinents();
+        getCountries();
+
+
     }
 
     /**
