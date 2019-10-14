@@ -38,18 +38,22 @@ public class ContinentModel {
     }
 
     public void setContinentValue(int continentValue) {
+
         this.continentValue = continentValue;
     }
 
     public ArrayList<String> getCountriesList() {
+
         return countriesList;
     }
 
     public void addCountryToList(String countryName) {
+
         this.countriesList.add(countryName);
     }
 
     public void removeCountryFromList(String countryName) {
+
         this.countriesList.remove(countryName);
     }
 

@@ -180,7 +180,12 @@ public class MapModel {
         return false;
     }
 
-
+    /**
+     *
+     * @param countryName
+     * @param neighborCountryName
+     * @return
+     */
     public boolean addNeighbor(String countryName, String neighborCountryName){
 
         //to check if the neighborCountryName exist or not and the countryName, also return the index of the country
@@ -201,7 +206,12 @@ public class MapModel {
 
     }
 
-
+    /**
+     *
+     * @param countryName
+     * @param neighborCountryName
+     * @return
+     */
     public boolean removeNeighbor(String countryName, String neighborCountryName){
 
         //to check if the continentName exist or not and the countryName, also return the continent index

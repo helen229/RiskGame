@@ -4,16 +4,14 @@ import MapEditorModel.ContinentModel;
 import MapEditorModel.CountryModel;
 import MapEditorModel.MapModel;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MapController {
 
     private MapModel mapModel;
 
-    private static final String CONTINENT = "continent";
-    private static final String COUNTRY = "country";
-    private static final String BORDER = "border";
-    private static final String NEW_LINE_DELIMITER = "\n";
+
 
     public MapController() {
         this.mapModel= new MapModel();
@@ -64,45 +62,30 @@ public class MapController {
     private void saveMap(String fileName) {
         //TODO: first check if the file exist or not, if not create a new file otherwise write the
         //      string to the file (clear the file content first)
-        System.out.println(parseMapModel(mapModel));
+        try {
+            SaveMap saveMap = new SaveMap(fileName, mapModel);
+        } catch (IOException e) {
+            System.out.println("Save Map fail");
+//            e.printStackTrace();
+        }
+        System.out.println("Save Map Succeed");
+
 
     }
 
     private void editMap(String fileName) {
         // TODO: Merge your Read file class here
-
+        EditMap readFile = new EditMap(fileName);
+        try {
+            this.mapModel = readFile.checkFile();
+        } catch (IOException e) {
+            System.out.println("Edit Map fail, this file not exist");
+//            e.printStackTrace();
+        }
+        System.out.println("Edit Map Succeed");
     }
 
-    public String parseMapModel(MapModel mapModel) {
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("["+CONTINENT+"]"+NEW_LINE_DELIMITER);
-
-        for (ContinentModel continent:mapModel.getContinentList()) {
-            String continentValue = String.format("%s %d %s"+NEW_LINE_DELIMITER, continent.getContinentName(), continent.getContinentValue(), null);
-            stringBuilder.append(continentValue);
-        }
-
-        stringBuilder.append("["+COUNTRY+"]"+NEW_LINE_DELIMITER);
-
-        for (CountryModel country:mapModel.getCountryList()) {
-            String countryValue= String.format("%d %s %s" + NEW_LINE_DELIMITER, country.getCountryValue(),country.getCountryName(), country.getContinentName());
-            stringBuilder.append(countryValue);
-        }
-
-        stringBuilder.append("["+BORDER+"]"+NEW_LINE_DELIMITER);
-        for (CountryModel country:mapModel.getCountryList()) {
-            String countryValue= String.format("%d ", country.getCountryValue());
-            stringBuilder.append(countryValue);
-            for (int neighbour:country.getNeighbours()) {
-                String neighbourValue= String.format(" %d", neighbour);
-                stringBuilder.append(neighbourValue);
-            }
-            stringBuilder.append(NEW_LINE_DELIMITER);
-        }
-        return stringBuilder.toString();
-
-    }
 
 
     public void parseCommandOption(String[] args, String command, String operation){
