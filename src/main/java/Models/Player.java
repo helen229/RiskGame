@@ -384,5 +384,9 @@ public class Player {
         setNumberOfArmies(numberOfArmies);
     }
     //checking
+
+    public boolean getCountryArmyInfo() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
