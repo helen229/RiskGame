@@ -1,3 +1,0 @@
-# RiskGame
-Here we go.
-
