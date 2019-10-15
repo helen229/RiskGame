@@ -27,8 +27,8 @@ public class ContinentModel {
     }
 
     /**
-     *
-     * @return
+     * Get Continent name
+     * @return the name of the Continent
      */
     public String getContinentName() {
 
@@ -36,7 +36,7 @@ public class ContinentModel {
     }
 
     /**
-     *
+     * Set Continent name
      * @param continentName
      */
     public void setContinentName(String continentName) {
@@ -45,7 +45,7 @@ public class ContinentModel {
     }
 
     /**
-     *
+     * Get Continent value
      * @return
      */
     public int getContinentValue() {
@@ -53,7 +53,7 @@ public class ContinentModel {
     }
 
     /**
-     *
+     * Set Continent value
      * @param continentValue
      */
     public void setContinentValue(int continentValue) {
@@ -62,8 +62,8 @@ public class ContinentModel {
     }
 
     /**
-     *
-     * @return
+     * Get Continent's country list
+     * @return country list
      */
     public ArrayList<String> getCountriesList() {
 

@@ -1,3 +1,4 @@
+import GamePlayController.GameController;
 import MapEditorController.MapController;
 
 import java.util.Scanner;
@@ -18,18 +19,24 @@ public class RiskGame {
     private static void newGame(){
 
         MapController mapController = new MapController();
-
+        GameController gameController = new GameController();
         Scanner input = new Scanner(System.in);
         System.out.println("Please enter command");
         while(input.hasNext()){
             String command= input.nextLine();
-            if (command.equals("start game"))
+            if (command.equals("start game play"))
                 phase = "GamePlay";
             if (phase.equals("MapEditor")){
                 mapController.commandHandler(command.split(" "));
             }else {
-                //gameController.commandHandler(command.split(" ")
-                System.out.println("GAME PLAY PHASE");
+                System.out.println("GAME PLAY PHASE START");
+                phase="Startup";
+                if (command.equals("Startup phase done"))
+                    phase="Reinforcement";
+                else if (command.equals("Reinforcement phase done"))
+                    phase="Fortification";
+
+                gameController.commandHandler(command.split(" "), phase);
             }
         }
 
