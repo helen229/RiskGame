@@ -1,6 +1,6 @@
-package GamePlayModel;
+package module.game_play.models;
 
-import MapEditorModel.CountryModel;
+import module.map_editor.models.CountryModel;
 
 import java.util.ArrayList;
 

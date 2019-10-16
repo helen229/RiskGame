@@ -1,12 +1,6 @@
-package MapEditorController;
+package module.map_editor.MapEditorController;
 
-import MapEditorModel.ContinentModel;
 import org.junit.*;
-
-import java.io.IOException;
-import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 
 public class ReadFileTest {
 
@@ -14,7 +8,7 @@ public class ReadFileTest {
     @Before
 
     public void runBefore() {
-        readfile = new ReadFile("C:\\Users\\Adeola Adeniji\\Desktop\\Game\\src\\main\\java\\MapEditorController\\ameroki.map");
+        readfile = new ReadFile("C:\\Users\\Adeola Adeniji\\Desktop\\Game\\src\\main\\java\\module.map_editor.MapEditorController\\ameroki.map");
        // try {
          //   readfile.checkFile();
       //  } catch (IOException e) {

@@ -1,11 +1,12 @@
-package MapEditorController;
+package module.map_editor;
 
-import MapEditorModel.ContinentModel;
-import MapEditorModel.CountryModel;
-import MapEditorModel.MapModel;
+import module.map_editor.MapEditorController.ReadFile;
+import module.map_editor.MapEditorController.SaveMap;
+import module.map_editor.models.ContinentModel;
+import module.map_editor.models.CountryModel;
+import module.map_editor.models.MapModel;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class MapController {
 

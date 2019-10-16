@@ -1,11 +1,10 @@
-package MapEditorController;
+package module.map_editor.MapEditorController;
 
-import MapEditorModel.CountryModel;
-import MapEditorModel.MapModel;
+import module.map_editor.models.CountryModel;
+import module.map_editor.models.MapModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class Validate {
     MapModel mapModel;

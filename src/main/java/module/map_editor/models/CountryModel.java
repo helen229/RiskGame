@@ -1,5 +1,7 @@
-package MapEditorModel;
+package module.map_editor.models;
 
+
+import module.game_play.models.PlayerModel;
 
 import java.util.ArrayList;
 
@@ -12,6 +14,9 @@ public class CountryModel {
     private String continentName;
 
     private ArrayList<Integer> neighbours;
+    //    private int armyNum;
+//
+    public PlayerModel owner;
 
     public CountryModel(int countryID, String countryName, String continentName) {
         this.countryValue = countryID;
@@ -60,12 +65,9 @@ public class CountryModel {
     public void setNeighbours(ArrayList<Integer> neighbours) {
         this.neighbours = neighbours;
     }
+    public void setOwner(PlayerModel owner) {
+        this.owner = owner;
+    }
 
 
-
-
-
-    //    private int armyNum;
-//
-//    private PlayerModel owner;
 }

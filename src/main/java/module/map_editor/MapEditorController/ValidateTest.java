@@ -1,6 +1,6 @@
-package MapEditorController;
+package module.map_editor.MapEditorController;
 
-import MapEditorModel.MapModel;
+import module.map_editor.models.MapModel;
 import org.junit.*;
 
 import static junit.framework.TestCase.assertTrue;

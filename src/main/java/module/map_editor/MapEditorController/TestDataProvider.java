@@ -1,8 +1,8 @@
-package MapEditorController;
+package module.map_editor.MapEditorController;
 
-import MapEditorModel.ContinentModel;
-import MapEditorModel.CountryModel;
-import MapEditorModel.MapModel;
+import module.map_editor.models.ContinentModel;
+import module.map_editor.models.CountryModel;
+import module.map_editor.models.MapModel;
 
 import java.util.ArrayList;
 

@@ -1,7 +1,6 @@
-package MapEditorModel;
+package module.map_editor.models;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class MapModel {
 

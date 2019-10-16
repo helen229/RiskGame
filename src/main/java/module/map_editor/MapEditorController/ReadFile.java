@@ -1,8 +1,8 @@
-package MapEditorController;
+package module.map_editor.MapEditorController;
 
-import MapEditorModel.ContinentModel;
-import MapEditorModel.CountryModel;
-import MapEditorModel.MapModel;
+import module.map_editor.models.ContinentModel;
+import module.map_editor.models.CountryModel;
+import module.map_editor.models.MapModel;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -30,7 +30,13 @@ public class ReadFile {
 
     private final String fileDirectory;
 
-
+    public MapModel getMapModel() {
+        MapModel mapModel = new MapModel();
+        mapModel.setContinentList(continents);
+        mapModel.setCountryList(countries);
+        mapModel.setTotalCountries(countries.size());
+        return mapModel;
+    }
     public ReadFile (String fileDirectory) {
         this. fileDirectory = fileDirectory;
         try{

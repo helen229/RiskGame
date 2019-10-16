@@ -1,4 +1,4 @@
-import MapEditorController.MapController;
+import module.map_editor.MapController;
 
 import java.util.Scanner;
 

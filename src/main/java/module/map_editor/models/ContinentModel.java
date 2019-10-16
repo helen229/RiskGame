@@ -1,4 +1,4 @@
-package MapEditorModel;
+package module.map_editor.models;
 
 import java.util.ArrayList;
 
