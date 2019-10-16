@@ -64,12 +64,10 @@ public class StartUpPhase {
         playerList.add(playerModel);
     }
 
-    /**
-     * This method allows a player to be removed
-     * @param playername the parameter used to identify the player to be removed.
-     */
-    public void removePlayer(String playername){
 
+    public void removePlayer(String playername){
+     //PlayerModel playerModel= new PlayerModel();
+    // playerModel.getPlayerName()
 
 
     }
