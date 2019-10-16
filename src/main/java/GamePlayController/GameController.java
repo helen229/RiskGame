@@ -1,14 +1,18 @@
 package GamePlayController;
 
+import GamePlayModel.GameModel;
+
 public class GameController {
     StartUpPhase startUpPhase;
     ReinforcementPhase reinforce;
     FortificationPhase fortify;
+    private GameModel game;
 
     public GameController(){
-        StartUpPhase startUpPhase= new StartUpPhase();
-        ReinforcementPhase reinforce= new ReinforcementPhase();
-        FortificationPhase fortify= new FortificationPhase();
+        this.game = new GameModel();
+//        StartUpPhase startUpPhase= new StartUpPhase();
+//        ReinforcementPhase reinforce= new ReinforcementPhase();
+//        FortificationPhase fortify= new FortificationPhase();
     }
 
 
@@ -32,14 +36,14 @@ public class GameController {
             if (phase.equals("Startup")){
                 switch (args[0]) {
                     case "loadmap":
-                        startUpPhase.loadMap(args[1]);
+                        game.loadMap(args[1]);
                         break;
                     case "populatecountries":
-                        startUpPhase.assignCountries();
+                        game.populateCountries();
                         break;
-//                case "editneighbor":
-//                    parseCommandOption(args,args[0],args[1]);
-//                    break;
+                    case "gameplayer":
+                        parsePlayerOption(args[1],args[2]);
+                        break;
 //                case "validatemap":
 //                    mapModel.isValid();
 //                    break;
@@ -51,7 +55,7 @@ public class GameController {
 //                    break;
 
                     default:
-                        System.out.println("Invalid Command");
+//                        System.out.println("Invalid Command");
                         break;
                 }
 
@@ -64,4 +68,14 @@ public class GameController {
         }catch(ArrayIndexOutOfBoundsException e){
             System.out.println("Arguments number invalid");
         }    }
+
+    private void parsePlayerOption(String operation, String playerName) {
+        if (operation.equals("-add")){
+            game.addPlayer(playerName);
+        }else if (operation.equals("-remove")){
+            game.removePlayer(playerName);
+        }else {
+            System.out.println("Invalid Command");
+        }
+    }
 }

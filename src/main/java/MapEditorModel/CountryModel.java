@@ -1,5 +1,6 @@
 package MapEditorModel;
 
+import GamePlayModel.PlayerModel;
 import sun.awt.SunHints;
 
 import java.util.ArrayList;
@@ -13,6 +14,10 @@ public class CountryModel {
     private String continentName;
 
     private ArrayList<Integer> neighbours;
+
+    private int armyNum;
+
+    private PlayerModel owner;
 
     /**
      * Constructor for the CountryModel
@@ -99,7 +104,20 @@ public class CountryModel {
         this.neighbours = neighbours;
     }
 
-//    private int armyNum;
-//
-//    private PlayerModel owner;
+
+    public int getArmyNum() {
+        return armyNum;
+    }
+
+    public void setArmyNum(int armyNum) {
+        this.armyNum = armyNum;
+    }
+
+    public PlayerModel getOwner() {
+        return owner;
+    }
+
+    public void setOwner(PlayerModel owner) {
+        this.owner = owner;
+    }
 }

@@ -29,7 +29,7 @@ public class RiskGame {
             if (phase.equals("MapEditor")){
                 mapController.commandHandler(command.split(" "));
             }else {
-                System.out.println("GAME PLAY PHASE START");
+//                System.out.println("GAME PLAY PHASE START");
                 phase="Startup";
                 if (command.equals("Startup phase done"))
                     phase="Reinforcement";

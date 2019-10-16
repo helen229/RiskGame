@@ -10,7 +10,13 @@ import java.util.ArrayList;
 
 public class PlayerModel {
     String PlayerName;
+//    int id;
     ArrayList<CountryModel> playerCountries;
+
+    public PlayerModel(String playerName) {
+        PlayerName = playerName;
+        playerCountries = new ArrayList<>();
+    }
 
     /**
      * This method  retrieves the name of the player

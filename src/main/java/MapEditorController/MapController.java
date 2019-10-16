@@ -90,7 +90,7 @@ public class MapController {
      * @param fileName
      */
     private void editMap(String fileName) {
-        // TODO: Merge your Read file class here
+
         EditMap readFile = new EditMap(fileName);
         try {
             this.mapModel = readFile.checkFile();
