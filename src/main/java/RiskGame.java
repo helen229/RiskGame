@@ -29,13 +29,14 @@ public class RiskGame {
                 mapController.commandHandler(command.split(" "));
             }else {
 //                System.out.println("GAME PLAY PHASE START");
-                phase="Startup";
-                if (command.equals("Startup phase done"))
-                    phase="Reinforcement";
-                else if (command.equals("Reinforcement phase done"))
-                    phase="Fortification";
 
-                gameController.commandHandler(command.split(" "), phase);
+                gameController.getGame().setPhase("Startup");
+//                if (command.equals("Startup phase done"))
+//                    phase="Reinforcement";
+//                else if (command.equals("Reinforcement phase done"))
+//                    phase="Fortification";
+
+                gameController.commandHandler(command.split(" "),  gameController.getGame().getPhase());
             }
         }
 

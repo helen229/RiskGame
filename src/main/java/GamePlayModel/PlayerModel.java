@@ -11,6 +11,8 @@ import java.util.ArrayList;
 public class PlayerModel {
     String PlayerName;
 //    int id;
+    int totalNumArmy;
+    int numArmyRemainPlace;
     ArrayList<CountryModel> playerCountries;
 
     public PlayerModel(String playerName) {
@@ -53,5 +55,21 @@ public class PlayerModel {
 
     public void addPlayerCountries(CountryModel country){
         playerCountries.add(country);
+    }
+
+    public int getTotalNumArmy() {
+        return totalNumArmy=playerCountries.size()/3;
+    }
+
+    public void setTotalNumArmy(int totalNumArmy) {
+        this.totalNumArmy = totalNumArmy;
+    }
+
+    public int getNumArmyRemainPlace() {
+        return numArmyRemainPlace;
+    }
+
+    public void setNumArmyRemainPlace(int numArmyRemainPlace) {
+        this.numArmyRemainPlace = numArmyRemainPlace;
     }
 }

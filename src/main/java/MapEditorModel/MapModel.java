@@ -360,7 +360,7 @@ public class MapModel {
      * @param countryName
      * @return
      */
-    private int indexOfCountry(String countryName) {
+    public int indexOfCountry(String countryName) {
         if (this.countryList.isEmpty())
             return -1;
 
@@ -400,7 +400,7 @@ public class MapModel {
      * @param continentName
      * @return
      */
-    private int indexOfContinent(String continentName) {
+    public int indexOfContinent(String continentName) {
         if (this.continentList.isEmpty()){
             return -1;
         }

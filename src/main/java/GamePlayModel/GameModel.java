@@ -15,6 +15,8 @@ public class GameModel {
 
     MapModel mapModel;
     ArrayList<PlayerModel> playerList;
+    PlayerModel currentPlayer;
+    String phase;
 
     public GameModel() {
         this.mapModel = new MapModel();
@@ -89,6 +91,9 @@ public class GameModel {
 
         }
         System.out.println("populate countries succeed");
+        setCurrentPlayer(playerList.get(0));
+        System.out.println("Start Placing army, Current Player is "+ getCurrentPlayer().getPlayerName());
+
     }
 
 
@@ -112,11 +117,41 @@ public class GameModel {
     }
 
     public void placeArmy(String countryName) {
+        int numArmy=currentPlayer.getTotalNumArmy();
+        int armyLeft=currentPlayer.getNumArmyRemainPlace();
+        CountryModel country = mapModel.getCountryList().get(mapModel.indexOfCountry(countryName));
+        if (currentPlayer.getPlayerName().equals(country.getOwner().PlayerName)){
+            if (armyLeft>=1){
+                armyLeft = armyLeft -1;
+                currentPlayer.setNumArmyRemainPlace(armyLeft);
+            }else {
+                System.out.println("You already place All your army! please start Reinforcement phase");
+                this.setPhase("Reinforcement");
+            }
+        }else {
+            System.out.println("Not your country! please try again");
+        }
 
     }
 
     public void placeAllAmy() {
+        System.out.println("You already place All your army! please start Reinforcement phase");
+        this.setPhase("Reinforcement");
+    }
 
+    public void reinforce(String countryName, int number) {
+        System.out.println("You already place All your army! please start Reinforcement phase");
+        this.setPhase("Reinforcement");
+    }
+
+    public void fortify(String fromcountry, String tocountry, int number) {
+        System.out.println("You already place All your army! please start Reinforcement phase");
+        this.setPhase("Reinforcement");
+    }
+
+    public void fortifyNone() {
+        System.out.println("You already place All your army! please start Reinforcement phase");
+        this.setPhase("Reinforcement");
     }
 
     /**
@@ -191,5 +226,21 @@ public class GameModel {
             System.out.print(mapModel.getCountryList().get(mapModel.indexOfCountry(neighbourValue)).getCountryName()+", ");
         }
 
+    }
+
+    public PlayerModel getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(PlayerModel currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public String getPhase() {
+        return phase;
+    }
+
+    public void setPhase(String phase) {
+        this.phase = phase;
     }
 }
