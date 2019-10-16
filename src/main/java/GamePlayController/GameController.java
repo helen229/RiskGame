@@ -17,11 +17,11 @@ public class GameController {
 
 
     public void showMap(String phase){
-        if (phase.equals("")){
+        if (phase.equals("Startup")){
+            game.showMap();
+        }else if (phase.equals("Reinforcement")){
 
-        }else if (phase.equals("")){
-
-        }else if (phase.equals("")){
+        }else if (phase.equals("Fortification")){
 
         }
 

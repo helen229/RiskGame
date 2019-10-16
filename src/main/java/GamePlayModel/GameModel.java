@@ -1,8 +1,10 @@
 package GamePlayModel;
 
 import MapEditorController.EditMap;
+import MapEditorModel.ContinentModel;
 import MapEditorModel.CountryModel;
 import MapEditorModel.MapModel;
+import com.sun.org.apache.bcel.internal.generic.CHECKCAST;
 
 import java.io.IOException;
 import java.lang.management.PlatformLoggingMXBean;
@@ -77,16 +79,16 @@ public class GameModel {
         }
         int checker = countrySize % numOfPlayers;
         if (checker != 0) {
-            int remainderCountries = countrySize - (numberCountry * numOfPlayers);
-
-            for (int i = 0; i < remainderCountries; i++) {
-                playerList.get(i).addPlayerCountries(countries.get(i));
-
+//            int remainderCountries = countrySize - (numberCountry * numOfPlayers);
+            for (int i = numberCountry * numOfPlayers; i < numberCountry * numOfPlayers+checker; i++) {
+                for (int j = 0; j < playerList.size(); j++) {
+                    countries.get(i).setOwner(playerList.get(j));
+                    playerList.get(j).addPlayerCountries(countries.get(i));
+                }
             }
 
         }
-        System.out.println(playerList.get(0).playerCountries.size());
-        System.out.println(playerList.get(1).playerCountries.size());
+        System.out.println("populate countries succeed");
     }
 
 
@@ -114,6 +116,80 @@ public class GameModel {
     }
 
     public void placeAllAmy() {
+
+    }
+
+    /**
+     * Method for the command show map
+     */
+    public void showMap(){
+        System.out.println("Continents: ");
+
+        for (int i = 0; i < mapModel.getContinentList().size(); i++){
+            printContinent(mapModel.getContinentList().get(i));
+            System.out.println("\n");
+        }
+
+        System.out.println("\nAll Countries: ");
+        for (int i = 0; i < mapModel.getCountryList().size(); i++){
+            printCountry(mapModel.getCountryList().get(i));
+        }
+    }
+
+    /**
+     *
+     * @param continent
+     */
+    private void printContinent(ContinentModel continent){
+
+        System.out.print(
+                "Continent Name:" +
+                        continent.getContinentName() + "\n" +
+                        "Continent Value:" +
+                        continent.getContinentValue() + "\n" +
+                        "Countries List: ");
+
+        for (int i = 0; i < continent.getCountriesList().size(); i++){
+//            String countryName= continent.getCountriesList().get(i);
+//            printCountry(this.countryList.get(indexOfCountry(countryName)));
+            if (i==0)
+                System.out.print("[");
+            if (i == continent.getCountriesList().size()-1){
+                System.out.print(continent.getCountriesList().get(i)+"]\n");
+                break;
+            }
+            System.out.print(continent.getCountriesList().get(i)+",");
+        }
+
+    }
+
+    /**
+     *
+     * @param country
+     */
+    private void printCountry(CountryModel country){
+
+        System.out.print(
+                "Country Name:" +
+                        country.getCountryName() + "\n" +
+                        "Country Value:" +
+                        country.getCountryValue() + "\n" +
+                        "Country Owner:" +
+                        country.getOwner().getPlayerName() + "\n" +
+                        "Country Army:" +
+                        country.getArmyNum() + "\n" +
+                        "Neighbor Country List: ");
+
+        for (int i = 0; i < country.getNeighbours().size(); i++){
+            int neighbourValue= country.getNeighbours().get(i);
+            if (i==0)
+                System.out.print("[");
+            if (i==country.getNeighbours().size()-1){
+                System.out.println(mapModel.getCountryList().get(mapModel.indexOfCountry(neighbourValue)).getCountryName()+"]\n");
+                break;
+            }
+            System.out.print(mapModel.getCountryList().get(mapModel.indexOfCountry(neighbourValue)).getCountryName()+", ");
+        }
 
     }
 }
