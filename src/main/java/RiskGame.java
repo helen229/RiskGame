@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class RiskGame {
 
-    static String phase = "MapEditor";
+//    static String phase = "MapEditor";
     public static void main(String[] args) {
         //uncomment those hardcode for testing phase
 //        args[0]="start";
@@ -20,17 +20,16 @@ public class RiskGame {
         MapController mapController = new MapController();
         GameController gameController = new GameController();
         Scanner input = new Scanner(System.in);
+        gameController.getGame().setPhase("MapEditor");
         System.out.println("Please enter command");
         while(input.hasNext()){
             String command= input.nextLine();
             if (command.equals("start game play"))
-                phase = "GamePlay";
-            if (phase.equals("MapEditor")){
+                gameController.getGame().setPhase("Startup");
+            if ( gameController.getGame().getPhase().equals("MapEditor")){
                 mapController.commandHandler(command.split(" "));
             }else {
 //                System.out.println("GAME PLAY PHASE START");
-
-                gameController.getGame().setPhase("Startup");
 //                if (command.equals("Startup phase done"))
 //                    phase="Reinforcement";
 //                else if (command.equals("Reinforcement phase done"))

@@ -54,6 +54,8 @@ public class GameController {
                 //reinforce countryname num
                 if (args[0].equals("reinforce"))
                     game.reinforce(args[1], Integer.parseInt(args[2]));
+                else
+                    System.out.println("Wrong command, The command is not valid in this phase");
 
             }else if (phase.equals("Fortification")){
                 //fortify fromcountry tocountry num
@@ -64,7 +66,8 @@ public class GameController {
                     }else{
                         game.fortify(args[1], args[2], Integer.parseInt(args[3]));
                     }
-                }
+                }else
+                    System.out.println("Wrong command, The command is not valid in this phase");
 
             }else {
                 System.out.println("The command is not valid in this phase");

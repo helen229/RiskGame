@@ -16,11 +16,13 @@ public class GameModel {
     MapModel mapModel;
     ArrayList<PlayerModel> playerList;
     PlayerModel currentPlayer;
+    int currentPlayerNum;
     String phase;
 
     public GameModel() {
         this.mapModel = new MapModel();
         this.playerList = new ArrayList<>();
+        this.currentPlayerNum=0;
     }
 
     public ArrayList<String> getPlayerNameList(){
@@ -91,9 +93,10 @@ public class GameModel {
 
         }
         System.out.println("populate countries succeed");
-        setCurrentPlayer(playerList.get(0));
+        setCurrentPlayer(playerList.get(currentPlayerNum));
         System.out.println("Start Placing army, Current Player is "+ getCurrentPlayer().getPlayerName());
-
+        currentPlayer.setTotalNumArmy(currentPlayer.getPlayerCountries().size()/3);
+        currentPlayer.setNumArmyRemainPlace(currentPlayer.getTotalNumArmy());
     }
 
 
@@ -124,6 +127,8 @@ public class GameModel {
             if (armyLeft>=1){
                 armyLeft = armyLeft -1;
                 currentPlayer.setNumArmyRemainPlace(armyLeft);
+                country.setArmyNum(country.getArmyNum()+1);
+                System.out.println("Place Army Succeed!");
             }else {
                 System.out.println("You already place All your army! please start Reinforcement phase");
                 this.setPhase("Reinforcement");
@@ -140,18 +145,28 @@ public class GameModel {
     }
 
     public void reinforce(String countryName, int number) {
-        System.out.println("You already place All your army! please start Reinforcement phase");
-        this.setPhase("Reinforcement");
+        System.out.println("You are Reinforcement phase");
+        this.setPhase("Fortification");
     }
 
     public void fortify(String fromcountry, String tocountry, int number) {
-        System.out.println("You already place All your army! please start Reinforcement phase");
-        this.setPhase("Reinforcement");
+        System.out.println("You Fortification phase");
+        this.setPhase("Fortification");
     }
 
     public void fortifyNone() {
-        System.out.println("You already place All your army! please start Reinforcement phase");
-        this.setPhase("Reinforcement");
+        System.out.println("You Fortification phase");
+        System.out.println(getCurrentPlayer().getPlayerName()+" Your turn over!");
+        if (this.currentPlayerNum+1<this.playerList.size()){
+            this.currentPlayerNum++;
+            setCurrentPlayer(this.playerList.get(this.currentPlayerNum));
+            currentPlayer.setTotalNumArmy(currentPlayer.getPlayerCountries().size()/3);
+            currentPlayer.setNumArmyRemainPlace(currentPlayer.getTotalNumArmy());
+            this.setPhase("Startup");
+            System.out.println("Start Placing army, Current Player is "+ getCurrentPlayer().getPlayerName());
+        }else{
+            System.out.println("GAME END");
+        }
     }
 
     /**

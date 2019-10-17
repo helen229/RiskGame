@@ -58,7 +58,7 @@ public class PlayerModel {
     }
 
     public int getTotalNumArmy() {
-        return totalNumArmy=playerCountries.size()/3;
+        return totalNumArmy;
     }
 
     public void setTotalNumArmy(int totalNumArmy) {
