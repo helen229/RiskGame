@@ -4,12 +4,9 @@ import MapEditorController.EditMap;
 import MapEditorModel.ContinentModel;
 import MapEditorModel.CountryModel;
 import MapEditorModel.MapModel;
-import com.sun.org.apache.bcel.internal.generic.CHECKCAST;
-
 import java.io.IOException;
-import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
-import java.util.Map;
+import static java.lang.System.exit;
 
 public class GameModel {
 
@@ -168,7 +165,8 @@ public class GameModel {
                 currentPlayer.setNumReinforceArmyRemainPlace(armyLeft);
                 country.setArmyNum(country.getArmyNum()+number);
                 System.out.println("Place Reinforcement Army Succeed! "+ currentPlayer.getPlayerName() + " left " + currentPlayer.getNumReinforceArmyRemainPlace());
-            }else if(armyLeft==0) {
+            }
+            if(armyLeft==0) {
                 System.out.println("You already place All your Reinforcement army! please start Fortification phase");
                 this.setPhase("Fortification");
             }
@@ -179,7 +177,7 @@ public class GameModel {
     }
 
     public void fortify(String fromcountry, String tocountry, int number) {
-        System.out.println("You Fortification phase");
+
         CountryModel sourceCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(fromcountry));
         CountryModel targetCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(tocountry));
         ArrayList<Boolean> visitedCountryList=new ArrayList<>();
@@ -192,7 +190,7 @@ public class GameModel {
             return;
         }
         if (sourceCountry.getOwner().getPlayerName().equals(targetCountry.getOwner().PlayerName)){
-           if (currentPlayer.getPlayerName().equals(sourceCountry.getOwner().getPlayerName())){
+           if (!currentPlayer.getPlayerName().equals(sourceCountry.getOwner().getPlayerName())){
                System.out.println("the two countries are not belong to current player! Please try again");
                return;
            }
@@ -245,6 +243,7 @@ public class GameModel {
             System.out.println("Start Placing army, Current Player is "+ getCurrentPlayer().getPlayerName());
         }else{
             System.out.println("GAME END");
+            exit(0);
         }
 
     }

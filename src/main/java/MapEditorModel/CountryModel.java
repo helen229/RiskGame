@@ -1,7 +1,6 @@
 package MapEditorModel;
 
 import GamePlayModel.PlayerModel;
-import sun.awt.SunHints;
 
 import java.util.ArrayList;
 
