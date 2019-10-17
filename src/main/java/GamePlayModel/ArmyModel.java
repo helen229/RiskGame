@@ -1,6 +1,9 @@
 package GamePlayModel;
 
 import MapEditorModel.CountryModel;
+ /**
+     * This class defines the characteristics of an Army in the Game
+     */ 
 
 public class ArmyModel {
     private PlayerModel player;
