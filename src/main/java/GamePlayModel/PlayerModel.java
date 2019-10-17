@@ -13,6 +13,8 @@ public class PlayerModel {
 //    int id;
     int totalNumArmy;
     int numArmyRemainPlace;
+    int totalNumReinforceArmy;
+    int NumReinforceArmyRemainPlace;
     ArrayList<CountryModel> playerCountries;
 
     public PlayerModel(String playerName) {
@@ -88,5 +90,21 @@ public class PlayerModel {
 
     public void setNumArmyRemainPlace(int numArmyRemainPlace) {
         this.numArmyRemainPlace = numArmyRemainPlace;
+    }
+
+    public int getTotalNumReinforceArmy() {
+        return totalNumReinforceArmy;
+    }
+
+    public void setTotalNumReinforceArmy(int totalNumReinforceArmy) {
+        this.totalNumReinforceArmy = totalNumReinforceArmy;
+    }
+
+    public int getNumReinforceArmyRemainPlace() {
+        return NumReinforceArmyRemainPlace;
+    }
+
+    public void setNumReinforceArmyRemainPlace(int numReinforceArmyRemainPlace) {
+        NumReinforceArmyRemainPlace = numReinforceArmyRemainPlace;
     }
 }

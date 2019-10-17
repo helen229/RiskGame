@@ -132,6 +132,8 @@ public class GameModel {
             }else {
                 System.out.println("You already place All your army! please start Reinforcement phase");
                 this.setPhase("Reinforcement");
+                currentPlayer.setTotalNumReinforceArmy(currentPlayer.getPlayerCountries().size()/3);
+                currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getTotalNumReinforceArmy());
             }
         }else {
             System.out.println("Not your country! please try again");
@@ -149,11 +151,31 @@ public class GameModel {
         currentPlayer.setNumArmyRemainPlace(0);
         System.out.println("You already place All your army! please start Reinforcement phase");
         this.setPhase("Reinforcement");
+        currentPlayer.setTotalNumReinforceArmy(currentPlayer.getPlayerCountries().size()/3);
+        currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getTotalNumReinforceArmy());
     }
 
     public void reinforce(String countryName, int number) {
-        System.out.println("You are Reinforcement phase");
-        this.setPhase("Fortification");
+        int armyLeft=currentPlayer.getNumReinforceArmyRemainPlace();
+        CountryModel country = mapModel.getCountryList().get(mapModel.indexOfCountry(countryName));
+        if (armyLeft<number){
+            System.out.println(" the number is too big!");
+            return;
+        }
+        if (currentPlayer.getPlayerName().equals(country.getOwner().PlayerName)){
+            if (armyLeft>=number){
+                armyLeft = armyLeft - number;
+                currentPlayer.setNumReinforceArmyRemainPlace(armyLeft);
+                country.setArmyNum(country.getArmyNum()+number);
+                System.out.println("Place Reinforcement Army Succeed! "+ currentPlayer.getPlayerName() + " left " + currentPlayer.getNumReinforceArmyRemainPlace());
+            }else if(armyLeft==0) {
+                System.out.println("You already place All your Reinforcement army! please start Fortification phase");
+                this.setPhase("Fortification");
+            }
+        }else {
+            System.out.println("Not your country! please try again");
+        }
+
     }
 
     public void fortify(String fromcountry, String tocountry, int number) {
