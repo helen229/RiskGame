@@ -57,11 +57,19 @@ public class PlayerModel {
 
     public void addPlayerCountries(CountryModel country){
         playerCountries.add(country);
-    }
+    } 
+     /**
+     *  This method returns the total number of armies.
+     *
+     */
 
     public int getTotalNumArmy() {
         return totalNumArmy;
-    }
+    }  
+     /**
+     * This methos assigns armies to players based on their size.
+     *
+     */
 
     public void setTotalNumArmy(int playerSize) {
         switch(playerSize){
@@ -82,27 +90,50 @@ public class PlayerModel {
                 break;
         }
 
-    }
+    } 
+     /**
+     * This method return the remaining number of armies
+     *
+     */
 
     public int getNumArmyRemainPlace() {
         return numArmyRemainPlace;
-    }
+    } 
+     /**
+     * This method sets the number of armies remaining
+     *
+     */
 
     public void setNumArmyRemainPlace(int numArmyRemainPlace) {
         this.numArmyRemainPlace = numArmyRemainPlace;
     }
-
+ /**
+     * This method returns the total number of reinforce army
+     *
+     */
     public int getTotalNumReinforceArmy() {
         return totalNumReinforceArmy;
     }
+     /**
+     * This method sets the total number of reinforce army
+     *
+     */
 
     public void setTotalNumReinforceArmy(int totalNumReinforceArmy) {
         this.totalNumReinforceArmy = totalNumReinforceArmy;
-    }
+    } 
+     /**
+     * This method  get the total number of armies that remain in their place
+     *
+     */
 
     public int getNumReinforceArmyRemainPlace() {
         return NumReinforceArmyRemainPlace;
     }
+     /**
+     * This method sets the total number of armies that remian in the place
+     *
+     */
 
     public void setNumReinforceArmyRemainPlace(int numReinforceArmyRemainPlace) {
         NumReinforceArmyRemainPlace = numReinforceArmyRemainPlace;

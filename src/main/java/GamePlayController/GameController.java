@@ -1,6 +1,9 @@
 package GamePlayController;
 
-import GamePlayModel.GameModel;
+import GamePlayModel.GameModel; 
+/**
+     * This class handles commands that are require while playing the game.
+     */
 
 public class GameController {
     private GameModel game;
@@ -12,7 +15,11 @@ public class GameController {
 
     public void showMap(String phase){
         game.showMap();
-    }
+    } 
+    /**
+         * This method shows the map based on the phase selected.
+         * @param phase
+         */
 
     public void commandHandler(String[] args, String phase) {
 
@@ -74,7 +81,11 @@ public class GameController {
         }catch(ArrayIndexOutOfBoundsException e){
             System.out.println("Arguments number invalid");
         }
-    }
+    } 
+    /**
+         * This method allows players to add or remove players.
+         * 
+         */
 
     private void parsePlayerOption(String operation, String playerName) {
         if (operation.equals("-add")){
@@ -84,7 +95,11 @@ public class GameController {
         }else {
             System.out.println("Invalid Command");
         }
-    }
+    } 
+    /**
+         * This method  returns a game Model.
+         * @return game
+         */
 
     public GameModel getGame() {
         return game;

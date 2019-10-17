@@ -8,6 +8,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import static java.lang.System.exit;
 
+/**
+   * This class defines the characteristics of the a Game in a particular phase
+   */
+      
+     
+  
 public class GameModel {
 
     MapModel mapModel;
@@ -57,12 +63,19 @@ public class GameModel {
         }else {
             System.out.println("Remove "+playerName+" Failed, it's not exist");
         }
-    }
+    } 
+    /**
+     * This method returns the number of players
+     */
+
 
     public int getNumOfPlayers() {
         return playerList.size();
     }
 
+/**
+     * This method assigns countries to the players
+     */
 
     public void populateCountries() {
 
@@ -96,7 +109,9 @@ public class GameModel {
         currentPlayer.setNumArmyRemainPlace(currentPlayer.getTotalNumArmy());
     }
 
-
+ /**
+     * This method allows players load a map file, that was previously saved
+     */
 
     public void loadMap(String fileName) {
         EditMap readFile = new EditMap(fileName);
@@ -114,7 +129,11 @@ public class GameModel {
             mapModel.getCountryList().clear();
             mapModel.getContinentList().clear();
         }
-    }
+    } 
+    
+    /**
+     * This method allows armies to be assigned to countries
+     */
 
     public void placeArmy(String countryName) {
         int numArmy=currentPlayer.getTotalNumArmy();
@@ -136,7 +155,10 @@ public class GameModel {
             System.out.println("Not your country! please try again");
         }
 
-    }
+    } 
+    /**
+     * This method allows a player to place armies
+     */
 
     public void placeAllAmy() {
         int armyLeft=currentPlayer.getNumArmyRemainPlace();
@@ -150,7 +172,10 @@ public class GameModel {
         this.setPhase("Reinforcement");
         currentPlayer.setTotalNumReinforceArmy(currentPlayer.getPlayerCountries().size()/3);
         currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getTotalNumReinforceArmy());
-    }
+    } 
+    /**
+     * This method allows a player to reinforce
+     */
 
     public void reinforce(String countryName, int number) {
         int armyLeft=currentPlayer.getNumReinforceArmyRemainPlace();
@@ -174,7 +199,10 @@ public class GameModel {
             System.out.println("Not your country! please try again");
         }
 
-    }
+    } 
+    /**
+     * This method allows a player to fortify a country with armies from another related country
+     */
 
     public void fortify(String fromcountry, String tocountry, int number) {
 
@@ -208,7 +236,10 @@ public class GameModel {
             System.out.println("this path is not validate");
         }
 
-    }
+    } 
+    /**
+     * This method checks if a path exist between the two countries
+     */
 
     public boolean existPath (CountryModel country1, CountryModel country2, ArrayList<Boolean> visited) {
         ArrayList<Integer> neighbours = country1.getNeighbours();
@@ -229,7 +260,10 @@ public class GameModel {
             }
         }
         return false;
-    }
+    } 
+    /**
+     * This method fortifies no countries for the player
+     */
 
     public void fortifyNone() {
 
@@ -320,19 +354,30 @@ public class GameModel {
             System.out.print(mapModel.getCountryList().get(mapModel.indexOfCountry(neighbourValue)).getCountryName()+", ");
         }
 
-    }
+    } 
+    /**
+     * This method returns the current Player
+     */
 
     public PlayerModel getCurrentPlayer() {
         return currentPlayer;
     }
-
+ /**
+     * This method sets the current player
+     */
     public void setCurrentPlayer(PlayerModel currentPlayer) {
         this.currentPlayer = currentPlayer;
-    }
+    } 
+    /**
+     * This method  returns the phase
+     */
 
     public String getPhase() {
         return phase;
-    }
+    } 
+    /**
+     * This method sets the phase 
+     */
 
     public void setPhase(String phase) {
         this.phase = phase;
