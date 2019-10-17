@@ -14,6 +14,9 @@ public class RiskGame {
             newGame();
     }
 
+    /**
+     * Main Entry for the game
+     */
     private static void newGame(){
 
         MapController mapController = new MapController();
