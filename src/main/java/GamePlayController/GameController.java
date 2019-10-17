@@ -11,20 +11,23 @@ public class GameController {
 
 
     public void showMap(String phase){
-        if (phase.equals("Startup")){
-            game.showMap();
-        }else if (phase.equals("Reinforcement")){
-
-        }else if (phase.equals("Fortification")){
-
-        }
-
+//        if (phase.equals("Startup")){
+//
+//        }else if (phase.equals("Reinforcement")){
+//
+//        }else if (phase.equals("Fortification")){
+//
+//        }
+        game.showMap();
     }
 
     public void commandHandler(String[] args, String phase) {
 
-        if (args[0].equals("showmap"))
+        if (args[0].equals("showmap")){
             showMap(phase);
+            return;
+        }
+
         try
         {
             if (phase.equals("Startup")){

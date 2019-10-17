@@ -85,7 +85,7 @@ public class GameModel {
         if (checker != 0) {
 //            int remainderCountries = countrySize - (numberCountry * numOfPlayers);
             for (int i = numberCountry * numOfPlayers; i < numberCountry * numOfPlayers+checker; i++) {
-                for (int j = 0; j < playerList.size(); j++) {
+                for (int j = 0; j < checker; j++) {
                     countries.get(i).setOwner(playerList.get(j));
                     playerList.get(j).addPlayerCountries(countries.get(i));
                 }
@@ -95,7 +95,7 @@ public class GameModel {
         System.out.println("populate countries succeed");
         setCurrentPlayer(playerList.get(currentPlayerNum));
         System.out.println("Start Placing army, Current Player is "+ getCurrentPlayer().getPlayerName());
-        currentPlayer.setTotalNumArmy(currentPlayer.getPlayerCountries().size()/3);
+        currentPlayer.setTotalNumArmy(this.playerList.size());
         currentPlayer.setNumArmyRemainPlace(currentPlayer.getTotalNumArmy());
     }
 
@@ -127,8 +127,8 @@ public class GameModel {
             if (armyLeft>=1){
                 armyLeft = armyLeft -1;
                 currentPlayer.setNumArmyRemainPlace(armyLeft);
-                country.setArmyNum(country.getArmyNum()+1);
-                System.out.println("Place Army Succeed!");
+                country.addArmyNum();
+                System.out.println("Place Army Succeed! "+ currentPlayer.getPlayerName() + " left " + currentPlayer.getNumArmyRemainPlace() );
             }else {
                 System.out.println("You already place All your army! please start Reinforcement phase");
                 this.setPhase("Reinforcement");
@@ -140,6 +140,13 @@ public class GameModel {
     }
 
     public void placeAllAmy() {
+        int armyLeft=currentPlayer.getNumArmyRemainPlace();
+        while (armyLeft>0){
+            int randomNum=(int)(Math.random() * (currentPlayer.playerCountries.size()));
+            currentPlayer.playerCountries.get(randomNum).addArmyNum();
+            armyLeft--;
+        }
+        currentPlayer.setNumArmyRemainPlace(0);
         System.out.println("You already place All your army! please start Reinforcement phase");
         this.setPhase("Reinforcement");
     }
@@ -151,22 +158,73 @@ public class GameModel {
 
     public void fortify(String fromcountry, String tocountry, int number) {
         System.out.println("You Fortification phase");
-        this.setPhase("Fortification");
+        CountryModel sourceCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(fromcountry));
+        CountryModel targetCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(tocountry));
+        ArrayList<Boolean> visitedCountryList=new ArrayList<>();
+        for (int i = 0; i < mapModel.getCountryList().size(); i++) {
+            visitedCountryList.add(false);
+        }
+        //can't less than one army
+        if ((sourceCountry.getArmyNum()-number)<1){
+            System.out.println("the Army number is greater than the fromcountry number! Please try again");
+            return;
+        }
+        if (sourceCountry.getOwner().getPlayerName().equals(targetCountry.getOwner().PlayerName)){
+           if (currentPlayer.getPlayerName().equals(sourceCountry.getOwner().getPlayerName())){
+               System.out.println("the two countries are not belong to current player! Please try again");
+               return;
+           }
+        }else{
+            System.out.println("the two countries are not belong to same player! Please try again");
+            return;
+        }
+
+        if (existPath(sourceCountry,targetCountry,visitedCountryList)){
+            sourceCountry.setArmyNum(sourceCountry.getArmyNum()-number);
+            targetCountry.setArmyNum(targetCountry.getArmyNum()+number);
+            System.out.println("this path is validate, fortify succeed");
+            this.fortifyNone();
+        }else {
+            System.out.println("this path is not validate");
+        }
+
+    }
+
+    public boolean existPath (CountryModel country1, CountryModel country2, ArrayList<Boolean> visited) {
+        ArrayList<Integer> neighbours = country1.getNeighbours();
+        for (Integer neighbour : neighbours) {
+            if (visited.get(neighbour)) {
+                continue;
+            }
+            visited.set(neighbour, true);
+            CountryModel neighbourCountryModel = mapModel.getCountryList().get(neighbour);
+            if (neighbourCountryModel.getOwner().getPlayerName().equals(country1.getOwner().getPlayerName())) {
+                if (neighbour == country2.getCountryValue()) {
+                    return true;
+                }
+                boolean b = existPath(neighbourCountryModel, country2, visited);
+                if (b) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void fortifyNone() {
-        System.out.println("You Fortification phase");
+
         System.out.println(getCurrentPlayer().getPlayerName()+" Your turn over!");
         if (this.currentPlayerNum+1<this.playerList.size()){
             this.currentPlayerNum++;
             setCurrentPlayer(this.playerList.get(this.currentPlayerNum));
-            currentPlayer.setTotalNumArmy(currentPlayer.getPlayerCountries().size()/3);
+            currentPlayer.setTotalNumArmy(this.playerList.size());
             currentPlayer.setNumArmyRemainPlace(currentPlayer.getTotalNumArmy());
             this.setPhase("Startup");
             System.out.println("Start Placing army, Current Player is "+ getCurrentPlayer().getPlayerName());
         }else{
             System.out.println("GAME END");
         }
+
     }
 
     /**

@@ -61,8 +61,25 @@ public class PlayerModel {
         return totalNumArmy;
     }
 
-    public void setTotalNumArmy(int totalNumArmy) {
-        this.totalNumArmy = totalNumArmy;
+    public void setTotalNumArmy(int playerSize) {
+        switch(playerSize){
+            case 2:
+                this.totalNumArmy = 40;
+                break;
+            case 3:
+                this.totalNumArmy =35;
+                break;
+            case 4:
+                this.totalNumArmy =30;
+                break;
+            case 5:
+                this.totalNumArmy =25;
+                break;
+            case 6://20 armies
+                this.totalNumArmy =20;
+                break;
+        }
+
     }
 
     public int getNumArmyRemainPlace() {
