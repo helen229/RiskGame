@@ -1,35 +1,43 @@
 import MapEditorController.MapController;
+import GamePlayController.GameController;
 
 import java.util.Scanner;
 
 public class RiskGame {
 
-    static String phase = "MapEditor";
+    static String phase = "Menu";
     public static void main(String[] args) {
-        //uncomment those hardcode for testing phase
-//        args[0]="start";
-//        args[1]="new";
-//        args[2]="game";
-//
-//        if (args[0].equals("start")&&args[1].equals("new")&&args[2].equals("game"))
             newGame();
     }
 
     private static void newGame(){
 
         MapController mapController = new MapController();
+        GameController gameController = new GameController();
 
         Scanner input = new Scanner(System.in);
-        System.out.println("Please enter command");
-        while(input.hasNext()){
+        System.out.println("GamePlay, MapEditor or Exit?");
+        
+        while(phase!="Exit"){
             String command= input.nextLine();
-            if (command.equals("start game"))
-                phase = "GamePlay";
-            if (phase.equals("MapEditor")){
-                mapController.commandHandler(command.split(" "));
+            if ((command.equals("GamePlay")||(phase.equals("GamePlay")))) {
+                
+                System.out.println("Game Play > Please enter command:");
+                phase=gameController.commandHandler(input.nextLine().split(" "));
+                System.out.print("For next command press Enter or MapEditor:");
+                
+            } else if (command.equals("MapEditor")||(phase.equals("MapEditor"))){
+                
+                System.out.println("Map Editor > Please enter command:");
+                phase=mapController.commandHandler(input.nextLine().split(" "));
+                System.out.print("For next command press Enter or GamePlay:");
+                
+            }else if (command.equals("Exit")) {
+                phase="Exit";
             }else {
                 //gameController.commandHandler(command.split(" ")
-                System.out.println("GAME PLAY PHASE");
+                System.out.println("Invalid input!");
+                System.out.println("GamePlay or MapEditor?");
             }
         }
 

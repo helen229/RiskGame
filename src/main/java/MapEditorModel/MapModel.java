@@ -26,11 +26,11 @@ public class MapModel {
     }
 
     public void showMap(){
-        System.out.println("Continents: ");
+        System.out.println("\nAll Continents: ");
 
         for (int i = 0; i < this.continentList.size(); i++){
             printContinent(this.continentList.get(i));
-            System.out.println("\n");
+            //System.out.println("\n");
         }
 
         System.out.println("\nAll Countries: ");
@@ -40,6 +40,13 @@ public class MapModel {
     }
 
     private void printContinent(ContinentModel continent){
+        if (continent.getCountriesList().isEmpty()){
+            System.out.println(
+                "Continent Name:" +
+                continent.getContinentName() + "\n" +
+                "Continent Value:" +
+                continent.getContinentValue()+ "\n");
+        }else {
 
         System.out.print(
                 "Continent Name:" +
@@ -49,8 +56,6 @@ public class MapModel {
                 "Countries List: ");
 
         for (int i = 0; i < continent.getCountriesList().size(); i++){
-//            String countryName= continent.getCountriesList().get(i);
-//            printCountry(this.countryList.get(indexOfCountry(countryName)));
             if (i==0)
                 System.out.print("[");
             if (i == continent.getCountriesList().size()-1){
@@ -58,6 +63,7 @@ public class MapModel {
                 break;
             }
             System.out.print(continent.getCountriesList().get(i)+",");
+        }
         }
 
     }
@@ -69,6 +75,8 @@ public class MapModel {
                 country.getCountryName() + "\n" +
                 "Country Value:" +
                 country.getCountryValue() + "\n" +
+                "From Continent:"+
+                country.getContinentName()+ "\n" +
                 "Neighbor Country List: ");
 
         for (int i = 0; i < country.getNeighbours().size(); i++){

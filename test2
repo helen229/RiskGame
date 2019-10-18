@@ -1,0 +1,18 @@
+  
+[continents]
+Asia 1 [ Iran India Iraq Pakistan ]
+America 2 [ USA Argentina ]
+[countries]
+0 Iran Asia
+1 India Asia
+2 Iraq Asia
+3 Pakistan Asia
+4 USA America
+5 Argentina America
+[borders]
+0 1 
+1 0 3 2 4 
+2 1 3 
+3 1 2 
+4 1 5 
+5 4 

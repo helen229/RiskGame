@@ -22,43 +22,53 @@ public class MapController {
 
     //  TODO: Unit TEST, add javadoc, add comments
 
-
-    public void commandHandler(String[] args) {
+    
+    public String commandHandler(String[] args) {
 
         try
         {
             switch (args[0]) {
                 case "editcontinent":
                     parseCommandOption(args,args[0],args[1]);
+                    args[0]="MapEditor";
                     break;
                 case "editcountry":
                     parseCommandOption(args,args[0],args[1]);
+                    args[0]="MapEditor";
                     break;
                 case "editneighbor":
                     parseCommandOption(args,args[0],args[1]);
+                    args[0]="MapEditor";
                     break;
                 case "showmap":
                     mapModel.showMap();
+                    args[0]="MapEditor";
                     break;
                 case "validatemap":
                     System.out.println("valid map method");
+                    ValidateMap();
+                    args[0]="MapEditor";
                     break;
                 case "editmap":
                     editMap(args[1]);
+                    args[0]="MapEditor";
                     break;
                 case "savemap":
                     saveMap(args[1]);
+                    args[0]="MapEditor";
                     break;
-
+                
                 default:
-                    System.out.println("Invalid Command");
+                    System.out.println("Invalid Command ");
+                    if ((!"Exit".equals(args[0]))&&(!"GamePlay".equals(args[0])))
+                        args[0]="MapEditor";
                     break;
 
             }
         }catch(ArrayIndexOutOfBoundsException e){
             System.out.println("Arguments number invalid");
         }
-
+    return args[0];
     }
 
 
@@ -235,7 +245,10 @@ public class MapController {
         }
 
     }
-
+    
+    public void ValidateMap(){
+        Validate validateMap = new Validate( mapModel);
+    }
 
     public MapModel getMapModel() {
         return mapModel;

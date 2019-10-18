@@ -1,0 +1,38 @@
+MapEditor
+GamePlay
+Exit
+
+editcontinent -add Asia 1
+editcountry -add Iran Asia
+editcountry -add India Asia
+editcountry -add Iraq Asia
+editcountry -add Pakistan Asia
+
+editcontinent -add America 2
+editcountry -add USA America
+editcountry -add Argentina America
+
+showmap
+
+editneighbor -add India Iran
+editneighbor -add India Pakistan
+editneighbor -add India Iraq
+editneighbor -add Pakistan Iraq
+
+showmap
+
+editneighbor -add USA India
+editneighbor -add USA Argentina
+
+showmap
+
+
+gameplayer -add Ehsan
+gameplayer -add Jack
+gameplayer -add Bob
+gameplayer -add David
+
+populatecountries
+placearmy Iran
+placeall
+reinforce

@@ -17,15 +17,15 @@ public class ReadFile {
 
 
     private  static final String CONTINENTS_TAG= "[continents]";
-    private static final String CONTINENT=" continent";
+    private static final String CONTINENT="continent";
     private static final String COUNTRY_TAG= "[countries]";
     private static final String COUNTRY= "country";
     private static final String BORDERS = "borders";
     private static final String BORDERS_TAG = "[borders]";
 
 
-    private ArrayList<ContinentModel> continents = new ArrayList<ContinentModel>();
-    private ArrayList<CountryModel> countries = new ArrayList<CountryModel>();
+    private ArrayList<ContinentModel> continentList = new ArrayList<ContinentModel>();
+    private ArrayList<CountryModel> countryList = new ArrayList<CountryModel>();
 
 
     private final String fileDirectory;
@@ -57,8 +57,8 @@ public class ReadFile {
         String[] splitLine = line.split(" ");
         String checker = " ";
         MapModel mapModel= new MapModel();
-        mapModel.setContinentList(continents);
-        mapModel.setCountryList(countries);
+        mapModel.setContinentList(continentList);
+        mapModel.setCountryList(countryList);
 
         if(line!=null) {
             while (line != null) {
@@ -80,16 +80,16 @@ public class ReadFile {
                 int size = line.length();
                 switch (checker) {
                     case CONTINENT:
-                        ArrayList<String> CountryList = new ArrayList<>();
+                        //ArrayList<String> CountryList = new ArrayList<>();
 
                         if (size > 0) {
                             String[] continentData = line.split(" ");
                             ContinentModel c1 = new ContinentModel(continentData[0], Integer.parseInt(continentData[1]));
-                            continents.add(c1);
-                            CountryList = c1.getCountriesList();
-                            for (String country : CountryList) {
-                                c1.addCountryToList(country);
-                            }
+                            continentList.add(c1);
+                            //CountryList = c1.getCountriesList();
+                            //for (String country : CountryList) {
+                            //    c1.addCountryToList(country);
+                            //}
 
                         } else {
                             continue;
@@ -105,7 +105,7 @@ public class ReadFile {
 
                             CountryModel country = new CountryModel(Integer.parseInt(countryData[0]), countryData[1], countryData[2]);
 
-                            countries.add(country);
+                            countryList.add(country);
 
                             neigbour = country.getNeighbours();
                             for (int neighbourCountry : neigbour) {
@@ -130,7 +130,7 @@ public class ReadFile {
 
                         int Index=   mapModel.indexOfCountry(id);
 
-                            countries.get(Index).setNeighbours(adjacent);
+                            countryList.get(Index).setNeighbours(adjacent);
                         }else{
                             continue;
                         }
@@ -156,7 +156,7 @@ public class ReadFile {
      */
 
     public ArrayList<ContinentModel> getContinents() {
-        return continents;
+        return continentList;
     }
 
     /**
@@ -166,7 +166,7 @@ public class ReadFile {
 
 
     public ArrayList<CountryModel> getCountries() {
-        return countries;
+        return countryList;
     }
 
 

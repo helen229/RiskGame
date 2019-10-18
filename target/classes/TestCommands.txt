@@ -1,0 +1,15 @@
+editcontinent -add continentname 0
+editcontinent -add continentname1 1
+editcontinent -add continentname2 2
+editcontinent -add continentname3 3
+editcountry -add countryname continentname
+editcountry -add countryname1 continentname
+editcountry -add countryname2 continentname
+editcountry -add countryname3 continentname
+editneighbor -add countryname countryname1
+editneighbor -add countryname1 countryname2
+editneighbor -add countryname2 countryname3
+editneighbor -add countryname3 countryname2
+savemap filename
+showmap
+editcountry -remove countryname

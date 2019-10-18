@@ -1,0 +1,18 @@
+  
+[continents]
+Africa 1
+America 2
+[countries]
+0 Yeman Africa
+1 Oman Africa
+2 Botan Africa
+3 USA America
+4 Canada America
+5 Brasil America
+[borders]
+0 
+1 
+2 
+3 
+4 
+5 

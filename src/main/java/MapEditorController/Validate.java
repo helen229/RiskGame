@@ -9,14 +9,14 @@ import java.util.Iterator;
 
 public class Validate {
     MapModel mapModel;
-    ArrayList<CountryModel> countries;
+    ArrayList<CountryModel> countryList;
 
     HashMap<CountryModel, Boolean> visited = new HashMap<>();
-    HashMap<Integer, CountryModel> countryId = new HashMap<>();
+    HashMap<Integer, CountryModel> countryValue = new HashMap<>();
 
 
     public  Validate(MapModel mapModel) {
-        countries = mapModel.getCountryList();
+        countryList = mapModel.getCountryList();
         this.mapModel = mapModel;
         StoreData();
         validator();
@@ -24,21 +24,20 @@ public class Validate {
     }
 
     public void StoreData() {
-        for (CountryModel country : countries) {
+        for (CountryModel country : countryList) {
             visited.put(country, false);
-            countryId.put(country.getCountryValue(), country);
+            countryValue.put(country.getCountryValue(), country);
         }
     }
 
     public void validator() {
 
-        for (CountryModel country : countries) {
+        for (CountryModel country : countryList) {
 
             ArrayList<Integer> neighbours = country.getNeighbours();
 
-            for (int i : neighbours
-            ) {
-                CountryModel neighbour = countryId.get(i);
+            for (int i : neighbours) {
+                CountryModel neighbour = countryValue.get(i);
 
                 visited.put(neighbour, true);
 
