@@ -1,20 +1,18 @@
 package MapValidate;
 
-import MapEditorController.MapController;
+import MapEditor.MapHandler;
 import MapEditorModel.ContinentModel;
 import MapEditorModel.CountryModel;
 import MapEditorModel.MapModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MapValidatorTest {
     public MapModel map;
-    public MapController mapController;
+    public MapHandler mapHandler;
     private ContinentModel Asia;
     public CountryModel China;
     public CountryModel Japan;
@@ -25,28 +23,28 @@ public class MapValidatorTest {
      */
     @BeforeEach
     public void setUp() {
-        mapController = new MapController();
+        mapHandler = new MapHandler();
     }
 
     @Test
     public void testLoadMap() {
-        mapController.editMap("test.txt");
-        int size = mapController.getMapModel().getCountryList().size();
+        mapHandler.editMap("test.txt");
+        int size = mapHandler.getMapModel().getCountryList().size();
         assertTrue(size>0);
     }
 
 
     @Test
     public void testValidMap() {
-        mapController.editMap("test.txt");
-        mapController.getMapModel().isValid();
-        assertTrue(mapController.getMapModel().isValid());
+        mapHandler.editMap("test.txt");
+        mapHandler.getMapModel().isValid();
+        assertTrue(mapHandler.getMapModel().isValid());
     }
 
     @Test
     public void testInValidMap() {
-        mapController.editMap("testInvalidate1.txt");
-        assertFalse(mapController.getMapModel().getCountryList().size()>0);
+        mapHandler.editMap("testInvalidate1.txt");
+        assertFalse(mapHandler.getMapModel().getCountryList().size()>0);
     }
 
 }

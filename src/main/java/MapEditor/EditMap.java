@@ -1,4 +1,4 @@
-package MapEditorController;
+package MapEditor;
 
 import MapEditorModel.ContinentModel;
 import MapEditorModel.CountryModel;

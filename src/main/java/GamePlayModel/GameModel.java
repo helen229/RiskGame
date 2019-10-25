@@ -1,6 +1,6 @@
 package GamePlayModel;
 
-import MapEditorController.EditMap;
+import MapEditor.EditMap;
 import MapEditorModel.ContinentModel;
 import MapEditorModel.CountryModel;
 import MapEditorModel.MapModel;

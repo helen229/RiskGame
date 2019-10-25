@@ -1,5 +1,5 @@
 import GamePlayController.GameController;
-import MapEditorController.MapController;
+import MapEditor.MapHandler;
 
 import java.util.Scanner;
 
@@ -22,7 +22,7 @@ public class RiskGame {
      */
     private static void newGame(){
 
-        MapController mapController = new MapController();
+        MapHandler mapHandler = new MapHandler();
         GameController gameController = new GameController();
         Scanner input = new Scanner(System.in);
         gameController.getGame().setPhase("MapEditor");
@@ -32,7 +32,7 @@ public class RiskGame {
             if (command.equals("start game play"))
                 gameController.getGame().setPhase("Startup");
             if ( gameController.getGame().getPhase().equals("MapEditor")){
-                mapController.commandHandler(command.split(" "));
+                mapHandler.commandHandler(command.split(" "));
             }else {
                 gameController.commandHandler(command.split(" "),  gameController.getGame().getPhase());
             }

@@ -1,13 +1,10 @@
-package MapEditorController;
+package MapEditor;
 
-import MapEditorModel.ContinentModel;
-import MapEditorModel.CountryModel;
 import MapEditorModel.MapModel;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-public class MapController {
+public class MapHandler {
 
     private MapModel mapModel;
 
@@ -15,7 +12,7 @@ public class MapController {
     /**
      * Constructor of the MapController Class
      */
-    public MapController() {
+    public MapHandler() {
         this.mapModel= new MapModel();
     }
 
