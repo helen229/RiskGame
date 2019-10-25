@@ -81,30 +81,49 @@ public class GameModel {
         int countrySize = countries.size();
         if ((isNotPopulated()) && (countrySize>0) && (numOfPlayers>0)) {
             int numberCountry = countrySize / numOfPlayers;
-            int start=0;
-            for (int j = 0; j < playerList.size(); j++) {
-                for (int i = start; i < (j + 1) * numberCountry; i++) {
-                    countries.get(i).setOwner(playerList.get(j));
-                    playerList.get(j).addPlayerCountries(countries.get(i));
-                }
-                start=(j + 1) * numberCountry;
-            }
-            int checker = countrySize % numOfPlayers;
-            if (checker != 0) {
-//            int remainderCountries = countrySize - (numberCountry * numOfPlayers);
-                for (int i = numberCountry * numOfPlayers; i < numberCountry * numOfPlayers+checker; i++) {
-                    for (int j = 0; j < checker; j++) {
-                        countries.get(i).setOwner(playerList.get(j));
-                        playerList.get(j).addPlayerCountries(countries.get(i));
-                    }
-                }
+            if (numberCountry==0) {
+                System.out.println("Error: Number of Players > Number of Countries");
+            } else {
+                int totalCountriesAssigned=0;
+                int selectedCountry=0;
+               int selectedOwner=-1;
+               for (int j=0; j<numberCountry; j++)
+                   for (int i=0; i<numOfPlayers;i++){
+                       do{
+                           selectedCountry=(int) Math.floor((Math.random() * countrySize));
+                       }
+                       while (!"".equals(countries.get(selectedCountry).getOwner().getPlayerName()));
+                       countries.get(selectedCountry).setOwner(playerList.get(i));
+                       countries.get(selectedCountry).setArmyNum(countries.get(selectedCountry).getArmyNum()+1);
+                       playerList.get(i).addPlayerCountries(countries.get(selectedCountry));
+                       totalCountriesAssigned++;
+                   }
+               while(totalCountriesAssigned<countrySize){
+                   selectedOwner++;
+                   do{
+                       selectedCountry=(int) Math.floor((Math.random() * countrySize));
+                   }
+                   while (!"".equals(countries.get(selectedCountry).getOwner().getPlayerName()));
+                   countries.get(selectedCountry).setOwner(playerList.get(selectedOwner));
+                   countries.get(selectedCountry).setArmyNum(countries.get(selectedCountry).getArmyNum()+1);
+                   playerList.get(selectedOwner).addPlayerCountries(countries.get(selectedCountry));
+                   totalCountriesAssigned++;
+               }
+                System.out.println("Populate countries succeed");
+                if (selectedOwner<0) selectedOwner=0;
+                else selectedOwner++;
+               System.out.println("Assigned initial armies (Number of players):"+(int) this.playerList.size());
+               System.out.println("Assigned initial countries (one army included)");
+               System.out.println("Total number of countries: "+countrySize);
+               System.out.println("Total number of players: "+numOfPlayers);
+               System.out.println("Minimum number of owned countries: " +numberCountry);
+               System.out.println("Maximum number of owned countries: " +(numberCountry+selectedOwner));
                 
+               setCurrentPlayer(playerList.get(currentPlayerNum));
+                System.out.println("Start Placing army, Current Player is "+ getCurrentPlayer().getPlayerName());
+                currentPlayer.setTotalNumArmy(this.playerList.size());
+                currentPlayer.setNumArmyRemainPlace(currentPlayer.getTotalNumArmy());
             }
-            System.out.println("populate countries succeed");
-            setCurrentPlayer(playerList.get(currentPlayerNum));
-            System.out.println("Start Placing army, Current Player is "+ getCurrentPlayer().getPlayerName());
-            currentPlayer.setTotalNumArmy(this.playerList.size());
-            currentPlayer.setNumArmyRemainPlace(currentPlayer.getTotalNumArmy());
         } else if (countrySize==0) {
             System.out.println("Populate countries failed! First add some countries.");
         } else if (numOfPlayers==0) {
