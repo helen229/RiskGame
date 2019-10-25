@@ -82,33 +82,55 @@ public class GameModel {
         int numOfPlayers= this.getNumOfPlayers();
         ArrayList<CountryModel> countries = mapModel.getCountryList();
         int countrySize = countries.size();
-        int numberCountry = countrySize / numOfPlayers;
-        int start=0;
-        for (int j = 0; j < playerList.size(); j++) {
-            for (int i = start; i < (j + 1) * numberCountry; i++) {
-                countries.get(i).setOwner(playerList.get(j));
-                playerList.get(j).addPlayerCountries(countries.get(i));
-            }
-            start=(j + 1) * numberCountry;
-        }
-        int checker = countrySize % numOfPlayers;
-        if (checker != 0) {
-//            int remainderCountries = countrySize - (numberCountry * numOfPlayers);
-            for (int i = numberCountry * numOfPlayers; i < numberCountry * numOfPlayers+checker; i++) {
-                for (int j = 0; j < checker; j++) {
+        if ((isNotPopulated()) && (countrySize>0)) {
+            int numberCountry = countrySize / numOfPlayers;
+            int start=0;
+            for (int j = 0; j < playerList.size(); j++) {
+                for (int i = start; i < (j + 1) * numberCountry; i++) {
                     countries.get(i).setOwner(playerList.get(j));
                     playerList.get(j).addPlayerCountries(countries.get(i));
                 }
+                start=(j + 1) * numberCountry;
             }
-
+            int checker = countrySize % numOfPlayers;
+            if (checker != 0) {
+//            int remainderCountries = countrySize - (numberCountry * numOfPlayers);
+                for (int i = numberCountry * numOfPlayers; i < numberCountry * numOfPlayers+checker; i++) {
+                    for (int j = 0; j < checker; j++) {
+                        countries.get(i).setOwner(playerList.get(j));
+                        playerList.get(j).addPlayerCountries(countries.get(i));
+                    }
+                }
+                
+            }
+            System.out.println("populate countries succeed");
+            setCurrentPlayer(playerList.get(currentPlayerNum));
+            System.out.println("Start Placing army, Current Player is "+ getCurrentPlayer().getPlayerName());
+            currentPlayer.setTotalNumArmy(this.playerList.size());
+            currentPlayer.setNumArmyRemainPlace(currentPlayer.getTotalNumArmy());
+        } else if (countrySize==0) {
+            System.out.println("Populate countries failed! First add some countries.");
+        } else {
+            System.out.println("Populate countries failed! The map has been populated before.");
         }
-        System.out.println("populate countries succeed");
-        setCurrentPlayer(playerList.get(currentPlayerNum));
-        System.out.println("Start Placing army, Current Player is "+ getCurrentPlayer().getPlayerName());
-        currentPlayer.setTotalNumArmy(this.playerList.size());
-        currentPlayer.setNumArmyRemainPlace(currentPlayer.getTotalNumArmy());
     }
 
+    /**
+     * @return true if there is a country without owner.
+     * @return false if all countries have owner.
+     */
+    
+    private boolean isNotPopulated(){
+        ArrayList<CountryModel> countries = mapModel.getCountryList();
+        for (int i = 0; i < countries.size(); i++){
+            if("".equals(countries.get(i).getOwner().getPlayerName())){
+                return true;
+            } 
+        }
+
+       return false;
+   }
+    
  /**
      * This method allows players load a map file, that was previously saved
      */
