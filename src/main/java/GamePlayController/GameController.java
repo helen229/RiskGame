@@ -2,12 +2,14 @@ package GamePlayController;
 
 import GamePlayModel.GameModel; 
 /**
-     * This class handles commands that are require while playing the game.
-     */
-
+ * This class handles commands that are require while playing the game.
+ */
 public class GameController {
     private GameModel game;
 
+    /**
+     * Constructor for game controller
+     */
     public GameController(){
         this.game = new GameModel();
     }
@@ -17,10 +19,9 @@ public class GameController {
         game.showMap();
     } 
     /**
-         * This method shows the map based on the phase selected.
-         * @param phase
-         */
-
+     * This method shows the map based on the phase selected.
+     * @param phase
+     */
     public void commandHandler(String[] args, String phase) {
 
         if (args[0].equals("showmap")){
@@ -81,12 +82,13 @@ public class GameController {
         }catch(ArrayIndexOutOfBoundsException e){
             System.out.println("Arguments number invalid");
         }
-    } 
-    /**
-         * This method allows players to add or remove players.
-         * 
-         */
+    }
 
+    /**
+     * This method allows players to add or remove players.
+     * @param operation
+     * @param playerName
+     */
     private void parsePlayerOption(String operation, String playerName) {
         if (operation.equals("-add")){
             game.addPlayer(playerName);
@@ -97,10 +99,9 @@ public class GameController {
         }
     } 
     /**
-         * This method  returns a game Model.
-         * @return game
-         */
-
+     * This method  returns a game Model.
+     * @return game
+     */
     public GameModel getGame() {
         return game;
     }

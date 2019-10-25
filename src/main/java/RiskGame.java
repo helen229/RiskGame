@@ -4,7 +4,10 @@ import MapEditorController.MapController;
 import java.util.Scanner;
 
 public class RiskGame {
-
+    /**
+     * Main Entry for the game
+     * @param args
+     */
     public static void main(String[] args) {
         //uncomment those hardcode for testing phase
 //        args[0]="start";
@@ -15,7 +18,7 @@ public class RiskGame {
     }
 
     /**
-     * Main Entry for the game
+     * Game method for all the phase
      */
     private static void newGame(){
 
@@ -31,12 +34,6 @@ public class RiskGame {
             if ( gameController.getGame().getPhase().equals("MapEditor")){
                 mapController.commandHandler(command.split(" "));
             }else {
-//                System.out.println("GAME PLAY PHASE START");
-//                if (command.equals("Startup phase done"))
-//                    phase="Reinforcement";
-//                else if (command.equals("Reinforcement phase done"))
-//                    phase="Fortification";
-
                 gameController.commandHandler(command.split(" "),  gameController.getGame().getPhase());
             }
         }

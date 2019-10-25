@@ -11,9 +11,6 @@ import static java.lang.System.exit;
 /**
    * This class defines the characteristics of the a Game in a particular phase
    */
-      
-     
-  
 public class GameModel {
 
     MapModel mapModel;

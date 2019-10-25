@@ -86,10 +86,10 @@ public class MapController {
     }
 
     /**
-     *
+     * Load map from file
      * @param fileName
      */
-    private void editMap(String fileName) {
+    public void editMap(String fileName) {
 
         EditMap readFile = new EditMap(fileName);
         try {

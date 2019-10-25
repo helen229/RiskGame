@@ -139,26 +139,4 @@ public class EditMap {
 
 
 
-//    /**
-//     *  This class returns an arraylist containing the list of  continents
-//     * @return  Arraylists of continents
-//     */
-//
-//    public ArrayList<ContinentModel> getContinents() {
-//        return continents;
-//    }
-//
-//    /**
-//     * This class returns an arraylist of the countries
-//     * @return Arraylist of countries.
-//     */
-//
-//
-//    public ArrayList<CountryModel> getCountries() {
-//        return countries;
-//    }
-
-
-
-
 }

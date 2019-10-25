@@ -2,9 +2,8 @@ package GamePlayModel;
 
 import MapEditorModel.CountryModel;
  /**
-     * This class defines the characteristics of an Army in the Game
-     */ 
-
+ * This class defines the characteristics of an Army in the Game
+ */
 public class ArmyModel {
     private PlayerModel player;
 
@@ -25,9 +24,10 @@ public class ArmyModel {
         return player;
     }
 
-    /**
-     * Sets the player.
-     */
+     /**
+      * Sets the player.
+      * @param player
+      */
     public void setPlayer(PlayerModel player) {
         this.player = player;
     }

@@ -46,8 +46,8 @@ public class MapModel {
     }
 
     /**
-     *
-     * @return
+     * Check if the map is valid, if it is then return true
+     * @return is valid or not
      */
     public boolean isValid(){
         ArrayList<String> invalidContinent = new ArrayList<String>();
@@ -81,7 +81,7 @@ public class MapModel {
     }
 
     /**
-     *
+     * A dfs method to help validate the map
      * @param country
      * @param visitedCountryList
      */
@@ -105,7 +105,7 @@ public class MapModel {
     }
 
     /**
-     *
+     * the method for printout the Continent content
      * @param continent
      */
     private void printContinent(ContinentModel continent){
@@ -132,7 +132,7 @@ public class MapModel {
     }
 
     /**
-     *
+     * the method for printout the Country content
      * @param country
      */
     private void printCountry(CountryModel country){
@@ -158,15 +158,15 @@ public class MapModel {
     }
 
     /**
-     *
-     * @return
+     * get the map name
+     * @return the map Name
      */
     public String getMapName() {
         return mapName;
     }
 
     /**
-     *
+     *  set up the map name
      * @param mapName
      */
     public void setMapName(String mapName) {
@@ -174,15 +174,15 @@ public class MapModel {
     }
 
     /**
-     *
-     * @return
+     * get totalCountries size
+     * @return size
      */
     public int getTotalCountries() {
         return this.countryList.size();
     }
 
     /**
-     *
+     * set totalCountries number
      * @param totalCountries
      */
     public void setTotalCountries(int totalCountries) {
@@ -223,9 +223,9 @@ public class MapModel {
     }
 
     /**
-     *
+     * remove continent valid or not
      * @param continentName
-     * @return
+     * @return result
      */
     public boolean removeContinent(String continentName){
 
@@ -261,10 +261,10 @@ public class MapModel {
     }
 
     /**
-     *
+     * add country to the countryList
      * @param countryName
      * @param continentName
-     * @return
+     * @return add succeed or not
      */
     public boolean addCountry(String countryName, String continentName){
 
@@ -280,9 +280,9 @@ public class MapModel {
     }
 
     /**
-     *
+     * remove country to the countryList
      * @param countryName
-     * @return
+     * @return succeed or not
      */
     public boolean removeCountry(String countryName){
 
@@ -308,10 +308,10 @@ public class MapModel {
     }
 
     /**
-     *
+     * Add the neighbor to the list failed or not
      * @param countryName
      * @param neighborCountryName
-     * @return
+     * @return result
      */
     public boolean addNeighbor(String countryName, String neighborCountryName){
 
@@ -334,10 +334,10 @@ public class MapModel {
     }
 
     /**
-     *
+     * Remove the neighbor to the list failed or not
      * @param countryName
      * @param neighborCountryName
-     * @return
+     * @return result
      */
     public boolean removeNeighbor(String countryName, String neighborCountryName){
 
@@ -356,9 +356,9 @@ public class MapModel {
     }
 
     /**
-     *
+     * get the index of the CountryList base on the country name
      * @param countryName
-     * @return
+     * @return index
      */
     public int indexOfCountry(String countryName) {
         if (this.countryList.isEmpty())
@@ -376,9 +376,9 @@ public class MapModel {
     }
 
     /**
-     *
+     * get the index of the CountryList base on the country value
      * @param countryValue
-     * @return
+     * @return index
      */
     public int indexOfCountry(int countryValue) {
         if (this.countryList.isEmpty())
@@ -396,9 +396,9 @@ public class MapModel {
     }
 
     /**
-     *
+     * get the index of the ContinentList base on the Continent name
      * @param continentName
-     * @return
+     * @return index
      */
     public int indexOfContinent(String continentName) {
         if (this.continentList.isEmpty()){
@@ -417,7 +417,7 @@ public class MapModel {
     }
 
     /**
-     *
+     * flag for the map validation
      * @return
      */
     public boolean isMapValid() {
@@ -425,10 +425,10 @@ public class MapModel {
     }
 
     /**
-     *
+     * is the add validate
      * @param continentName
      * @param continentValue
-     * @return
+     * @return result
      */
     public boolean isAddContinentValid(String continentName, int continentValue) {
 
@@ -449,9 +449,9 @@ public class MapModel {
     }
 
     /**
-     *
+     * is the remove validate
      * @param continentName
-     * @return
+     * @return result
      */
     public boolean isRemoveContinentValid(String continentName) {
 
@@ -464,7 +464,7 @@ public class MapModel {
     }
 
     /**
-     *
+     * set the valid flag
      * @param valid
      */
     public void setValid(boolean valid) {
