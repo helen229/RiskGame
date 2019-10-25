@@ -33,11 +33,6 @@ public class RiskGame {
             if ( gameController.getGame().getPhase().equals("MapEditor")){
                 mapController.commandHandler(command.split(" "));
             }else {
-//                System.out.println("GAME PLAY PHASE START");
-//                if (command.equals("Startup phase done"))
-//                    phase="Reinforcement";
-//                else if (command.equals("Reinforcement phase done"))
-//                    phase="Fortification";
                 System.out.println("Phase> "+gameController.getGame().getPhase());
                 gameController.commandHandler(command.split(" "),  gameController.getGame().getPhase());
             }
