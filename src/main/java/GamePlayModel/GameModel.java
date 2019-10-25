@@ -111,7 +111,7 @@ public class GameModel {
                }
                 System.out.println("Populate countries succeed");
                 if (selectedOwner<0) selectedOwner=0;
-                else selectedOwner++;
+                else selectedOwner=1;
                System.out.println("Assigned initial armies (Number of players):"+(int) this.playerList.size());
                System.out.println("Assigned initial countries (one army included)");
                System.out.println("Total number of countries: "+countrySize);
