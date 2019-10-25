@@ -33,7 +33,6 @@ public class RiskGame {
             if ( gameController.getGame().getPhase().equals("MapEditor")){
                 mapController.commandHandler(command.split(" "));
             }else {
-                System.out.println("Phase> "+gameController.getGame().getPhase());
                 gameController.commandHandler(command.split(" "),  gameController.getGame().getPhase());
             }
         }
