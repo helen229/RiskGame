@@ -122,7 +122,7 @@ public class GameModel {
                setCurrentPlayer(playerList.get(currentPlayerNum));
                 System.out.println("Start Placing army, Current Player is "+ getCurrentPlayer().getPlayerName());
                 currentPlayer.setTotalNumArmy(this.playerList.size());
-                currentPlayer.setNumArmyRemainPlace(currentPlayer.getTotalNumArmy());
+                currentPlayer.setNumArmyRemainPlace(currentPlayer.getTotalNumArmy()-currentPlayer.playerCountries.size());
             }
         } else if (countrySize==0) {
             System.out.println("Populate countries failed! First add some countries.");
@@ -201,10 +201,15 @@ public class GameModel {
      */
 
     public void placeAllAmy() {
+        int numOfPlayers= this.getNumOfPlayers();
+        ArrayList<CountryModel> countries = mapModel.getCountryList();
+        int countrySize = countries.size();
+        if ((!(isNotPopulated())) && (countrySize>0) && (numOfPlayers>0)) {
         int armyLeft=currentPlayer.getNumArmyRemainPlace();
         while (armyLeft>0){
             int randomNum=(int)(Math.random() * (currentPlayer.playerCountries.size()));
-            currentPlayer.playerCountries.get(randomNum).addArmyNum();
+//            currentPlayer.playerCountries.get(randomNum).addArmyNum();
+            countries.get(currentPlayer.playerCountries.get(randomNum).getCountryValue()).addArmyNum();
             armyLeft--;
         }
         currentPlayer.setNumArmyRemainPlace(0);
@@ -213,6 +218,13 @@ public class GameModel {
         System.out.println("Phase> "+this.getPhase());
         currentPlayer.setTotalNumReinforceArmy(currentPlayer.getPlayerCountries().size()/3);
         currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getTotalNumReinforceArmy());
+        } else if (countrySize==0) {
+            System.out.println("Place all army failed! First add some countries.");
+        } else if (numOfPlayers==0) {
+            System.out.println("Place all army failed! First add some players.");
+        } else {
+            System.out.println("Place all army failed! First populate countries.");
+        }
     } 
     /**
      * This method allows a player to reinforce
