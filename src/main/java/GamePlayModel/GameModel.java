@@ -122,7 +122,8 @@ public class GameModel {
                setCurrentPlayer(playerList.get(currentPlayerNum));
                 System.out.println("Start Placing army, Current Player is "+ getCurrentPlayer().getPlayerName());
                 currentPlayer.setTotalNumArmy(this.playerList.size());
-                currentPlayer.setNumArmyRemainPlace(currentPlayer.getTotalNumArmy()-currentPlayer.playerCountries.size());
+                for (int i=0; i<numOfPlayers;i++)
+                    playerList.get(i).setNumArmyRemainPlace(currentPlayer.getTotalNumArmy()-playerList.get(i).playerCountries.size());
             }
         } else if (countrySize==0) {
             System.out.println("Populate countries failed! First add some countries.");
