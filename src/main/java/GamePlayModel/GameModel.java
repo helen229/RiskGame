@@ -179,26 +179,40 @@ public class GameModel {
      */
 
     public void placeArmy(String countryName) {
-        int numArmy=currentPlayer.getTotalNumArmy();
-        int armyLeft=currentPlayer.getNumArmyRemainPlace();
-        CountryModel country = mapModel.getCountryList().get(mapModel.indexOfCountry(countryName));
-        if (currentPlayer.getPlayerName().equals(country.getOwner().PlayerName)){
-            if (armyLeft>=1){
-                armyLeft = armyLeft -1;
-                currentPlayer.setNumArmyRemainPlace(armyLeft);
-                country.addArmyNum();
-                System.out.println("Place Army Succeed! "+ currentPlayer.getPlayerName() + " left " + currentPlayer.getNumArmyRemainPlace() );
-            }else {
-                System.out.println("You already place All your army! please start Reinforcement phase");
-                this.setPhase("Reinforcement");
-                System.out.println("Phase> "+this.getPhase());
-                currentPlayer.setTotalNumReinforceArmy(currentPlayer.getPlayerCountries().size()/3);
-                currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getTotalNumReinforceArmy());
+        int numOfPlayers= this.getNumOfPlayers();
+        ArrayList<CountryModel> countries = mapModel.getCountryList();
+        int countrySize = countries.size();
+        if ((!(isNotPopulated())) && (countrySize>0) && (numOfPlayers>0)) {
+            if (mapModel.indexOfCountry(countryName)!=-1) {
+                int numArmy=currentPlayer.getTotalNumArmy();
+                int armyLeft=currentPlayer.getNumArmyRemainPlace();
+                CountryModel country = mapModel.getCountryList().get(mapModel.indexOfCountry(countryName));
+                if (currentPlayer.getPlayerName().equals(country.getOwner().PlayerName)){
+                    if (armyLeft>=1){
+                        armyLeft = armyLeft -1;
+                        currentPlayer.setNumArmyRemainPlace(armyLeft);
+                        country.addArmyNum();
+                        System.out.println("Place Army Succeed! "+ currentPlayer.getPlayerName() + " left " + currentPlayer.getNumArmyRemainPlace() );
+                    }else {
+                        System.out.println("You already place All your army! please start Reinforcement phase");
+                        this.setPhase("Reinforcement");
+                        System.out.println("Phase> "+this.getPhase());
+                        currentPlayer.setTotalNumReinforceArmy(currentPlayer.getPlayerCountries().size()/3);
+                        currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getTotalNumReinforceArmy());
+                    }
+                }else {
+                    System.out.println("Not your country! please try again");
+                }
+            } else{
+                System.out.println("Country name is not valid! please try again");
             }
-        }else {
-            System.out.println("Not your country! please try again");
+        } else if (countrySize==0) {
+            System.out.println("Place army failed! First add some countries.");
+        } else if (numOfPlayers==0) {
+            System.out.println("Place army failed! First add some players.");
+        } else {
+            System.out.println("Place army failed! First populate countries.");
         }
-
     } 
     /**
      * This method allows a player to place armies
