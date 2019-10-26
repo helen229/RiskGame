@@ -112,19 +112,21 @@ public class GameModel {
                 System.out.println("Populate countries succeed");
                 if (selectedOwner<0) selectedOwner=0;
                 else selectedOwner=1;
-               System.out.println("Assigned initial armies (Number of players):"+(int) this.playerList.size());
+                setCurrentPlayer(playerList.get(currentPlayerNum));
+                for (int i=0; i<numOfPlayers;i++) {
+                    playerList.get(i).setTotalNumArmy(this.playerList.size());
+                    playerList.get(i).setNumArmyRemainPlace(playerList.get(i).getTotalNumArmy()-playerList.get(i).playerCountries.size());
+                }
+               System.out.println("Assigned initial armies (Number of players):"+ currentPlayer.getTotalNumArmy());
                System.out.println("Assigned initial countries (one army included)");
                System.out.println("Total number of countries: "+countrySize);
                System.out.println("Total number of players: "+numOfPlayers);
                System.out.println("Minimum number of owned countries: " +numberCountry);
                System.out.println("Maximum number of owned countries: " +(numberCountry+selectedOwner));
                 
-               setCurrentPlayer(playerList.get(currentPlayerNum));
+               
                 System.out.println("Start Placing army, Current Player is "+ getCurrentPlayer().getPlayerName());
-                for (int i=0; i<numOfPlayers;i++) {
-                    playerList.get(i).setTotalNumArmy(this.playerList.size());
-                    playerList.get(i).setNumArmyRemainPlace(playerList.get(i).getTotalNumArmy()-playerList.get(i).playerCountries.size());
-                }
+                
             }
         } else if (countrySize==0) {
             System.out.println("Populate countries failed! First add some countries.");
