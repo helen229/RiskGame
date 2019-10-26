@@ -212,8 +212,8 @@ public class GameModel {
         int armyLeft=currentPlayer.getNumArmyRemainPlace();
         while (armyLeft>0){
             int randomNum=(int)(Math.random() * (currentPlayer.playerCountries.size()));
-//            currentPlayer.playerCountries.get(randomNum).addArmyNum();
-            countries.get(currentPlayer.playerCountries.get(randomNum).getCountryValue()).addArmyNum();
+            currentPlayer.playerCountries.get(randomNum).addArmyNum();
+//            countries.get(currentPlayer.playerCountries.get(randomNum).getCountryValue()).addArmyNum();
             armyLeft--;
         }
         currentPlayer.setNumArmyRemainPlace(0);
