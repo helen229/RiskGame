@@ -48,7 +48,6 @@ public class GameController {
                     case "placeall":
                         game.placeAllAmy();
                         break;
-
                     default:
 //                        System.out.println("Invalid Command");
                         break;
@@ -61,6 +60,25 @@ public class GameController {
                 else{
                     System.out.println("Wrong command, The command is not valid in this phase");
                     return;
+                }
+
+            }else if (phase.equals("Attack")){
+                switch (args[0]) {
+                    case "attack":
+                        parseAttackOption(args[0],args[1],args[3]);
+                        break;
+                    case "defend":
+                        game.defendDiceNum(Integer.parseInt(args[1]));
+                        break;
+                    case "attackmove":
+                        game.winnerMove(Integer.parseInt(args[1]));
+                        break;
+                    case "noattack":
+                        game.stopAttack();
+                        break;
+                    default:
+                        System.out.println("Invalid Command in Attack Phase");
+                        break;
                 }
 
             }else if (phase.equals("Fortification")){
@@ -90,14 +108,33 @@ public class GameController {
      * @param playerName
      */
     private void parsePlayerOption(String operation, String playerName) {
-        if (operation.equals("-add")){
+        if (operation.equals("add")){
             game.addPlayer(playerName);
-        }else if (operation.equals("-remove")){
+        }else if (operation.equals("remove")){
             game.removePlayer(playerName);
         }else {
             System.out.println("Invalid Command");
         }
-    } 
+    }
+
+    /**
+     *
+     * @param attackCountry
+     * @param defendCountry
+     * @param mode
+     */
+    private void parseAttackOption(String attackCountry, String defendCountry, String mode) {
+
+        //TODO:Integer failed exception handle!
+        if (mode.equals("allout")){
+            game.attackAllOut(attackCountry,defendCountry);
+        }else if (Integer.parseInt(mode)>0 && Integer.parseInt(mode)<4){
+            game.attackDiceNum(attackCountry,defendCountry,Integer.parseInt(mode));
+        }else {
+            System.out.println("Invalid Command");
+        }
+    }
+
     /**
      * This method  returns a game Model.
      * @return game

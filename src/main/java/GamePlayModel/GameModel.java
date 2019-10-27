@@ -6,6 +6,9 @@ import MapEditorModel.CountryModel;
 import MapEditorModel.MapModel;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+
 import static java.lang.System.exit;
 
 /**
@@ -18,6 +21,7 @@ public class GameModel {
     PlayerModel currentPlayer;
     int currentPlayerNum;
     String phase;
+    ArrayList<Integer> attackerDice;
 
     public GameModel() {
         this.mapModel = new MapModel();
@@ -209,8 +213,7 @@ public class GameModel {
         int armyLeft=currentPlayer.getNumArmyRemainPlace();
         while (armyLeft>0){
             int randomNum=(int)(Math.random() * (currentPlayer.playerCountries.size()));
-//            currentPlayer.playerCountries.get(randomNum).addArmyNum();
-            countries.get(currentPlayer.playerCountries.get(randomNum).getCountryValue()).addArmyNum();
+            currentPlayer.playerCountries.get(randomNum).addArmyNum();
             armyLeft--;
         }
         currentPlayer.setNumArmyRemainPlace(0);
@@ -230,7 +233,6 @@ public class GameModel {
     /**
      * This method allows a player to reinforce
      */
-
     public void reinforce(String countryName, int number) {
         int armyLeft=currentPlayer.getNumReinforceArmyRemainPlace();
         CountryModel country = mapModel.getCountryList().get(mapModel.indexOfCountry(countryName));
@@ -254,11 +256,80 @@ public class GameModel {
             System.out.println("Not your country! please try again");
         }
 
-    } 
+    }
+
+    public boolean checkAttackChance() {
+        boolean res= true;
+        return res;
+    }
+
+    public void attackDiceNum(String attackCountryName, String defendCountryName, int diceNum) {
+        CountryModel defendCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(defendCountryName));
+        CountryModel attackCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(attackCountryName));
+        PlayerModel defender=defendCountry.getOwner();
+        PlayerModel attacker=attackCountry.getOwner();
+        if (defender.getPlayerName().equals(attacker.getPlayerName())){
+            System.out.println("");
+            return;
+        }
+        attackerDice = generateDiceNum(diceNum);
+    }
+
+    public void defendDiceNum(int diceNum) {
+
+        if (!attackerDice.isEmpty()){
+            ArrayList<Integer> defenderDice=generateDiceNum(diceNum);
+        }else {
+            System.out.println("Please declare the attacker dice number first");
+        }
+    }
+
+    public void attackAllOut(String attackCountryName, String defendCountryName) {
+
+    }
+
+    public boolean attackProcess(ArrayList<Integer> defenderDice) {
+        boolean ifAttackerWin=false;
+        //compare the two list
+        //remove the certain amount army of the loser
+        //if attacker wins, set to true and start the attackmove
+        //if attacker lose all army then print out this country can't attack anymore
+        return  ifAttackerWin;
+    }
+
+    public void winnerMove(int num) {
+
+    }
+
+
+    public void stopAttack() {
+
+    }
+
+
+    /**
+     * Generate the random dice list of one player, can be either attacker or defender
+     * And the dice list would be sorted in ascending order
+     *
+     * @param diceNum is the number of dices they choose
+     * @return ArrayList<Integer>  a list of dices
+     */
+    public ArrayList<Integer> generateDiceNum(int diceNum) {
+        ArrayList<Integer> diceList = new ArrayList<>();
+        int randomNumber;
+        //generate a random number for each dice in the dice list
+        for (int i = 0; i < diceNum; i++) {
+            randomNumber = new Random().nextInt(6) + 1;
+            diceList.add(randomNumber);
+        }
+        //making it be in a ascending order
+        Collections.sort(diceList);
+        return diceList;
+    }
+
     /**
      * This method allows a player to fortify a country with armies from another related country
      */
-
     public void fortify(String fromcountry, String tocountry, int number) {
 
         CountryModel sourceCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(fromcountry));
