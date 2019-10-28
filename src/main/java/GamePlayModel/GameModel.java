@@ -26,6 +26,7 @@ public class GameModel {
     CountryModel attackerCountry;
     boolean ifAttackerWin=false;
 
+
     public GameModel() {
         this.mapModel = new MapModel();
         this.playerList = new ArrayList<>();
@@ -290,6 +291,9 @@ public class GameModel {
                     System.out.println("You already place All your Reinforcement army! please start Attack phase");
                     this.setPhase("Attack");
                     System.out.println("Phase> "+this.getPhase());
+                    if (!checkAttackChance()){
+                        stopAttack();
+                    }
                 }
             }else {
                 System.out.println("Not your country! please try again");
@@ -301,10 +305,24 @@ public class GameModel {
     }
 
     public boolean checkAttackChance() {
-        boolean ifAttackContinue= true;
-        PlayerModel attacker = attackerCountry.getOwner();
-        PlayerModel defender = defenderCountry.getOwner();
+        boolean ifAttackContinue = false;
+        for (CountryModel playerCountry : currentPlayer.getPlayerCountries()) {
+            if (playerCountry.getArmyNum()<2){
+                continue;
+            }else if (!ifCountriesBelongPlayer(playerCountry.getNeighbours())){
+                ifAttackContinue = true;
+            }
+        }
         return ifAttackContinue;
+    }
+
+    public boolean ifCountriesBelongPlayer(ArrayList<Integer> countryList) {
+        for (int countryValue:countryList) {
+            if (!currentPlayer.equals(mapModel.getCountryList().get(countryValue).getOwner())){
+                return false;
+            }
+        }
+        return true;
     }
 
     public void attackDiceNum(String attackCountryName, String defendCountryName, int diceNum) {
@@ -344,19 +362,32 @@ public class GameModel {
 
     public void defendDiceNum(int diceNum) {
 
-        if (!attackerDice.isEmpty()){
-            if (defenderCountry.getArmyNum()>=diceNum && diceNum<3  && diceNum>0){
-                attackProcess(generateDiceNum(diceNum));
-            }else {
-                System.out.println("The dice number is invalid");
-            }
-        }else {
+        if (attackerDice.isEmpty()){
             System.out.println("Please declare the attacker dice number first");
+        }else if (defenderCountry.getArmyNum()>=diceNum && diceNum<3  && diceNum>0){
+            attackProcess(generateDiceNum(diceNum));
+        }else {
+            System.out.println("The dice number is invalid");
         }
+
     }
 
     public void attackAllOut(String attackCountryName, String defendCountryName) {
-
+        CountryModel attackCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(attackCountryName));
+        int diceNum=0;
+        while (!ifAttackerWin){
+            if (attackCountry.getArmyNum()>3){
+                diceNum=3;
+            }else if (attackCountry.getArmyNum()==3){
+                diceNum=2;
+            }else if (attackCountry.getArmyNum()==2){
+                diceNum=1;
+            }else{
+                System.out.println("The attack country can't attack!");
+                break;
+            }
+            attackDiceNum(attackCountryName,defendCountryName, diceNum);
+        }
     }
 
     public void attackProcess(ArrayList<Integer> defenderDice) {
@@ -400,6 +431,9 @@ public class GameModel {
         }else {
             System.out.println("Attack done");
         }
+
+        if (!checkAttackChance())
+            stopAttack();
 
     }
 
@@ -642,11 +676,12 @@ public class GameModel {
 
     public String getPhase() {
         return phase;
-    } 
-    /**
-     * This method sets the phase 
-     */
+    }
 
+    /**
+     * This method sets the phase
+     * @param phase
+     */
     public void setPhase(String phase) {
         this.phase = phase;
     }
