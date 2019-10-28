@@ -22,10 +22,14 @@ public class GameModel {
     int currentPlayerNum;
     String phase;
     ArrayList<Integer> attackerDice;
+    CountryModel defenderCountry;
+    CountryModel attackerCountry;
+    boolean ifAttackerWin=false;
 
     public GameModel() {
         this.mapModel = new MapModel();
         this.playerList = new ArrayList<>();
+        this.attackerDice = new ArrayList<>();
         this.currentPlayerNum=0;
     }
 
@@ -156,7 +160,7 @@ public class GameModel {
        return false;
    }
     
- /**
+    /**
      * This method allows players load a map file, that was previously saved
      */
 
@@ -297,8 +301,10 @@ public class GameModel {
     }
 
     public boolean checkAttackChance() {
-        boolean res= true;
-        return res;
+        boolean ifAttackContinue= true;
+        PlayerModel attacker = attackerCountry.getOwner();
+        PlayerModel defender = defenderCountry.getOwner();
+        return ifAttackContinue;
     }
 
     public void attackDiceNum(String attackCountryName, String defendCountryName, int diceNum) {
@@ -306,17 +312,23 @@ public class GameModel {
         CountryModel attackCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(attackCountryName));
         PlayerModel defender=defendCountry.getOwner();
         PlayerModel attacker=attackCountry.getOwner();
-        if (defender.getPlayerName().equals(attacker.getPlayerName())){
+        if (defender.equals(attacker)){
             System.out.println("");
             return;
         }
         attackerDice = generateDiceNum(diceNum);
+        this.defenderCountry = defendCountry;
+        this.attackerCountry = attackCountry;
     }
 
     public void defendDiceNum(int diceNum) {
 
         if (!attackerDice.isEmpty()){
-            ArrayList<Integer> defenderDice=generateDiceNum(diceNum);
+            if (defenderCountry.getArmyNum()>=diceNum && diceNum<3  && diceNum>0){
+                attackProcess(generateDiceNum(diceNum));
+            }else {
+                System.out.println("The dice number is invalid");
+            }
         }else {
             System.out.println("Please declare the attacker dice number first");
         }
@@ -326,21 +338,68 @@ public class GameModel {
 
     }
 
-    public boolean attackProcess(ArrayList<Integer> defenderDice) {
-        boolean ifAttackerWin=false;
+    public void attackProcess(ArrayList<Integer> defenderDice) {
+
+        System.out.println("Attacker Dice: "+attackerDice);
+        System.out.println("Defender Dice: "+defenderDice);
         //compare the two list
-        //remove the certain amount army of the loser
-        //if attacker wins, set to true and start the attackmove
-        //if attacker lose all army then print out this country can't attack anymore
-        return  ifAttackerWin;
+        if (attackerDice.get(0) - defenderDice.get(0) > 0) {
+            //remove the certain amount army of the loser
+            defenderCountry.reduceArmyNum();
+        } else {
+            attackerCountry.reduceArmyNum();
+        }
+        ifAttackerWin = attackResult();
+        if (attackerDice.size()>1 && defenderDice.size()>1){
+
+            if (attackerDice.get(1) - defenderDice.get(1) > 0) {
+                //remove the certain amount army of the loser
+                defenderCountry.reduceArmyNum();
+            } else {
+                attackerCountry.reduceArmyNum();
+            }
+            ifAttackerWin = attackResult();
+        }
+
+        if (ifAttackerWin){
+            //if attacker wins, set to true and start the attackmove
+            System.out.println("Attacker take over the country! Please start move army!");
+        }else {
+            System.out.println("Attack done");
+        }
+
+    }
+
+    public boolean attackResult() {
+        boolean attackerWin = false;
+        PlayerModel attacker = attackerCountry.getOwner();
+        PlayerModel defender = defenderCountry.getOwner();
+
+        //if the attacker conquer the country
+        if (defenderCountry.getArmyNum() == 0) {
+            attackerWin = true;
+            //remove the country from defender's country list
+            defender.getPlayerCountries().remove(defenderCountry);
+            //change country's owner
+            defenderCountry.setOwner(attacker);
+            //add the country to attacker's country list
+            attacker.getPlayerCountries().add(defenderCountry);
+            //check if the attacker owns all countries,if yes, then game finished.
+            if (attacker.getPlayerCountries().size() == mapModel.getCountryList().size()) {
+                System.out.println("GAME END! " + attacker.getPlayerName()+ " WIN");
+                exit(0);
+            }
+        }
+        return attackerWin;
     }
 
     public void winnerMove(int num) {
 
+
     }
 
 
-    public void stopAttack() {
+    public void stopAttack(){
 
     }
 
@@ -365,7 +424,6 @@ public class GameModel {
         return diceList;
     }
 
-    }
     /**
      * This method allows a player to fortify a country with armies from another related country
      */

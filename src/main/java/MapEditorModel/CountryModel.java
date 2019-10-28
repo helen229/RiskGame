@@ -124,4 +124,8 @@ public class CountryModel {
     public void setOwner(PlayerModel owner) {
         this.owner = owner;
     }
+
+    public void reduceArmyNum() {
+        this.armyNum--;
+    }
 }
