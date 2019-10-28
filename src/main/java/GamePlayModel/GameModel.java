@@ -287,8 +287,8 @@ public class GameModel {
                     System.out.println("Place Reinforcement Army Succeed! "+ currentPlayer.getPlayerName() + " left " + currentPlayer.getNumReinforceArmyRemainPlace());
                 }
                 if(armyLeft==0) {
-                    System.out.println("You already place All your Reinforcement army! please start Fortification phase");
-                    this.setPhase("Fortification");
+                    System.out.println("You already place All your Reinforcement army! please start Attack phase");
+                    this.setPhase("Attack");
                     System.out.println("Phase> "+this.getPhase());
                 }
             }else {
@@ -312,13 +312,34 @@ public class GameModel {
         CountryModel attackCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(attackCountryName));
         PlayerModel defender=defendCountry.getOwner();
         PlayerModel attacker=attackCountry.getOwner();
+        //check if the attack country belong to the current player
+        if (!currentPlayer.equals(attacker)){
+            System.out.println("The attack Country is not belong to the attacker!");
+            return;
+        }
+        //check if the same owner
         if (defender.equals(attacker)){
-            System.out.println("");
+            System.out.println("The defend Country is belong to the attacker!");
+            return;
+        }
+        //check if attack country more than one army
+        if (attackCountry.getArmyNum()<2){
+            System.out.println("The attack country must more than one army!");
+            return;
+        }
+        //check if defend country is an adjacent country
+        if (!attackCountry.getNeighbours().contains(defendCountry.getCountryValue())){
+            System.out.println("The defend Country is not an adjacent country to the attacker!");
+            return;
+        }
+        if (diceNum<1 && diceNum>3 && diceNum>(attackCountry.getArmyNum()-1)){
+            System.out.println("The dice number is invalid");
             return;
         }
         attackerDice = generateDiceNum(diceNum);
         this.defenderCountry = defendCountry;
         this.attackerCountry = attackCountry;
+        System.out.println("Attack declare Valid! "+defender.getPlayerName() + " please set up your dice number");
     }
 
     public void defendDiceNum(int diceNum) {
@@ -346,8 +367,14 @@ public class GameModel {
         if (attackerDice.get(0) - defenderDice.get(0) > 0) {
             //remove the certain amount army of the loser
             defenderCountry.reduceArmyNum();
+            System.out.println("Attacker won the first round dice competition, "
+                    + defenderCountry.getCountryName() + " left "
+                    + defenderCountry.getArmyNum() + " Armies");
         } else {
             attackerCountry.reduceArmyNum();
+            System.out.println("Defender won the first round dice competition, "
+                    + attackerCountry.getCountryName()  + " left "
+                    + attackerCountry.getArmyNum() + " Armies");
         }
         ifAttackerWin = attackResult();
         if (attackerDice.size()>1 && defenderDice.size()>1){
@@ -355,8 +382,14 @@ public class GameModel {
             if (attackerDice.get(1) - defenderDice.get(1) > 0) {
                 //remove the certain amount army of the loser
                 defenderCountry.reduceArmyNum();
+                System.out.println("Attacker won the second round dice competition, "
+                        + defenderCountry.getCountryName() + " left "
+                        + defenderCountry.getArmyNum() + " Armies");
             } else {
                 attackerCountry.reduceArmyNum();
+                System.out.println("Defender won the second round dice competition, "
+                        + attackerCountry.getCountryName()  + " left "
+                        + attackerCountry.getArmyNum() + " Armies");
             }
             ifAttackerWin = attackResult();
         }
@@ -395,12 +428,23 @@ public class GameModel {
 
     public void winnerMove(int num) {
 
+        if (!ifAttackerWin){
+            System.out.println("Invalid command");
+        }
+        else if (num > attackerCountry.getArmyNum()-1 && num>0) {
+            System.out.println("the army number should between 0 to" + (attackerCountry.getArmyNum()-1));
+            return;
+        }
+        defenderCountry.addArmyNum(num);
+        attackerCountry.reduceArmyNum(num);
+        System.out.println("Moved the Armies to conquered Country");
 
     }
 
-
     public void stopAttack(){
-
+        //set the to the next phase
+        System.out.println("Attack Phase Done! please start Fortification phase");
+        this.setPhase("Fortification");
     }
 
 
@@ -419,8 +463,8 @@ public class GameModel {
             randomNumber = new Random().nextInt(6) + 1;
             diceList.add(randomNumber);
         }
-        //making it be in a ascending order
-        Collections.sort(diceList);
+        //making it be in a descending order
+        Collections.sort(diceList, Collections.reverseOrder());
         return diceList;
     }
 

@@ -65,7 +65,7 @@ public class GameController {
             }else if (phase.equals("Attack")){
                 switch (args[0]) {
                     case "attack":
-                        parseAttackOption(args[0],args[1],args[3]);
+                        parseAttackOption(args[1],args[2],args[3]);
                         break;
                     case "defend":
                         game.defendDiceNum(Integer.parseInt(args[1]));

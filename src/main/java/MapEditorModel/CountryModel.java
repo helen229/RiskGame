@@ -117,6 +117,10 @@ public class CountryModel {
         this.armyNum++;
     }
 
+    public void addArmyNum(int num) {
+        this.armyNum= this.armyNum + num;
+    }
+
     public PlayerModel getOwner() {
         return owner;
     }
@@ -127,5 +131,9 @@ public class CountryModel {
 
     public void reduceArmyNum() {
         this.armyNum--;
+    }
+
+    public void reduceArmyNum(int num) {
+        this.armyNum= this.armyNum - num;
     }
 }
