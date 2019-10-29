@@ -97,8 +97,8 @@ public class GameController {
             }else {
                 System.out.println("The command is not valid in this phase");
             }
-        }catch(ArrayIndexOutOfBoundsException e){
-            System.out.println("Arguments number invalid");
+        }catch(Exception e){
+            System.out.println(e);
         }
     }
 
@@ -129,7 +129,7 @@ public class GameController {
         if (mode.equals("allout")){
             game.attackAllOut(attackCountry,defendCountry);
         }else if (Integer.parseInt(mode)>0 && Integer.parseInt(mode)<4){
-            game.attackDiceNum(attackCountry,defendCountry,Integer.parseInt(mode));
+            game.attackDiceNum(attackCountry,defendCountry,Integer.parseInt(mode),false);
         }else {
             System.out.println("Invalid Command");
         }

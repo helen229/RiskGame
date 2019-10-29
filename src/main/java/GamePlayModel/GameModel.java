@@ -16,6 +16,7 @@ import static java.lang.System.exit;
    */
 public class GameModel {
 
+
     MapModel mapModel;
     ArrayList<PlayerModel> playerList;
     PlayerModel currentPlayer;
@@ -25,6 +26,7 @@ public class GameModel {
     CountryModel defenderCountry;
     CountryModel attackerCountry;
     boolean ifAttackerWin=false;
+    boolean ifAttackAllOut=false;
 
 
     public GameModel() {
@@ -32,7 +34,10 @@ public class GameModel {
         this.playerList = new ArrayList<>();
         this.attackerDice = new ArrayList<>();
         this.currentPlayerNum=0;
+        defenderCountry = null;
+        attackerCountry = null;
     }
+
 
     public ArrayList<String> getPlayerNameList(){
         ArrayList<String> playerNameList = new ArrayList<>();
@@ -41,6 +46,7 @@ public class GameModel {
         }
         return  playerNameList;
     }
+
     /**
      * This method allows a player to be added.
      * @param playerName the parameter used to identify the player to be added.
@@ -73,16 +79,13 @@ public class GameModel {
     /**
      * This method returns the number of players
      */
-
-
     public int getNumOfPlayers() {
         return playerList.size();
     }
 
-/**
+    /**
      * This method assigns countries to the players
      */
-
     public void populateCountries() {
 
         int numOfPlayers= this.getNumOfPlayers();
@@ -150,7 +153,6 @@ public class GameModel {
      * @return true if there is a country without owner.
      * @return false if all countries have owner.
      */
-    
     private boolean isNotPopulated(){
         ArrayList<CountryModel> countries = mapModel.getCountryList();
         for (int i = 0; i < countries.size(); i++){
@@ -164,7 +166,6 @@ public class GameModel {
     /**
      * This method allows players load a map file, that was previously saved
      */
-
     public void loadMap(String fileName) {
         EditMap readFile = new EditMap(fileName);
         try {
@@ -186,7 +187,6 @@ public class GameModel {
     /**
      * This method allows armies to be assigned to countries
      */
-
     public void placeArmy(String countryName) {
         int numOfPlayers= this.getNumOfPlayers();
         ArrayList<CountryModel> countries = mapModel.getCountryList();
@@ -304,6 +304,7 @@ public class GameModel {
 
     }
 
+
     public boolean checkAttackChance() {
         boolean ifAttackContinue = false;
         for (CountryModel playerCountry : currentPlayer.getPlayerCountries()) {
@@ -316,6 +317,7 @@ public class GameModel {
         return ifAttackContinue;
     }
 
+
     public boolean ifCountriesBelongPlayer(ArrayList<Integer> countryList) {
         for (int countryValue:countryList) {
             if (!currentPlayer.equals(mapModel.getCountryList().get(countryValue).getOwner())){
@@ -325,46 +327,53 @@ public class GameModel {
         return true;
     }
 
-    public void attackDiceNum(String attackCountryName, String defendCountryName, int diceNum) {
+    public boolean attackDiceNum(String attackCountryName, String defendCountryName, int diceNum, boolean fromAllOut) {
         CountryModel defendCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(defendCountryName));
         CountryModel attackCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(attackCountryName));
         PlayerModel defender=defendCountry.getOwner();
         PlayerModel attacker=attackCountry.getOwner();
+        if (ifAttackAllOut && !fromAllOut){
+            System.out.println("The attack command is invalid! it's attack all out mode");
+            return false;
+        }
         //check if the attack country belong to the current player
         if (!currentPlayer.equals(attacker)){
             System.out.println("The attack Country is not belong to the attacker!");
-            return;
+            return false;
         }
         //check if the same owner
         if (defender.equals(attacker)){
             System.out.println("The defend Country is belong to the attacker!");
-            return;
+            return false;
         }
         //check if attack country more than one army
         if (attackCountry.getArmyNum()<2){
             System.out.println("The attack country must more than one army!");
-            return;
+            return false;
         }
         //check if defend country is an adjacent country
         if (!attackCountry.getNeighbours().contains(defendCountry.getCountryValue())){
             System.out.println("The defend Country is not an adjacent country to the attacker!");
-            return;
+            return false;
         }
         if (diceNum<1 && diceNum>3 && diceNum>(attackCountry.getArmyNum()-1)){
             System.out.println("The dice number is invalid");
-            return;
+            return false;
         }
         attackerDice = generateDiceNum(diceNum);
         this.defenderCountry = defendCountry;
         this.attackerCountry = attackCountry;
         System.out.println("Attack declare Valid! "+defender.getPlayerName() + " please set up your dice number");
+        return true;
     }
 
     public void defendDiceNum(int diceNum) {
 
-        if (attackerDice.isEmpty()){
+        if (attackerDice.isEmpty()||this.attackerCountry==null){
             System.out.println("Please declare the attacker dice number first");
         }else if (defenderCountry.getArmyNum()>=diceNum && diceNum<3  && diceNum>0){
+            if (ifAttackAllOut)
+                attackAllOut(attackerCountry.getCountryName(),defenderCountry.getCountryName());
             attackProcess(generateDiceNum(diceNum));
         }else {
             System.out.println("The dice number is invalid");
@@ -373,9 +382,10 @@ public class GameModel {
     }
 
     public void attackAllOut(String attackCountryName, String defendCountryName) {
+
         CountryModel attackCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(attackCountryName));
         int diceNum=0;
-        while (!ifAttackerWin){
+        if (!ifAttackerWin){
             if (attackCountry.getArmyNum()>3){
                 diceNum=3;
             }else if (attackCountry.getArmyNum()==3){
@@ -384,10 +394,12 @@ public class GameModel {
                 diceNum=1;
             }else{
                 System.out.println("The attack country can't attack!");
-                break;
+                return;
             }
-            attackDiceNum(attackCountryName,defendCountryName, diceNum);
+            if (attackDiceNum(attackCountryName,defendCountryName, diceNum, true))
+                ifAttackAllOut = true;
         }
+
     }
 
     public void attackProcess(ArrayList<Integer> defenderDice) {
@@ -430,10 +442,19 @@ public class GameModel {
             System.out.println("Attacker take over the country! Please start move army!");
         }else {
             System.out.println("Attack done");
+            if (ifAttackAllOut){
+                attackerDice.isEmpty();
+            }else{
+                this.defenderCountry = null;
+                this.attackerCountry = null;
+                attackerDice.isEmpty();
+            }
+
         }
 
         if (!checkAttackChance())
             stopAttack();
+
 
     }
 
@@ -457,6 +478,10 @@ public class GameModel {
                 exit(0);
             }
         }
+        if (attackerCountry.getArmyNum() == 1){
+            System.out.println(attackerCountry.getCountryName()+" can't attack anymore!");
+            ifAttackAllOut = false;
+        }
         return attackerWin;
     }
 
@@ -464,14 +489,19 @@ public class GameModel {
 
         if (!ifAttackerWin){
             System.out.println("Invalid command");
+            return;
         }
         else if (num > attackerCountry.getArmyNum()-1 && num>0) {
-            System.out.println("the army number should between 0 to" + (attackerCountry.getArmyNum()-1));
+            System.out.println("the army number should between 1 to" + (attackerCountry.getArmyNum()-1));
             return;
         }
         defenderCountry.addArmyNum(num);
         attackerCountry.reduceArmyNum(num);
         System.out.println("Moved the Armies to conquered Country");
+        ifAttackerWin=false;
+        ifAttackAllOut = false;
+        this.defenderCountry = null;
+        this.attackerCountry = null;
 
     }
 
