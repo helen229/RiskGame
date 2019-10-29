@@ -25,8 +25,12 @@ public class GameModel {
     ArrayList<Integer> attackerDice;
     CountryModel defenderCountry;
     CountryModel attackerCountry;
+    //To make sure attack move command only can run when this flag is true
     boolean ifAttackerWin=false;
+    //To prevent attack declare in the allout mode
     boolean ifAttackAllOut=false;
+    //To check if the current player can get a card
+    boolean hasPlayerConquered=false;
 
 
     public GameModel() {
@@ -440,6 +444,7 @@ public class GameModel {
         if (ifAttackerWin){
             //if attacker wins, set to true and start the attackmove
             System.out.println("Attacker take over the country! Please start move army!");
+            hasPlayerConquered = true;
         }else {
             System.out.println("Attack done");
             if (ifAttackAllOut){
@@ -591,18 +596,27 @@ public class GameModel {
             }
         }
         return false;
-    } 
+    }
+
+
     /**
      * This method fortifies no countries for the player
      */
 
     public void fortifyNone() {
 
+        if (hasPlayerConquered){
+            System.out.println(getCurrentPlayer().getPlayerName()+" You have conquered at least one country!");
+            Card card = new Card(currentPlayer);
+            CardType cardType = card.getCardType();
+            currentPlayer.addCard(card);
+            System.out.println("You receives a "+cardType+"card");
+        }
+        
         System.out.println(getCurrentPlayer().getPlayerName()+" Your turn over!");
         if (this.currentPlayerNum+1<this.playerList.size()){
             this.currentPlayerNum++;
             setCurrentPlayer(this.playerList.get(this.currentPlayerNum));
-            //currentPlayer.setTotalNumArmy(this.playerList.size());
             currentPlayer.setNumArmyRemainPlace(currentPlayer.getNumArmyRemainPlace());
             this.setPhase("Startup");
             System.out.println("Phase> "+this.getPhase());

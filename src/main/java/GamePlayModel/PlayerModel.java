@@ -16,10 +16,13 @@ public class PlayerModel {
     int totalNumReinforceArmy;
     int NumReinforceArmyRemainPlace;
     ArrayList<CountryModel> playerCountries;
+    ArrayList<Card> cardList;
+
 
     public PlayerModel(String playerName) {
         PlayerName = playerName;
         playerCountries = new ArrayList<>();
+        cardList = new ArrayList<>();
     }
 
     /**
@@ -137,5 +140,17 @@ public class PlayerModel {
 
     public void setNumReinforceArmyRemainPlace(int numReinforceArmyRemainPlace) {
         NumReinforceArmyRemainPlace = numReinforceArmyRemainPlace;
+    }
+
+    public ArrayList<Card> getCardList() {
+        return cardList;
+    }
+
+    public void addCard(Card card) {
+        this.cardList.add(card);
+    }
+
+    public void removeCard(Card card) {
+        this.cardList.remove(card);
     }
 }
