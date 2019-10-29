@@ -308,6 +308,14 @@ public class GameModel {
 
     }
 
+    public void exchangeCards(int cardOne, int cardTwo, int cardThree){
+
+    }
+
+
+    public void exchangeCardsNone(){
+
+    }
 
     public boolean checkAttackChance() {
         boolean ifAttackContinue = false;
@@ -612,7 +620,7 @@ public class GameModel {
             currentPlayer.addCard(card);
             System.out.println("You receives a "+cardType+"card");
         }
-        
+
         System.out.println(getCurrentPlayer().getPlayerName()+" Your turn over!");
         if (this.currentPlayerNum+1<this.playerList.size()){
             this.currentPlayerNum++;
