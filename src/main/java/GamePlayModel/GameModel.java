@@ -7,6 +7,7 @@ import MapEditorModel.MapModel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Observable;
 import java.util.Random;
 
 import static java.lang.System.exit;
@@ -14,7 +15,7 @@ import static java.lang.System.exit;
 /**
    * This class defines the characteristics of the a Game in a particular phase
    */
-public class GameModel {
+public class GameModel extends Observable {
 
 
     MapModel mapModel;
@@ -736,5 +737,7 @@ public class GameModel {
      */
     public void setPhase(String phase) {
         this.phase = phase;
+        setChanged();
+        notifyObservers("PhaseView");
     }
 }

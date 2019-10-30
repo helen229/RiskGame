@@ -1,4 +1,8 @@
 import GamePlayController.GameController;
+import GamePlayModel.GameModel;
+import GamePlayView.CardsExchangeView;
+import GamePlayView.GamePhaseView;
+import GamePlayView.PlayerDominationView;
 import MapEditor.MapHandler;
 
 import java.util.Scanner;
@@ -24,9 +28,19 @@ public class RiskGame {
 
         MapHandler mapHandler = new MapHandler();
         GameController gameController = new GameController();
-        Scanner input = new Scanner(System.in);
-        gameController.getGame().setPhase("MapEditor");
+        GameModel game = gameController.getGame();
+        GamePhaseView gamePhaseView = new GamePhaseView();
+        CardsExchangeView cardsExchangeView = new CardsExchangeView();
+        PlayerDominationView playerDominationView = new PlayerDominationView();
+
+        game.addObserver(gamePhaseView);
+        game.addObserver(cardsExchangeView);
+        game.addObserver(playerDominationView);
+
+        game.setPhase("MapEditor");
         System.out.println("Phase> "+gameController.getGame().getPhase()+"> Please enter command");
+
+        Scanner input = new Scanner(System.in);
         while(input.hasNext()){
             String command= input.nextLine();
             if (command.equals("start game play")) {
