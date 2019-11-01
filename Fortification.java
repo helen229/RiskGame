@@ -4,10 +4,8 @@ import java.util.ArrayList;
 
 import MapEditorModel.CountryModel;
 
-public class Fortification {
-
-	
 	/**
+	* This is a method on game model class
      * This method allows a player to fortify a country with armies from another related country
      */
 
