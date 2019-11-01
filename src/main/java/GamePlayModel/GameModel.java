@@ -214,9 +214,15 @@ public class GameModel extends Observable {
                             System.out.println("You already place All your army! please start Reinforcement phase");
                             this.setPhase("Reinforcement");
                             System.out.println("Phase> "+this.getPhase());
-                            System.out.println("You have 0 Reinforcement army! Please start Fortification phase");
-                            this.setPhase("Fortification");
-                            System.out.println("Phase> "+this.getPhase());
+                            if (currentPlayer.getCardList().size()==0) {
+                                System.out.println("You have 0 Reinforcement army!");
+                                System.out.println("You have 0 Card! Please start Attack phase");
+                                this.setPhase("Attack");
+                                System.out.println("Phase> "+this.getPhase());
+                                if (!checkAttackChance()){
+                                    stopAttack();
+                                }
+                            }
                         } else {
                             System.out.println("You already place All your army! Please start Reinforcement phase");
                             System.out.println(currentPlayer.getPlayerName() + " has " + currentPlayer.getNumReinforceArmyRemainPlace()+" reinforcement.");
@@ -259,10 +265,14 @@ public class GameModel extends Observable {
             System.out.println("Phase> "+this.getPhase());
             currentPlayer.setTotalNumReinforceArmy(currentPlayer.getPlayerCountries().size()/3);
             currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getTotalNumReinforceArmy());
-            if(currentPlayer.getNumReinforceArmyRemainPlace()==0) {
-                System.out.println("You have 0 Reinforcement army! Please start Fortification phase");
-                this.setPhase("Fortification");
+            if ((currentPlayer.getNumReinforceArmyRemainPlace()==0)&&(currentPlayer.getCardList().size()==0)) {
+                System.out.println("You have 0 Reinforcement army!");
+                System.out.println("You have 0 Card! Please start Attack phase");
+                this.setPhase("Attack");
                 System.out.println("Phase> "+this.getPhase());
+                if (!checkAttackChance()){
+                    stopAttack();
+                }
             } else {
                 System.out.println(currentPlayer.getPlayerName() + " has " + currentPlayer.getNumReinforceArmyRemainPlace()+" reinforcement.");
             }
