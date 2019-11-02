@@ -18,17 +18,17 @@ public class GamePhaseView implements Observer {
         }
 
         String mapeditor = "The actions of this phase are: \nLoad map file \nEdit the game player " +
-                "\nAssign the countries \nPlace the armies\n***************PhaseView*******************\n";
+                "\nAssign the countries \nPlace the armies\n*************** PhaseView *******************\n";
         String startup = "The actions of this phase are: \nLoad map file \nEdit the game player " +
-                "\nAssign the countries \nPlace the armies\n***************PhaseView*******************\n";
+                "\nAssign the countries \nPlace the armies\n*************** PhaseView *******************\n";
         String reinforcement = "The actions of this phase are: \nReinforce the country \nExchange the cards" +
-                "\n***************PhaseView*******************\n";
+                "\n*************** PhaseView *******************\n";
         String attack = "The actions of this phase are: \nLoad map file \nEdit the game player " +
-                "\nAssign the countries \nPlace the armies\n***************PhaseView*******************\n";
+                "\nAssign the countries \nPlace the armies\n*************** PhaseView *******************\n";
         String fortification = "The actions of this phase are: \nLoad map file \nEdit the game player " +
-                "\nAssign the countries \nPlace the armies\n***************PhaseView*******************\n";
+                "\nAssign the countries \nPlace the armies\n*************** PhaseView *******************\n";
 
-        System.out.println("\n***************PhaseView*******************\nCurrent Phase is: "+phase);
+        System.out.println("\n*************** PhaseView *******************\nCurrent Phase is: "+phase);
         System.out.println("Current Player is: "+player);
         switch (phase) {
             case "MapEditor":

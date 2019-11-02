@@ -28,8 +28,8 @@ public class GameModel extends Observable {
     CountryModel attackerCountry;
     //To make sure attack move command only can run when this flag is true
     boolean ifAttackerWin=false;
-    //To prevent attack declare in the allout mode
-    boolean ifAttackAllOut=false;
+//    //To prevent attack declare in the allout mode
+//    boolean ifAttackAllOut=false;
     //To check if the current player can get a card
     boolean hasPlayerConquered=false;
 
@@ -345,8 +345,9 @@ public class GameModel extends Observable {
         CountryModel attackCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(attackCountryName));
         PlayerModel defender=defendCountry.getOwner();
         PlayerModel attacker=attackCountry.getOwner();
-        if (ifAttackAllOut && !fromAllOut){
-            System.out.println("The attack command is invalid! it's attack all out mode");
+        //make sure only the winner move command will be run after player conquered one country
+        if (ifAttackerWin){
+            System.out.println("Please move the army first");
             return false;
         }
         //check if the attack country belong to the current player
@@ -377,16 +378,29 @@ public class GameModel extends Observable {
         this.defenderCountry = defendCountry;
         this.attackerCountry = attackCountry;
         System.out.println("Attack declare Valid! "+defender.getPlayerName() + " please set up your dice number");
+        if (fromAllOut){
+            diceNum = 0;
+            if (defenderCountry.getArmyNum()>1){
+                diceNum = 2;
+            }else if (defenderCountry.getArmyNum()==1){
+                diceNum = 1;
+            }
+            defendDiceNum(diceNum);
+        }
         return true;
     }
 
     public void defendDiceNum(int diceNum) {
 
+        //make sure only the winner move command will be run after player conquered one country
+        if (ifAttackerWin){
+            System.out.println("Please move the army first");
+            return;
+        }
+
         if (attackerDice.isEmpty()||this.attackerCountry==null){
             System.out.println("Please declare the attacker dice number first");
         }else if (defenderCountry.getArmyNum()>=diceNum && diceNum<3  && diceNum>0){
-            if (ifAttackAllOut)
-                attackAllOut(attackerCountry.getCountryName(),defenderCountry.getCountryName());
             attackProcess(generateDiceNum(diceNum));
         }else {
             System.out.println("The dice number is invalid");
@@ -398,7 +412,7 @@ public class GameModel extends Observable {
 
         CountryModel attackCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(attackCountryName));
         int diceNum=0;
-        if (!ifAttackerWin){
+        while (!ifAttackerWin){
             if (attackCountry.getArmyNum()>3){
                 diceNum=3;
             }else if (attackCountry.getArmyNum()==3){
@@ -409,8 +423,8 @@ public class GameModel extends Observable {
                 System.out.println("The attack country can't attack!");
                 return;
             }
-            if (attackDiceNum(attackCountryName,defendCountryName, diceNum, true))
-                ifAttackAllOut = true;
+            if (!attackDiceNum(attackCountryName,defendCountryName, diceNum, true))
+                break;
         }
 
     }
@@ -456,19 +470,14 @@ public class GameModel extends Observable {
             hasPlayerConquered = true;
         }else {
             System.out.println("Attack done");
-            if (ifAttackAllOut){
-                attackerDice.isEmpty();
-            }else{
-                this.defenderCountry = null;
-                this.attackerCountry = null;
-                attackerDice.isEmpty();
-            }
+            if (!checkAttackChance())
+                stopAttack();
+
+            this.defenderCountry = null;
+            this.attackerCountry = null;
+            attackerDice.isEmpty();
 
         }
-
-        if (!checkAttackChance())
-            stopAttack();
-
 
     }
 
@@ -494,7 +503,6 @@ public class GameModel extends Observable {
         }
         if (attackerCountry.getArmyNum() == 1){
             System.out.println(attackerCountry.getCountryName()+" can't attack anymore!");
-            ifAttackAllOut = false;
         }
         return attackerWin;
     }
@@ -512,8 +520,9 @@ public class GameModel extends Observable {
         defenderCountry.addArmyNum(num);
         attackerCountry.reduceArmyNum(num);
         System.out.println("Moved the Armies to conquered Country");
+        if (!checkAttackChance())
+            stopAttack();
         ifAttackerWin=false;
-        ifAttackAllOut = false;
         this.defenderCountry = null;
         this.attackerCountry = null;
 
@@ -739,5 +748,13 @@ public class GameModel extends Observable {
         this.phase = phase;
         setChanged();
         notifyObservers("PhaseView");
+    }
+
+    public MapModel getMapModel() {
+        return mapModel;
+    }
+
+    public ArrayList<PlayerModel> getPlayerList() {
+        return playerList;
     }
 }

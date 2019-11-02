@@ -2,6 +2,7 @@ package GamePlayModel;
 
 import MapEditorModel.CountryModel;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 /**
@@ -152,5 +153,17 @@ public class PlayerModel {
 
     public void removeCard(Card card) {
         this.cardList.remove(card);
+    }
+
+    /**
+     * get the percentage of the map controlled by player
+     */
+    public String percentageOfmap(int totalCountriesNum) {
+        String percent = "";
+        NumberFormat numberFormat = NumberFormat.getInstance();
+        numberFormat.setMaximumFractionDigits(2);
+        int ownerCountryNum = this.playerCountries.size();
+        percent = numberFormat.format((float) ownerCountryNum / (float) totalCountriesNum * 100);
+        return percent;
     }
 }
