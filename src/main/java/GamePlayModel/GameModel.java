@@ -212,33 +212,27 @@ public class GameModel extends Observable {
                     }else {
                         currentPlayer.setTotalNumReinforceArmy(currentPlayer.getPlayerCountries().size()/3);
                         currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getTotalNumReinforceArmy());
-                        if(currentPlayer.getNumReinforceArmyRemainPlace()==0) {
-                            System.out.println("You already place All your army! please start Reinforcement phase");
-                            this.setPhase("Reinforcement");
-                            System.out.println("Phase> "+this.getPhase());
+                        System.out.println("You already place All your army! please start Reinforcement phase");
+                        this.setPhase("Reinforcement");
+                        System.out.println("Phase> "+this.getPhase());
+                        if (currentPlayer.getCardList().size()!=0) {
                             //show the card view in the beginning of the Reinforcement
                             setChanged();
                             notifyObservers("CardsView");
-                            if (currentPlayer.getCardList().size()<3) {
-                                System.out.println("You have 0 Reinforcement army!");
-                                System.out.println("You have "+currentPlayer.getCardList().size()+" Card(s)! Please start Attack phase");
-                                this.setPhase("Attack");
-                                System.out.println("Phase> "+this.getPhase());
-                                if (!checkAttackChance()){
-                                    stopAttack();
-                                }
-                                //show the domin view in the beginning of the Attack
-                                setChanged();
-                                notifyObservers("DominView");
+                        }
+                        if((currentPlayer.getNumReinforceArmyRemainPlace()==0)&&(currentPlayer.getCardList().size()<3)) {
+                            System.out.println("You have 0 Reinforcement army!");
+                            System.out.println("You have "+currentPlayer.getCardList().size()+" Card(s)! Please start Attack phase");
+                            this.setPhase("Attack");
+                            System.out.println("Phase> "+this.getPhase());
+                            if (!checkAttackChance()){
+                                stopAttack();
                             }
-                        } else {
-                            System.out.println("You already place All your army! Please start Reinforcement phase");
-                            System.out.println(currentPlayer.getPlayerName() + " has " + currentPlayer.getNumReinforceArmyRemainPlace()+" reinforcement.");
-                            this.setPhase("Reinforcement");
-                            System.out.println("Phase> "+this.getPhase());
-                            //show the card view in the beginning of the Reinforcement
+                            //show the domin view in the beginning of the Attack
                             setChanged();
-                            notifyObservers("CardsView");
+                            notifyObservers("DominView");
+                        } else {
+                            System.out.println(currentPlayer.getPlayerName() + " has " + currentPlayer.getNumReinforceArmyRemainPlace()+" reinforcement.");
                         }
                     }
                 }else {
@@ -274,9 +268,11 @@ public class GameModel extends Observable {
             System.out.println("You already place All your army! Please start Reinforcement phase");
             this.setPhase("Reinforcement");
             System.out.println("Phase> "+this.getPhase());
-            //show the card view in the beginning of the Reinforcement
-            setChanged();
-            notifyObservers("CardsView");
+            if (currentPlayer.getCardList().size()!=0) {
+                //show the card view in the beginning of the Reinforcement
+                setChanged();
+                notifyObservers("CardsView");
+            }
             currentPlayer.setTotalNumReinforceArmy(currentPlayer.getPlayerCountries().size()/3);
             currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getTotalNumReinforceArmy());
             //TODO:this part need to change, the card size should be <= 3
@@ -320,17 +316,19 @@ public class GameModel extends Observable {
                     country.setArmyNum(country.getArmyNum()+number);
                     System.out.println("Place Reinforcement Army Succeed! "+ currentPlayer.getPlayerName() + " left " + currentPlayer.getNumReinforceArmyRemainPlace());
                 }
-                if((armyLeft==0)&&(currentPlayer.getCardList().size()==0)) {
+                if(armyLeft==0) {
                     System.out.println("You already place All your Reinforcement army!");
-                    System.out.println("You have 0 Card! Please start Attack phase");
-                    this.setPhase("Attack");
-                    System.out.println("Phase> "+this.getPhase());
-                    if (!checkAttackChance()){
-                        stopAttack();
+                    if (currentPlayer.getCardList().size()<3){
+                        System.out.println("You have "+currentPlayer.getCardList().size()+" Card(s)! Please start Attack phase");
+                        this.setPhase("Attack");
+                        System.out.println("Phase> "+this.getPhase());
+                        if (!checkAttackChance()){
+                            stopAttack();
+                        }
+                        //show the domin view in the beginning of the Attack
+                        setChanged();
+                        notifyObservers("DominView");
                     }
-                    //show the domin view in the beginning of the Attack
-                    setChanged();
-                    notifyObservers("DominView");
                 }
             }else {
                 System.out.println("Not your country! please try again");
