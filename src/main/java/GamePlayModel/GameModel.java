@@ -228,6 +228,9 @@ public class GameModel extends Observable {
                             System.out.println(currentPlayer.getPlayerName() + " has " + currentPlayer.getNumReinforceArmyRemainPlace()+" reinforcement.");
                             this.setPhase("Reinforcement");
                             System.out.println("Phase> "+this.getPhase());
+                            //show the card view in the beginning of the Reinforcement
+                            setChanged();
+                            notifyObservers("CardsView");
                         }
                     }
                 }else {
@@ -263,8 +266,12 @@ public class GameModel extends Observable {
             System.out.println("You already place All your army! Please start Reinforcement phase");
             this.setPhase("Reinforcement");
             System.out.println("Phase> "+this.getPhase());
+            //show the card view in the beginning of the Reinforcement
+            setChanged();
+            notifyObservers("CardsView");
             currentPlayer.setTotalNumReinforceArmy(currentPlayer.getPlayerCountries().size()/3);
             currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getTotalNumReinforceArmy());
+            //TODO:this part need to change, the card size should be <= 3
             if ((currentPlayer.getNumReinforceArmyRemainPlace()==0)&&(currentPlayer.getCardList().size()==0)) {
                 System.out.println("You have 0 Reinforcement army!");
                 System.out.println("You have 0 Card! Please start Attack phase");
