@@ -321,11 +321,20 @@ public class GameModel extends Observable {
     }
 
     public void exchangeCards(int cardOne, int cardTwo, int cardThree){
-
+        if ((currentPlayer.getCardList().size()!=0)&&(cardOne>=0)&&(cardTwo>=0)&&(cardThree>=0)){
+            notifyObservers("CardsView");
+            
+        } else {
+            System.out.println("Invalid input number as card identifier.");
+        }
     }
 
 
     public void exchangeCardsNone(){
+        if (currentPlayer.getCardList().size()>=5) {
+            notifyObservers("CardsView");
+            System.out.println(currentPlayer.getPlayerName()+" has "+ currentPlayer.getCardList().size() + " cards. Exchange cards is a must.");
+        }
 
     }
 
