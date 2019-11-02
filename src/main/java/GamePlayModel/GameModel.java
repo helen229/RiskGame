@@ -302,8 +302,9 @@ public class GameModel extends Observable {
                     country.setArmyNum(country.getArmyNum()+number);
                     System.out.println("Place Reinforcement Army Succeed! "+ currentPlayer.getPlayerName() + " left " + currentPlayer.getNumReinforceArmyRemainPlace());
                 }
-                if(armyLeft==0) {
-                    System.out.println("You already place All your Reinforcement army! please start Attack phase");
+                if((armyLeft==0)&&(currentPlayer.getCardList().size()==0)) {
+                    System.out.println("You already place All your Reinforcement army!");
+                    System.out.println("You have 0 Card! Please start Attack phase");
                     this.setPhase("Attack");
                     System.out.println("Phase> "+this.getPhase());
                     if (!checkAttackChance()){
