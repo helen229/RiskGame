@@ -280,6 +280,9 @@ public class GameModel extends Observable {
                 if (!checkAttackChance()){
                     stopAttack();
                 }
+                //show the domin view in the beginning of the Attack
+                setChanged();
+                notifyObservers("DominView");
             } else {
                 System.out.println(currentPlayer.getPlayerName() + " has " + currentPlayer.getNumReinforceArmyRemainPlace()+" reinforcement.");
             }
@@ -317,6 +320,9 @@ public class GameModel extends Observable {
                     if (!checkAttackChance()){
                         stopAttack();
                     }
+                    //show the domin view in the beginning of the Attack
+                    setChanged();
+                    notifyObservers("DominView");
                 }
             }else {
                 System.out.println("Not your country! please try again");
