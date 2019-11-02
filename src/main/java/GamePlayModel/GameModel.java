@@ -22,6 +22,7 @@ public class GameModel extends Observable {
     ArrayList<PlayerModel> playerList;
     PlayerModel currentPlayer;
     int currentPlayerNum;
+    int currentExchangeTry;
     String phase;
     ArrayList<Integer> attackerDice;
     CountryModel defenderCountry;
@@ -39,6 +40,7 @@ public class GameModel extends Observable {
         this.playerList = new ArrayList<>();
         this.attackerDice = new ArrayList<>();
         this.currentPlayerNum=0;
+        this.currentExchangeTry=1;
         defenderCountry = null;
         attackerCountry = null;
     }
@@ -272,9 +274,9 @@ public class GameModel extends Observable {
             currentPlayer.setTotalNumReinforceArmy(currentPlayer.getPlayerCountries().size()/3);
             currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getTotalNumReinforceArmy());
             //TODO:this part need to change, the card size should be <= 3
-            if ((currentPlayer.getNumReinforceArmyRemainPlace()==0)&&(currentPlayer.getCardList().size()==0)) {
+            if ((currentPlayer.getNumReinforceArmyRemainPlace()==0)&&(currentPlayer.getCardList().size()<3)) {
                 System.out.println("You have 0 Reinforcement army!");
-                System.out.println("You have 0 Card! Please start Attack phase");
+                System.out.println("You have "+currentPlayer.getCardList().size()+" Card(s)! Please start Attack phase");
                 this.setPhase("Attack");
                 System.out.println("Phase> "+this.getPhase());
                 if (!checkAttackChance()){
@@ -334,11 +336,40 @@ public class GameModel extends Observable {
     }
 
     public void exchangeCards(int cardOne, int cardTwo, int cardThree){
-        if ((currentPlayer.getCardList().size()!=0)&&(cardOne>=0)&&(cardTwo>=0)&&(cardThree>=0)){
-            notifyObservers("CardsView");
+        if (currentPlayer.getCardList().size()>=3)
+                if ((cardOne>=0)&&(cardOne<=currentPlayer.getCardList().size())&&
+                (cardTwo>=0)&&(cardTwo<=currentPlayer.getCardList().size())&&
+                (cardThree>=0)&&(cardThree<=currentPlayer.getCardList().size())&&
+                (cardOne!=cardThree)&&(cardOne!=cardTwo)&&(cardTwo!=cardThree)){
+                    currentPlayer.setNumReinforceArmyRemainPlace(currentExchangeTry*5);
+                    
+                    Card card = currentPlayer.getCardList().get(cardOne);
+                    CardType cardType = card.getCardType();
+                    currentPlayer.removeCard(card);
+                    System.out.println("You echanged your "+cardType+" card.");
+                    
+                    card = currentPlayer.getCardList().get(cardTwo);
+                    cardType = card.getCardType();
+                    currentPlayer.removeCard(card);
+                    System.out.println("You echanged your "+cardType+" card.");
+                    
+                    card = currentPlayer.getCardList().get(cardThree);
+                    cardType = card.getCardType();
+                    currentPlayer.removeCard(card);
+                    System.out.println("You echanged your "+cardType+" card.");
+                    
+                    System.out.println("You recived "+(currentExchangeTry*5)+" new Reinforcement armies.");
+                    System.out.println(currentPlayer.getPlayerName() + " has now " + currentPlayer.getNumReinforceArmyRemainPlace()+" Reinforcement armies.");
+                    currentExchangeTry++;
+                    setChanged();
+                    notifyObservers("CardsView");
+                }
+                else {
+                    System.out.println("Invalid input number as card identifier.");
+                }
             
-        } else {
-            System.out.println("Invalid input number as card identifier.");
+        else {
+            System.out.println("You do not have enough cards.");
         }
     }
 
@@ -753,6 +784,21 @@ public class GameModel extends Observable {
         }
 
     } 
+    
+    /**
+     * This method sets the Current Exchange Try number
+     */
+    public void setCurrentExchangeTry (int currentExchangeTry){
+        this.currentExchangeTry = currentExchangeTry;
+    }
+    
+    /**
+     * This method returns the Current Exchange Try number
+     */
+    public int getCurrentExchangeTry (){
+        return currentExchangeTry;
+    }
+    
     /**
      * This method returns the current Player
      */
