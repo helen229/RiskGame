@@ -216,14 +216,20 @@ public class GameModel extends Observable {
                             System.out.println("You already place All your army! please start Reinforcement phase");
                             this.setPhase("Reinforcement");
                             System.out.println("Phase> "+this.getPhase());
-                            if (currentPlayer.getCardList().size()==0) {
+                            //show the card view in the beginning of the Reinforcement
+                            setChanged();
+                            notifyObservers("CardsView");
+                            if (currentPlayer.getCardList().size()<3) {
                                 System.out.println("You have 0 Reinforcement army!");
-                                System.out.println("You have 0 Card! Please start Attack phase");
+                                System.out.println("You have "+currentPlayer.getCardList().size()+" Card(s)! Please start Attack phase");
                                 this.setPhase("Attack");
                                 System.out.println("Phase> "+this.getPhase());
                                 if (!checkAttackChance()){
                                     stopAttack();
                                 }
+                                //show the domin view in the beginning of the Attack
+                                setChanged();
+                                notifyObservers("DominView");
                             }
                         } else {
                             System.out.println("You already place All your army! Please start Reinforcement phase");
@@ -376,7 +382,6 @@ public class GameModel extends Observable {
 
     public void exchangeCardsNone(){
         if (currentPlayer.getCardList().size()>=5) {
-            notifyObservers("CardsView");
             System.out.println(currentPlayer.getPlayerName()+" has "+ currentPlayer.getCardList().size() + " cards. Exchange cards is a must.");
         }
 
