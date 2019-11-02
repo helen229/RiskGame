@@ -58,10 +58,3 @@ public class RiskGame {
     }
 
 }
-//    start game play
-//        loadmap test.txt
-//        gameplayer -add playername1
-//        gameplayer -add playername2
-//        gameplayer -add playername3
-//        populatecountries
-//        showmap

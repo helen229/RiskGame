@@ -15,11 +15,13 @@ public class PlayerDominationView implements Observer {
         ArrayList<PlayerModel> playerList = ((GameModel)obs).getPlayerList();
         MapModel mapModel = ((GameModel)obs).getMapModel();
 
+        String head = "*************** Domination View *******************";
+        System.out.println(head);
         for (PlayerModel player:playerList) {
-
-            System.out.println(player.percentageOfmap(mapModel.getTotalCountries()));
-
-            System.out.println(player.getTotalNumArmy());
+            System.out.println(player.getPlayerName()+"'s percentage of map "
+                    +player.percentageOfmap(mapModel.getTotalCountries())+ "%");
+            System.out.println(player.getPlayerName()+"'s total army number "+player.getTotalNumArmy());
         }
+        System.out.println(head);
     };
 }
