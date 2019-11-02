@@ -524,8 +524,9 @@ public class GameModel extends Observable {
             System.out.println("Invalid command");
             return;
         }
-        else if (num > attackerCountry.getArmyNum()-1 && num>0) {
-            System.out.println("the army number should between 1 to" + (attackerCountry.getArmyNum()-1));
+        else if (num > attackerCountry.getArmyNum()-1 || num < attackerDice.size()) {
+            System.out.println("the army number should between "+attackerDice.size()+
+                    " to " + (attackerCountry.getArmyNum()-1));
             return;
         }
         defenderCountry.addArmyNum(num);
