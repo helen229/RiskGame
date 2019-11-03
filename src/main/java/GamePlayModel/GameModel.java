@@ -706,6 +706,10 @@ public class GameModel extends Observable {
         System.out.println(getCurrentPlayer().getPlayerName()+" Your turn over!");
         if (this.currentPlayerNum+1<this.playerList.size()){
             this.currentPlayerNum++;
+            while (this.playerList.get(this.currentPlayerNum).playerCountries.isEmpty()&&
+                    this.currentPlayerNum+1<this.playerList.size()){
+                this.currentPlayerNum++;
+            }
         }else{
             this.currentPlayerNum = 0;
         }
