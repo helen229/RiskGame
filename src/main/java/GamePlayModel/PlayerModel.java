@@ -76,7 +76,8 @@ public class PlayerModel {
         }
         for (ContinentModel continent:continentList ){
             if (counter.containsKey(continent.getContinentName())){
-                if (counter.get(continent.getContinentName())==continent.getCountriesSize()){
+                if (counter.get(continent.getContinentName())==continent.getCountriesSize() &&
+                !this.playerContinents.contains(continent)){
                     //The continent is controlled by this player
                     this.playerContinents.add(continent);
                 }

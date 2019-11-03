@@ -22,7 +22,7 @@ public class PlayerDominationView implements Observer {
             System.out.println(player.getPlayerName());
             System.out.println("The percentage of map: "+player.percentageOfmap(mapModel.getTotalCountries())+ "%");
             System.out.println("The Continents controlled: " + player.getPlayerContinents());
-            System.out.println("The total army number: "+player.getTotalNumArmy());
+            System.out.println("The total army number: "+player.getTotalNumArmy()+"\n");
         }
         System.out.println(head);
     };
