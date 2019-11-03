@@ -54,8 +54,8 @@ public class MapHandler {
                     break;
 
             }
-        }catch(ArrayIndexOutOfBoundsException e){
-            System.out.println("Arguments number invalid");
+        }catch(Exception e){
+            System.out.println(e);
         }
 
     }

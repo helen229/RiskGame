@@ -17,8 +17,8 @@ public class MapModel {
     /** The country list. */
     private ArrayList<CountryModel> countryList;
 
-    /** The map valid or not */
-    private boolean isValid = true;
+//    /** The map valid or not */
+//    private boolean isValid = true;
 
     /**
      * Constructor for the MapModel
@@ -50,6 +50,7 @@ public class MapModel {
      * @return is valid or not
      */
     public boolean isValid(){
+        boolean isValid = true;
         ArrayList<String> invalidContinent = new ArrayList<String>();
         for (ContinentModel continent:this.continentList) {
 
@@ -73,10 +74,11 @@ public class MapModel {
             }
 
         }
-        if (!isValid)
-            System.out.println(invalidContinent+" is not valid");
-        else
+        if (isValid)
             System.out.println("Map is valid");
+        else
+            System.out.println(invalidContinent+" is not valid");
+
        return isValid;
     }
 
@@ -417,14 +419,6 @@ public class MapModel {
     }
 
     /**
-     * flag for the map validation
-     * @return
-     */
-    public boolean isMapValid() {
-        return isValid;
-    }
-
-    /**
      * is the add validate
      * @param continentName
      * @param continentValue
@@ -463,11 +457,5 @@ public class MapModel {
 
     }
 
-    /**
-     * set the valid flag
-     * @param valid
-     */
-    public void setValid(boolean valid) {
-        isValid = valid;
-    }
+
 }

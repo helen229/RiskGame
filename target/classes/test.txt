@@ -1,28 +1,30 @@
  
 [continents]
-continentname 0
+continentname0 0
 continentname1 1
 continentname2 2
 continentname3 3
 
 [countries]
-0 countryname continentname
-1 countryname1 continentname
-2 countryname2 continentname
-3 countryname3 continentname
-4 countryname4 continentname
-5 countryname5 continentname
-6 countryname6 continentname2
-7 countryname8 continentname1
-8 countryname9 continentname1
+0 countryname0 continentname0
+1 countryname1 continentname0
+2 countryname2 continentname0
+3 countryname3 continentname0
+4 countryname4 continentname1
+5 countryname5 continentname1
+6 countryname6 continentname3
+7 countryname7 continentname3
+8 countryname8 continentname2
+9 countryname9 continentname2
 
 [borders]
-0 1
+0 1 2
 1 0 2
-2 1 3
+2 0 1 3 7
 3 2 4
 4 3 5
 5 6 4
-6 5
-7 8
-8 7
+6 5 7
+7 2 6 8
+8 7 9
+9 8
