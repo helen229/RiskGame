@@ -136,4 +136,9 @@ public class CountryModel {
     public void reduceArmyNum(int num) {
         this.armyNum= this.armyNum - num;
     }
+
+    @Override
+    public String toString() {
+        return (this.getCountryName());
+    }
 }

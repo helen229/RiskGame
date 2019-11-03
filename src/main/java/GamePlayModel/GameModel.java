@@ -239,7 +239,7 @@ public class GameModel extends Observable {
     public void startReinforcement() {
         currentPlayer.setTotalNumReinforceArmy(currentPlayer.getPlayerCountries().size()/3);
         currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getTotalNumReinforceArmy());
-        System.out.println("You already place All your army! please start Reinforcement phase");
+        System.out.println(currentPlayer.getPlayerName()+" You already place All your army! please start Reinforcement phase");
         this.setPhase("Reinforcement");
         System.out.println("Phase> "+this.getPhase());
         if (currentPlayer.getCardList().size()!=0) {
@@ -540,7 +540,6 @@ public class GameModel extends Observable {
             System.out.println("Attack done");
             if (!checkAttackChance())
                 stopAttack();
-
             this.defenderCountry = null;
             this.attackerCountry = null;
             attackerDice.isEmpty();
@@ -571,6 +570,9 @@ public class GameModel extends Observable {
         }
         if (attackerCountry.getArmyNum() == 1){
             System.out.println(attackerCountry.getCountryName()+" can't attack anymore!");
+            //show the domin view in the end when attack done
+            setChanged();
+            notifyObservers("DominView");
         }
         return attackerWin;
     }
