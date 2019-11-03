@@ -341,37 +341,37 @@ public class GameModel extends Observable {
 
     public void exchangeCards(int cardOne, int cardTwo, int cardThree){
         if (currentPlayer.getCardList().size()>=3)
-                if ((cardOne>=0)&&(cardOne<=currentPlayer.getCardList().size())&&
-                (cardTwo>=0)&&(cardTwo<=currentPlayer.getCardList().size())&&
-                (cardThree>=0)&&(cardThree<=currentPlayer.getCardList().size())&&
-                (cardOne!=cardThree)&&(cardOne!=cardTwo)&&(cardTwo!=cardThree)){
-                    currentPlayer.setNumReinforceArmyRemainPlace(currentExchangeTry*5);
-                    
-                    Card card = currentPlayer.getCardList().get(cardOne);
-                    CardType cardType = card.getCardType();
-                    currentPlayer.removeCard(card);
-                    System.out.println("You echanged your "+cardType+" card.");
-                    
-                    card = currentPlayer.getCardList().get(cardTwo);
-                    cardType = card.getCardType();
-                    currentPlayer.removeCard(card);
-                    System.out.println("You echanged your "+cardType+" card.");
-                    
-                    card = currentPlayer.getCardList().get(cardThree);
-                    cardType = card.getCardType();
-                    currentPlayer.removeCard(card);
-                    System.out.println("You echanged your "+cardType+" card.");
-                    
-                    System.out.println("You recived "+(currentExchangeTry*5)+" new Reinforcement armies.");
-                    System.out.println(currentPlayer.getPlayerName() + " has now " + currentPlayer.getNumReinforceArmyRemainPlace()+" Reinforcement armies.");
-                    currentExchangeTry++;
-                    setChanged();
-                    notifyObservers("CardsView");
-                }
-                else {
-                    System.out.println("Invalid input number as card identifier.");
-                }
-            
+            if ((cardOne>=0)&&(cardOne<=currentPlayer.getCardList().size())&&
+            (cardTwo>=0)&&(cardTwo<=currentPlayer.getCardList().size())&&
+            (cardThree>=0)&&(cardThree<=currentPlayer.getCardList().size())&&
+            (cardOne!=cardThree)&&(cardOne!=cardTwo)&&(cardTwo!=cardThree)){
+                currentPlayer.setNumReinforceArmyRemainPlace(currentExchangeTry*5);
+
+                Card card = currentPlayer.getCardList().get(cardOne);
+                CardType cardType = card.getCardType();
+                currentPlayer.removeCard(card);
+                System.out.println("You echanged your "+cardType+" card.");
+
+                card = currentPlayer.getCardList().get(cardTwo);
+                cardType = card.getCardType();
+                currentPlayer.removeCard(card);
+                System.out.println("You echanged your "+cardType+" card.");
+
+                card = currentPlayer.getCardList().get(cardThree);
+                cardType = card.getCardType();
+                currentPlayer.removeCard(card);
+                System.out.println("You echanged your "+cardType+" card.");
+
+                System.out.println("You recived "+(currentExchangeTry*5)+" new Reinforcement armies.");
+                System.out.println(currentPlayer.getPlayerName() + " has now " + currentPlayer.getNumReinforceArmyRemainPlace()+" Reinforcement armies.");
+                currentExchangeTry++;
+                setChanged();
+                notifyObservers("CardsView");
+            }
+            else {
+                System.out.println("Invalid input number as card identifier.");
+            }
+
         else {
             System.out.println("You do not have enough cards.");
         }
@@ -593,8 +593,11 @@ public class GameModel extends Observable {
         ifAttackerWin=false;
         this.defenderCountry = null;
         this.attackerCountry = null;
-
+        //show the domin view in the end when a country conquered
+        setChanged();
+        notifyObservers("DominView");
     }
+
 
     public void stopAttack(){
         //set the to the next phase

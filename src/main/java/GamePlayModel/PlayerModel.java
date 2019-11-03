@@ -1,9 +1,12 @@
 package GamePlayModel;
 
+import MapEditorModel.ContinentModel;
 import MapEditorModel.CountryModel;
+import MapEditorModel.MapModel;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This class  defines the characteristics of a class
@@ -11,18 +14,19 @@ import java.util.ArrayList;
 
 public class PlayerModel {
     String PlayerName;
-//    int id;
     int totalNumArmy;
     int numArmyRemainPlace;
     int totalNumReinforceArmy;
     int NumReinforceArmyRemainPlace;
     ArrayList<CountryModel> playerCountries;
+    ArrayList<ContinentModel> playerContinents;
     ArrayList<Card> cardList;
 
 
     public PlayerModel(String playerName) {
         PlayerName = playerName;
         playerCountries = new ArrayList<>();
+        playerContinents = new ArrayList<>();
         cardList = new ArrayList<>();
     }
 
@@ -51,18 +55,36 @@ public class PlayerModel {
         return playerCountries;
     }
 
-    /**
-     * This method sets the list of countries that belong to the player.
-     * @param playerCountries
-     */
-    public void setPlayerCountries(ArrayList<CountryModel> playerCountries) {
-        this.playerCountries = playerCountries;
-    }
-
     public void addPlayerCountries(CountryModel country){
         playerCountries.add(country);
-    } 
-     /**
+    }
+
+    public ArrayList<ContinentModel> getPlayerContinents() {
+        return playerContinents;
+    }
+
+    public void checkPlayerContinents(ArrayList<ContinentModel> continentList) {
+        HashMap<String, Integer> counter = new  HashMap<String, Integer>();
+        for (CountryModel country:playerCountries) {
+            String continent = country.getContinentName();
+            if (counter.containsKey(continent)){
+                counter.replace(continent,counter.get(continent)+1);
+            }
+            else {
+                counter.put(continent,1);
+            }
+        }
+        for (ContinentModel continent:continentList ){
+            if (counter.containsKey(continent.getContinentName())){
+                if (counter.get(continent.getContinentName())==continent.getCountriesSize()){
+                    //The continent is controlled by this player
+                    this.playerContinents.add(continent);
+                }
+            }
+        }
+    }
+
+    /**
      *  This method returns the total number of armies.
      *
      */

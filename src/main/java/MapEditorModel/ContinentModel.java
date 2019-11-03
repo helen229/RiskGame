@@ -96,4 +96,8 @@ public class ContinentModel {
 
         this.countriesList = countriesList;
     }
+
+    public int getCountriesSize() {
+        return this.countriesList.size();
+    }
 }
