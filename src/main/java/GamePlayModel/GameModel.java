@@ -210,29 +210,15 @@ public class GameModel extends Observable {
                         country.addArmyNum();
                         System.out.println("Place Army Succeed! "+ currentPlayer.getPlayerName() + " left " + currentPlayer.getNumArmyRemainPlace() );
                     }else {
-                        currentPlayer.setTotalNumReinforceArmy(currentPlayer.getPlayerCountries().size()/3);
-                        currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getTotalNumReinforceArmy());
-                        System.out.println("You already place All your army! please start Reinforcement phase");
-                        this.setPhase("Reinforcement");
-                        System.out.println("Phase> "+this.getPhase());
-                        if (currentPlayer.getCardList().size()!=0) {
-                            //show the card view in the beginning of the Reinforcement
-                            setChanged();
-                            notifyObservers("CardsView");
-                        }
-                        if((currentPlayer.getNumReinforceArmyRemainPlace()==0)&&(currentPlayer.getCardList().size()<3)) {
-                            System.out.println("You have 0 Reinforcement army!");
-                            System.out.println("You have "+currentPlayer.getCardList().size()+" Card(s)! Please start Attack phase");
-                            this.setPhase("Attack");
-                            System.out.println("Phase> "+this.getPhase());
-                            if (!checkAttackChance()){
-                                stopAttack();
-                            }
-                            //show the domin view in the beginning of the Attack
-                            setChanged();
-                            notifyObservers("DominView");
-                        } else {
-                            System.out.println(currentPlayer.getPlayerName() + " has " + currentPlayer.getNumReinforceArmyRemainPlace()+" reinforcement.");
+                        if (this.currentPlayerNum+1<this.playerList.size()){
+                            this.currentPlayerNum++;
+                            setCurrentPlayer(this.playerList.get(this.currentPlayerNum));
+                            System.out.println("Now is "+currentPlayer.getPlayerName()+" start to place army!");
+                        }else{
+                            this.currentPlayerNum = 0;
+                            setCurrentPlayer(playerList.get(currentPlayerNum));
+                            startReinforcement();
+                            System.out.println("Current player is "+currentPlayer.getPlayerName());
                         }
                     }
                 }else {
@@ -248,7 +234,36 @@ public class GameModel extends Observable {
         } else {
             System.out.println("Place army failed! First populate countries.");
         }
-    } 
+    }
+
+    public void startReinforcement() {
+        currentPlayer.setTotalNumReinforceArmy(currentPlayer.getPlayerCountries().size()/3);
+        currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getTotalNumReinforceArmy());
+        System.out.println("You already place All your army! please start Reinforcement phase");
+        this.setPhase("Reinforcement");
+        System.out.println("Phase> "+this.getPhase());
+        if (currentPlayer.getCardList().size()!=0) {
+            //show the card view in the beginning of the Reinforcement
+            setChanged();
+            notifyObservers("CardsView");
+        }
+        if((currentPlayer.getNumReinforceArmyRemainPlace()==0)&&(currentPlayer.getCardList().size()<3)) {
+            System.out.println("You have 0 Reinforcement army!");
+            System.out.println("You have "+currentPlayer.getCardList().size()+" Card(s)! Please start Attack phase");
+            this.setPhase("Attack");
+            System.out.println("Phase> "+this.getPhase());
+            if (!checkAttackChance()){
+                stopAttack();
+            }
+            //show the domin view in the beginning of the Attack
+            setChanged();
+            notifyObservers("DominView");
+        } else {
+            System.out.println(currentPlayer.getPlayerName() + " has " + currentPlayer.getNumReinforceArmyRemainPlace()+" reinforcement.");
+        }
+
+    }
+
     /**
      * This method allows a player to place armies
      */
@@ -258,38 +273,19 @@ public class GameModel extends Observable {
         ArrayList<CountryModel> countries = mapModel.getCountryList();
         int countrySize = countries.size();
         if ((!(isNotPopulated())) && (countrySize>0) && (numOfPlayers>0)) {
-            int armyLeft=currentPlayer.getNumArmyRemainPlace();
-            while (armyLeft>0){
-                int randomNum=(int)(Math.random() * (currentPlayer.playerCountries.size()));
-                currentPlayer.playerCountries.get(randomNum).addArmyNum();
-                armyLeft--;
-            }
-            currentPlayer.setNumArmyRemainPlace(0);
-            System.out.println("You already place All your army! Please start Reinforcement phase");
-            this.setPhase("Reinforcement");
-            System.out.println("Phase> "+this.getPhase());
-            if (currentPlayer.getCardList().size()!=0) {
-                //show the card view in the beginning of the Reinforcement
-                setChanged();
-                notifyObservers("CardsView");
-            }
-            currentPlayer.setTotalNumReinforceArmy(currentPlayer.getPlayerCountries().size()/3);
-            currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getTotalNumReinforceArmy());
-            //TODO:this part need to change, the card size should be <= 3
-            if ((currentPlayer.getNumReinforceArmyRemainPlace()==0)&&(currentPlayer.getCardList().size()<3)) {
-                System.out.println("You have 0 Reinforcement army!");
-                System.out.println("You have "+currentPlayer.getCardList().size()+" Card(s)! Please start Attack phase");
-                this.setPhase("Attack");
-                System.out.println("Phase> "+this.getPhase());
-                if (!checkAttackChance()){
-                    stopAttack();
+            for (PlayerModel player:playerList) {
+                int armyLeft=player.getNumArmyRemainPlace();
+                while (armyLeft>0){
+                    int randomNum=(int)(Math.random() * (player.playerCountries.size()));
+                    player.playerCountries.get(randomNum).addArmyNum();
+                    armyLeft--;
                 }
-                //show the domin view in the beginning of the Attack
-                setChanged();
-                notifyObservers("DominView");
-            } else {
-                System.out.println(currentPlayer.getPlayerName() + " has " + currentPlayer.getNumReinforceArmyRemainPlace()+" reinforcement.");
+                player.setNumArmyRemainPlace(0);
             }
+            this.currentPlayerNum = 0;
+            setCurrentPlayer(playerList.get(currentPlayerNum));
+            System.out.println("Current player is "+currentPlayer.getPlayerName());
+            startReinforcement();
         } else if (countrySize==0) {
             System.out.println("Place all army failed! First add some countries.");
         } else if (numOfPlayers==0) {
@@ -313,6 +309,7 @@ public class GameModel extends Observable {
                 if (armyLeft>=number){
                     armyLeft = armyLeft - number;
                     currentPlayer.setNumReinforceArmyRemainPlace(armyLeft);
+                    currentPlayer.addArmyNum(number);
                     country.setArmyNum(country.getArmyNum()+number);
                     System.out.println("Place Reinforcement Army Succeed! "+ currentPlayer.getPlayerName() + " left " + currentPlayer.getNumReinforceArmyRemainPlace());
                 }
@@ -504,11 +501,13 @@ public class GameModel extends Observable {
         if (attackerDice.get(0) - defenderDice.get(0) > 0) {
             //remove the certain amount army of the loser
             defenderCountry.reduceArmyNum();
+            defenderCountry.getOwner().reduceArmyNum(1);
             System.out.println("Attacker won the first round dice competition, "
                     + defenderCountry.getCountryName() + " left "
                     + defenderCountry.getArmyNum() + " Armies");
         } else {
             attackerCountry.reduceArmyNum();
+            attackerCountry.getOwner().reduceArmyNum(1);
             System.out.println("Defender won the first round dice competition, "
                     + attackerCountry.getCountryName()  + " left "
                     + attackerCountry.getArmyNum() + " Armies");
@@ -519,11 +518,13 @@ public class GameModel extends Observable {
             if (attackerDice.get(1) - defenderDice.get(1) > 0) {
                 //remove the certain amount army of the loser
                 defenderCountry.reduceArmyNum();
+                defenderCountry.getOwner().reduceArmyNum(1);
                 System.out.println("Attacker won the second round dice competition, "
                         + defenderCountry.getCountryName() + " left "
                         + defenderCountry.getArmyNum() + " Armies");
             } else {
                 attackerCountry.reduceArmyNum();
+                attackerCountry.getOwner().reduceArmyNum(1);
                 System.out.println("Defender won the second round dice competition, "
                         + attackerCountry.getCountryName()  + " left "
                         + attackerCountry.getArmyNum() + " Armies");
@@ -705,15 +706,11 @@ public class GameModel extends Observable {
         System.out.println(getCurrentPlayer().getPlayerName()+" Your turn over!");
         if (this.currentPlayerNum+1<this.playerList.size()){
             this.currentPlayerNum++;
-            setCurrentPlayer(this.playerList.get(this.currentPlayerNum));
-            currentPlayer.setNumArmyRemainPlace(currentPlayer.getNumArmyRemainPlace());
-            this.setPhase("Startup");
-            System.out.println("Phase> "+this.getPhase());
-            System.out.println("Start Placing army, Current Player is "+ getCurrentPlayer().getPlayerName());
         }else{
-            System.out.println("GAME END");
-            exit(0);
+            this.currentPlayerNum = 0;
         }
+        setCurrentPlayer(this.playerList.get(this.currentPlayerNum));
+        startReinforcement();
 
     }
 

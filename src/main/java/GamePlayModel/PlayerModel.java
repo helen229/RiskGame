@@ -189,4 +189,11 @@ public class PlayerModel {
         percent = numberFormat.format((float) ownerCountryNum / (float) totalCountriesNum * 100);
         return percent;
     }
+
+    public void reduceArmyNum(int num) {
+        this.totalNumArmy= this.totalNumArmy - num;
+    }
+    public void addArmyNum(int num) {
+        this.totalNumArmy= this.totalNumArmy + num;
+    }
 }
