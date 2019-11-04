@@ -373,6 +373,15 @@ public class GameModel extends Observable {
     public void exchangeCardsNone(){
         if (currentPlayer.getCardList().size()>=5) {
             System.out.println(currentPlayer.getPlayerName()+" has "+ currentPlayer.getCardList().size() + " cards. Exchange cards is a must.");
+        } else {
+            this.setPhase("Attack");
+            System.out.println("Phase> "+this.getPhase());
+            if (!checkAttackChance()){
+                stopAttack();
+            }
+            //show the domin view in the beginning of the Attack
+            setChanged();
+            notifyObservers("DominView");
         }
 
     }
