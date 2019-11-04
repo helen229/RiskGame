@@ -342,23 +342,18 @@ public class GameModel extends Observable {
             (cardTwo>=0)&&(cardTwo<=currentPlayer.getCardList().size())&&
             (cardThree>=0)&&(cardThree<=currentPlayer.getCardList().size())&&
             (cardOne!=cardThree)&&(cardOne!=cardTwo)&&(cardTwo!=cardThree)){
-                currentPlayer.setNumReinforceArmyRemainPlace(currentExchangeTry*5);
+                currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getNumReinforceArmyRemainPlace()+currentExchangeTry*5);
 
-                Card card = currentPlayer.getCardList().get(cardOne);
-                CardType cardType = card.getCardType();
-                currentPlayer.removeCard(card);
-                System.out.println("You echanged your "+cardType+" card.");
+                ArrayList<Card> cards = currentPlayer.getCardList();
+                
+                System.out.println("You echanged your "+(cards.get(cardOne).getCardType())+" card.");
+                System.out.println("You echanged your "+(cards.get(cardTwo).getCardType())+" card.");
+                System.out.println("You echanged your "+(cards.get(cardThree).getCardType())+" card.");
 
-                card = currentPlayer.getCardList().get(cardTwo);
-                cardType = card.getCardType();
-                currentPlayer.removeCard(card);
-                System.out.println("You echanged your "+cardType+" card.");
-
-                card = currentPlayer.getCardList().get(cardThree);
-                cardType = card.getCardType();
-                currentPlayer.removeCard(card);
-                System.out.println("You echanged your "+cardType+" card.");
-
+                currentPlayer.removeCard(cards.get(cardOne));
+                currentPlayer.removeCard(cards.get(cardTwo));
+                currentPlayer.removeCard(cards.get(cardThree));
+                
                 System.out.println("You recived "+(currentExchangeTry*5)+" new Reinforcement armies.");
                 System.out.println(currentPlayer.getPlayerName() + " has now " + currentPlayer.getNumReinforceArmyRemainPlace()+" Reinforcement armies.");
                 currentExchangeTry++;
