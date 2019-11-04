@@ -433,6 +433,7 @@ public class GameModel extends Observable {
     }
 
     public boolean attackDiceNum(String attackCountryName, String defendCountryName, int diceNum, boolean fromAllOut) {
+        if ((mapModel.indexOfCountry(attackCountryName)!=-1)&&(mapModel.indexOfCountry(defendCountryName)!=-1)) {
         CountryModel defendCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(defendCountryName));
         CountryModel attackCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(attackCountryName));
         PlayerModel defender=defendCountry.getOwner();
@@ -481,6 +482,10 @@ public class GameModel extends Observable {
             defendDiceNum(diceNum);
         }
         return true;
+        } else {
+           System.out.println("Country name is not valid! please try again");
+           return false; 
+        }
     }
 
     public void defendDiceNum(int diceNum) {
@@ -502,6 +507,7 @@ public class GameModel extends Observable {
     }
 
     public void attackAllOut(String attackCountryName, String defendCountryName) {
+        if ((mapModel.indexOfCountry(attackCountryName)!=-1)&&(mapModel.indexOfCountry(defendCountryName)!=-1)) {
 
         CountryModel attackCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(attackCountryName));
         int diceNum=0;
@@ -518,6 +524,9 @@ public class GameModel extends Observable {
             }
             if (!attackDiceNum(attackCountryName,defendCountryName, diceNum, true))
                 break;
+        }
+    } else {
+        System.out.println("Country name is not valid! please try again");
         }
 
     }
@@ -662,6 +671,7 @@ public class GameModel extends Observable {
      * This method allows a player to fortify a country with armies from another related country
      */
     public void fortify(String fromcountry, String tocountry, int number) {
+        if ((mapModel.indexOfCountry(fromcountry)!=-1)&&(mapModel.indexOfCountry(tocountry)!=-1)&&(number>=0)) {
 
         CountryModel sourceCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(fromcountry));
         CountryModel targetCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(tocountry));
@@ -692,7 +702,9 @@ public class GameModel extends Observable {
         }else {
             System.out.println("this path is not validate");
         }
-
+        }else {
+            System.out.println("Country name/number is not valid! please try again");
+        }
     } 
     /**
      * This method checks if a path exist between the two countries
