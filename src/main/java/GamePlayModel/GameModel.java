@@ -337,28 +337,47 @@ public class GameModel extends Observable {
     }
 
     public void exchangeCards(int cardOne, int cardTwo, int cardThree){
+        int firstCard=0;
+        int secodnCard=0;
+        int thirdCard=0;
         if (currentPlayer.getCardList().size()>=3)
             if ((cardOne>=0)&&(cardOne<=currentPlayer.getCardList().size())&&
             (cardTwo>=0)&&(cardTwo<=currentPlayer.getCardList().size())&&
             (cardThree>=0)&&(cardThree<=currentPlayer.getCardList().size())&&
             (cardOne!=cardThree)&&(cardOne!=cardTwo)&&(cardTwo!=cardThree)){
-                currentPlayer.setNumReinforceArmyRemainPlace(currentExchangeTry*5);
+                currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getNumReinforceArmyRemainPlace()+currentExchangeTry*5);
 
-                Card card = currentPlayer.getCardList().get(cardOne);
-                CardType cardType = card.getCardType();
-                currentPlayer.removeCard(card);
-                System.out.println("You echanged your "+cardType+" card.");
-
-                card = currentPlayer.getCardList().get(cardTwo);
-                cardType = card.getCardType();
-                currentPlayer.removeCard(card);
-                System.out.println("You echanged your "+cardType+" card.");
-
-                card = currentPlayer.getCardList().get(cardThree);
-                cardType = card.getCardType();
-                currentPlayer.removeCard(card);
-                System.out.println("You echanged your "+cardType+" card.");
-
+                ArrayList<Card> cards = currentPlayer.getCardList();
+                
+                System.out.println("You echanged your "+(cards.get(cardOne).getCardType())+" card.");
+                System.out.println("You echanged your "+(cards.get(cardTwo).getCardType())+" card.");
+                System.out.println("You echanged your "+(cards.get(cardThree).getCardType())+" card.");
+                
+                if ((cardOne>cardTwo)&&((cardOne>cardThree)))
+                    thirdCard=cardOne;
+                else if ((cardTwo>cardOne)&&((cardTwo>cardThree)))
+                    thirdCard=cardTwo;
+                else if ((cardThree>cardOne)&&((cardThree>cardTwo)))
+                    thirdCard=cardThree;
+                
+                if ((cardOne<cardTwo)&&((cardOne<cardThree)))
+                    firstCard=cardOne;
+                else if ((cardTwo<cardOne)&&((cardTwo<cardThree)))
+                    firstCard=cardTwo;
+                else if ((cardThree<cardOne)&&((cardThree<cardTwo)))
+                    firstCard=cardThree;
+                
+                if ((cardOne!=firstCard)&&((cardOne!=thirdCard)))
+                    secodnCard=cardOne;
+                else if ((cardTwo!=firstCard)&&((cardTwo!=thirdCard)))
+                    secodnCard=cardTwo;
+                else if ((cardThree!=firstCard)&&((cardThree!=thirdCard)))
+                    secodnCard=cardThree;
+                
+                currentPlayer.removeCard(cards.get(thirdCard));
+                currentPlayer.removeCard(cards.get(secodnCard));
+                currentPlayer.removeCard(cards.get(firstCard));
+                
                 System.out.println("You recived "+(currentExchangeTry*5)+" new Reinforcement armies.");
                 System.out.println(currentPlayer.getPlayerName() + " has now " + currentPlayer.getNumReinforceArmyRemainPlace()+" Reinforcement armies.");
                 currentExchangeTry++;
@@ -378,6 +397,15 @@ public class GameModel extends Observable {
     public void exchangeCardsNone(){
         if (currentPlayer.getCardList().size()>=5) {
             System.out.println(currentPlayer.getPlayerName()+" has "+ currentPlayer.getCardList().size() + " cards. Exchange cards is a must.");
+        } else {
+            this.setPhase("Attack");
+            System.out.println("Phase> "+this.getPhase());
+            if (!checkAttackChance()){
+                stopAttack();
+            }
+            //show the domin view in the beginning of the Attack
+            setChanged();
+            notifyObservers("DominView");
         }
 
     }

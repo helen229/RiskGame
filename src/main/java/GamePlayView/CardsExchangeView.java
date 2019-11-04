@@ -17,7 +17,7 @@ public class CardsExchangeView implements Observer {
         ArrayList<Card> cardList= ((GameModel)obs).getCurrentPlayer().getCardList();
         System.out.println("\n*************** Card Exchange View *****************");
         System.out.println("Current Player is: "+player);
-        System.out.println("Currently, each card can reinforce "+ (currentExchangeTry*5)+" number of players.");
+        System.out.println("Currently, each card can reinforce "+ (currentExchangeTry*5)+" number of armies.");
         for (int i = 0; i < cardList.size(); i++) {
             Card card = cardList.get(i);
             System.out.println("Card "+i+" = "+card.getCardTypeName());
