@@ -434,10 +434,11 @@ public class GameModel extends Observable {
             System.out.println("The defend Country is not an adjacent country to the attacker!");
             return false;
         }
-        if (diceNum<1 && diceNum>3 && diceNum>(attackCountry.getArmyNum()-1)){
+        if (diceNum<1 || diceNum>3 || diceNum>(attackCountry.getArmyNum()-1)){
             System.out.println("The dice number is invalid");
             return false;
         }
+
         attackerDice = generateDiceNum(diceNum);
         this.defenderCountry = defendCountry;
         this.attackerCountry = attackCountry;
@@ -703,18 +704,23 @@ public class GameModel extends Observable {
             CardType cardType = card.getCardType();
             currentPlayer.addCard(card);
             System.out.println("You receives a "+cardType+"card");
+            hasPlayerConquered = false;
         }
 
         System.out.println(getCurrentPlayer().getPlayerName()+" Your turn over!");
-        if (this.currentPlayerNum+1<this.playerList.size()){
-            this.currentPlayerNum++;
-            while (this.playerList.get(this.currentPlayerNum).playerCountries.isEmpty()&&
-                    this.currentPlayerNum+1<this.playerList.size()){
-                this.currentPlayerNum++;
-            }
-        }else{
+
+        if (this.currentPlayerNum+1==this.playerList.size()){
             this.currentPlayerNum = 0;
+        }else
+            this.currentPlayerNum++;
+
+        while (this.playerList.get(this.currentPlayerNum).playerCountries.size()==0){
+            if (this.currentPlayerNum+1==this.playerList.size()){
+                this.currentPlayerNum = 0;
+            }else
+                this.currentPlayerNum++;
         }
+
         setCurrentPlayer(this.playerList.get(this.currentPlayerNum));
         startReinforcement();
 

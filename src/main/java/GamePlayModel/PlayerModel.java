@@ -64,6 +64,7 @@ public class PlayerModel {
     }
 
     public void checkPlayerContinents(ArrayList<ContinentModel> continentList) {
+        this.playerContinents.clear();
         HashMap<String, Integer> counter = new  HashMap<String, Integer>();
         for (CountryModel country:playerCountries) {
             String continent = country.getContinentName();
@@ -101,7 +102,7 @@ public class PlayerModel {
     public void setTotalNumArmy(int playerSize) {
         switch(playerSize){
             case 2:
-                this.totalNumArmy = 40;
+                this.totalNumArmy = 10;
                 break;
             case 3:
                 this.totalNumArmy =35;

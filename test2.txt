@@ -1,9 +1,6 @@
  
 [continents]
 continentname 0
-continentname1 1
-continentname2 2
-continentname3 3
 
 [countries]
 0 countryname continentname
