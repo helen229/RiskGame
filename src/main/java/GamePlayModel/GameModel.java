@@ -337,6 +337,9 @@ public class GameModel extends Observable {
     }
 
     public void exchangeCards(int cardOne, int cardTwo, int cardThree){
+        int firstCard=0;
+        int secodnCard=0;
+        int thirdCard=0;
         if (currentPlayer.getCardList().size()>=3)
             if ((cardOne>=0)&&(cardOne<=currentPlayer.getCardList().size())&&
             (cardTwo>=0)&&(cardTwo<=currentPlayer.getCardList().size())&&
@@ -349,10 +352,31 @@ public class GameModel extends Observable {
                 System.out.println("You echanged your "+(cards.get(cardOne).getCardType())+" card.");
                 System.out.println("You echanged your "+(cards.get(cardTwo).getCardType())+" card.");
                 System.out.println("You echanged your "+(cards.get(cardThree).getCardType())+" card.");
-
-                currentPlayer.removeCard(cards.get(cardOne));
-                currentPlayer.removeCard(cards.get(cardTwo));
-                currentPlayer.removeCard(cards.get(cardThree));
+                
+                if ((cardOne>cardTwo)&&((cardOne>cardThree)))
+                    thirdCard=cardOne;
+                else if ((cardTwo>cardOne)&&((cardTwo>cardThree)))
+                    thirdCard=cardTwo;
+                else if ((cardThree>cardOne)&&((cardThree>cardTwo)))
+                    thirdCard=cardThree;
+                
+                if ((cardOne<cardTwo)&&((cardOne<cardThree)))
+                    firstCard=cardOne;
+                else if ((cardTwo<cardOne)&&((cardTwo<cardThree)))
+                    firstCard=cardTwo;
+                else if ((cardThree<cardOne)&&((cardThree<cardTwo)))
+                    firstCard=cardThree;
+                
+                if ((cardOne!=firstCard)&&((cardOne!=thirdCard)))
+                    secodnCard=cardOne;
+                else if ((cardTwo!=firstCard)&&((cardTwo!=thirdCard)))
+                    secodnCard=cardTwo;
+                else if ((cardThree!=firstCard)&&((cardThree!=thirdCard)))
+                    secodnCard=cardThree;
+                
+                currentPlayer.removeCard(cards.get(thirdCard));
+                currentPlayer.removeCard(cards.get(secodnCard));
+                currentPlayer.removeCard(cards.get(firstCard));
                 
                 System.out.println("You recived "+(currentExchangeTry*5)+" new Reinforcement armies.");
                 System.out.println(currentPlayer.getPlayerName() + " has now " + currentPlayer.getNumReinforceArmyRemainPlace()+" Reinforcement armies.");
