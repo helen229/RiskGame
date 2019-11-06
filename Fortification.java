@@ -88,8 +88,10 @@ public void fortifyNone() {
         }
 
     System.out.println(getCurrentPlayer().getPlayerName()+" Your turn over!");
-    if (this.currentPlayerNum+1<this.playerList.size()){
-        this.currentPlayerNum++;
+  if (this.currentPlayerNum+1==this.playerList.size()){
+            this.currentPlayerNum = 0;
+        }else
+            this.currentPlayerNum++;
         setCurrentPlayer(this.playerList.get(this.currentPlayerNum));
         currentPlayer.setTotalNumArmy(this.playerList.size());
         currentPlayer.setNumArmyRemainPlace(currentPlayer.getTotalNumArmy());
