@@ -145,7 +145,9 @@ public class MapModel {
                 "Country Value:" +
                 country.getCountryValue() + "\n" +
                 "Neighbor Country List: ");
-
+        if (country.getNeighbours().isEmpty()){
+            System.out.print("[]\n\n");
+        }
         for (int i = 0; i < country.getNeighbours().size(); i++){
             int neighbourValue= country.getNeighbours().get(i);
             if (i==0)
@@ -233,15 +235,18 @@ public class MapModel {
 
         if(isRemoveContinentValid(continentName)){
             ContinentModel continent = this.continentList.get(indexOfContinent(continentName));
+            ArrayList<String> temp = new  ArrayList<String>();
+            //copy the arraylist otherwise the list is changing
+            for (String countryName:continent.getCountriesList()) {
+               temp.add(countryName);
+            }
             //remove the country of the continent first
-            for (int i = 0; i < continent.getCountriesList().size(); i++){
-                String countryName= continent.getCountriesList().get(i);
+            for (String countryName:temp) {
                 removeCountry(countryName);
             }
             this.continentList.remove(indexOfContinent(continentName));
             return true;
         }
-
         return false;
 
     }
@@ -292,7 +297,6 @@ public class MapModel {
         if (indexOfCountry(countryName)!=-1){
             String continentName = this.countryList.get(indexOfCountry(countryName)).getContinentName();
             CountryModel country = this.countryList.get(indexOfCountry(countryName));
-            this.continentList.get(indexOfContinent(continentName)).removeCountryFromList(countryName);
 
             //remove the country from its neighbours list
             for (int i = 0; i < country.getNeighbours().size(); i++){
@@ -300,9 +304,8 @@ public class MapModel {
                 String neighbourName = this.countryList.get(indexOfCountry(neighbourValue)).getCountryName();
                 removeNeighbor(countryName, neighbourName);
             }
-
             this.countryList.remove(indexOfCountry(countryName));
-
+            this.continentList.get(indexOfContinent(continentName)).removeCountryFromList(countryName);
             return true;
         }
 

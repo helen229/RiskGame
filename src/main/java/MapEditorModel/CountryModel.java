@@ -88,8 +88,10 @@ public class CountryModel {
      */
     public void removeNeighbour(int countryValue) {
 
-        this.neighbours.remove(countryValue);
-
+        if (neighbours.size()==1 && neighbours.contains(countryValue))
+            neighbours.clear();
+        else
+            this.neighbours.remove(neighbours.indexOf(countryValue));
     }
 
     /**
