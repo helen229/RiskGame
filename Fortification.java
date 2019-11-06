@@ -92,15 +92,14 @@ public void fortifyNone() {
             this.currentPlayerNum = 0;
         }else
             this.currentPlayerNum++;
-        setCurrentPlayer(this.playerList.get(this.currentPlayerNum));
-        currentPlayer.setTotalNumArmy(this.playerList.size());
-        currentPlayer.setNumArmyRemainPlace(currentPlayer.getTotalNumArmy());
-        this.setPhase("Startup");
-        System.out.println("Start Placing army, Current Player is "+ getCurrentPlayer().getPlayerName());
-    }else{
-        System.out.println("GAME END");
-        exit(0);
-    }
+        while (this.playerList.get(this.currentPlayerNum).playerCountries.size()==0){
+            if (this.currentPlayerNum+1==this.playerList.size()){
+                this.currentPlayerNum = 0;
+            }else
+                this.currentPlayerNum++;
+        }
 
-}
+        setCurrentPlayer(this.playerList.get(this.currentPlayerNum));
+        startReinforcement();
+
 }
