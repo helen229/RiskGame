@@ -10,6 +10,7 @@ import MapEditorModel.CountryModel;
      */
 
     public void fortify(String fromcountry, String tocountry, int number) {
+	    if ((mapModel.indexOfCountry(fromcountry)!=-1)&&(mapModel.indexOfCountry(tocountry)!=-1)&&(number>=0)) {
 
         CountryModel sourceCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(fromcountry));
         CountryModel targetCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(tocountry));
@@ -40,7 +41,9 @@ import MapEditorModel.CountryModel;
         }else {
             System.out.println("this path is not validate");
         }
-
+        }else {
+            System.out.println("Country name/number is not valid! please try again");
+        }
     } 
     
 
