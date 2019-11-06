@@ -8,23 +8,30 @@ import MapEditor.MapHandler;
 import java.util.Scanner;
 
 public class RiskGame {
+
     /**
      * Main Entry for the game
      * @param args
      */
     public static void main(String[] args) {
-        //uncomment those hardcode for testing phase
-//        args[0]="start";
-//        args[1]="new";
-//        args[2]="game";
-//        if (args[0].equals("start")&&args[1].equals("new")&&args[2].equals("game"))
-            newGame();
+        //comment those hardcode for Junit test
+        args[0]="start";
+        args[1]="new";
+        args[2]="game";
+        if (args[0].equals("start")&&args[1].equals("new")&&args[2].equals("game")){
+            RiskGame riskGame = new RiskGame();
+            riskGame.newGame();
+        }else{
+            throw new IllegalArgumentException("Wrong Args");
+        }
+
+
     }
 
     /**
      * Game method for all the phase
      */
-    private static void newGame(){
+    public void newGame(){
 
         MapHandler mapHandler = new MapHandler();
         GameController gameController = new GameController();

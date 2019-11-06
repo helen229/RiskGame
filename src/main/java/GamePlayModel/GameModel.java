@@ -733,9 +733,9 @@ public class GameModel extends Observable {
 
 
     /**
+     *
      * This method fortifies no countries for the player
      */
-
     public void fortifyNone() {
 
         if (hasPlayerConquered){
@@ -784,7 +784,7 @@ public class GameModel extends Observable {
     }
 
     /**
-     *
+     * print continent
      * @param continent
      */
     private void printContinent(ContinentModel continent){
@@ -811,7 +811,7 @@ public class GameModel extends Observable {
     }
 
     /**
-     *
+     * print country
      * @param country
      */
     private void printCountry(CountryModel country){

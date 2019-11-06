@@ -1,3 +1,5 @@
+package GamePlayModel;
+
 import GamePlayController.GameController;
 import GamePlayModel.GameModel;
 import GamePlayModel.PlayerModel;
