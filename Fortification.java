@@ -10,6 +10,7 @@ import MapEditorModel.CountryModel;
      */
 
     public void fortify(String fromcountry, String tocountry, int number) {
+	    if ((mapModel.indexOfCountry(fromcountry)!=-1)&&(mapModel.indexOfCountry(tocountry)!=-1)&&(number>=0)) {
 
         CountryModel sourceCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(fromcountry));
         CountryModel targetCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(tocountry));
@@ -40,7 +41,9 @@ import MapEditorModel.CountryModel;
         }else {
             System.out.println("this path is not validate");
         }
-
+        }else {
+            System.out.println("Country name/number is not valid! please try again");
+        }
     } 
     
 
@@ -74,19 +77,29 @@ public boolean existPath (CountryModel country1, CountryModel country2, ArrayLis
  */
 
 public void fortifyNone() {
+	
+	if (hasPlayerConquered){
+            System.out.println(getCurrentPlayer().getPlayerName()+" You have conquered at least one country!");
+            Card card = new Card(currentPlayer);
+            CardType cardType = card.getCardType();
+            currentPlayer.addCard(card);
+            System.out.println("You receives a "+cardType+"card");
+            hasPlayerConquered = false;
+        }
 
     System.out.println(getCurrentPlayer().getPlayerName()+" Your turn over!");
-    if (this.currentPlayerNum+1<this.playerList.size()){
-        this.currentPlayerNum++;
-        setCurrentPlayer(this.playerList.get(this.currentPlayerNum));
-        currentPlayer.setTotalNumArmy(this.playerList.size());
-        currentPlayer.setNumArmyRemainPlace(currentPlayer.getTotalNumArmy());
-        this.setPhase("Startup");
-        System.out.println("Start Placing army, Current Player is "+ getCurrentPlayer().getPlayerName());
-    }else{
-        System.out.println("GAME END");
-        exit(0);
-    }
+  if (this.currentPlayerNum+1==this.playerList.size()){
+            this.currentPlayerNum = 0;
+        }else
+            this.currentPlayerNum++;
+        while (this.playerList.get(this.currentPlayerNum).playerCountries.size()==0){
+            if (this.currentPlayerNum+1==this.playerList.size()){
+                this.currentPlayerNum = 0;
+            }else
+                this.currentPlayerNum++;
+        }
 
-}
+        setCurrentPlayer(this.playerList.get(this.currentPlayerNum));
+        startReinforcement();
+
 }
