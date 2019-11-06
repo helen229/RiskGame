@@ -14,18 +14,13 @@ public class RiskGame {
      * @param args
      */
     public static void main(String[] args) {
-        //comment those hardcode for Junit test
-        args[0]="start";
-        args[1]="new";
-        args[2]="game";
-        if (args[0].equals("start")&&args[1].equals("new")&&args[2].equals("game")){
+        //uncomment those hardcode for Junit test
+//        if (args[0].equals("start")&&args[1].equals("new")&&args[2].equals("game")){
             RiskGame riskGame = new RiskGame();
             riskGame.newGame();
-        }else{
-            throw new IllegalArgumentException("Wrong Args");
-        }
-
-
+//        }else{
+//            throw new IllegalArgumentException("Wrong Args");
+//        }
     }
 
     /**

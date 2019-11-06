@@ -51,29 +51,45 @@ public class MapModel {
      */
     public boolean isValid(){
         boolean isValid = true;
-        ArrayList<String> invalidContinent = new ArrayList<String>();
+        String invalidContinent ="";
+        if (continentList.isEmpty()||countryList.isEmpty()||countryList.size()==1){
+            System.out.println("Map not validate");
+            isValid = false;
+            return isValid;
+        }
+        //validate the continent
         for (ContinentModel continent:this.continentList) {
 
             if (continent.getCountriesList().size()>0){
                 String countryName = continent.getCountriesList().get(0);
                 CountryModel country= countryList.get(indexOfCountry(countryName));
                 ArrayList<Boolean> visitedCountryList=new ArrayList<Boolean>();
-                for (int i = 0; i < countryList.size(); i++) {
+                for (String temp: continent.getCountriesList()) {
                     visitedCountryList.add(false);
                 }
-                dfs(country,visitedCountryList);
-                for (int i = 0; i < continent.getCountriesList().size(); i++) {
-                    int index = indexOfCountry(continent.getCountriesList().get(i));
-                    if (!visitedCountryList.get(index)){
-                        if (!invalidContinent.contains(continent.getContinentName()))
-                            invalidContinent.add(continent.getContinentName());
+                dfs(country,visitedCountryList, continent.getCountriesList());
+                for (Boolean res:visitedCountryList) {
+                    if (!res){
                         isValid=false;
+                        invalidContinent = continent.getContinentName();
+                        break;
                     }
                 }
 
+            }else{
+                System.out.println("Continent can't be empty");
+                isValid=false;
             }
 
         }
+        //validate the map
+        ArrayList<CountryModel> visited=new ArrayList<>();
+        ifAllCountryConnected(this.countryList.get(0),visited);
+        if (visited.size() != this.countryList.size()){
+            isValid = false;
+            invalidContinent = "not all countries connected,";
+        }
+
         if (isValid)
             System.out.println("Map is valid");
         else
@@ -83,24 +99,53 @@ public class MapModel {
     }
 
     /**
-     * A dfs method to help validate the map
+     * A dfs method to help validate the map if Continent Country Connected
      * @param country
      * @param visitedCountryList
      */
-    public void dfs(CountryModel country, ArrayList<Boolean> visitedCountryList){
+    public void dfs(CountryModel country, ArrayList<Boolean> visitedCountryList, ArrayList<String> countryList){
 
-        if (visitedCountryList.get(country.getCountryValue())){
+        if (!countryList.contains(country.getCountryName()))
+            return;
+
+        int index = countryList.indexOf(country.getCountryName());
+
+        if (visitedCountryList.get(index)){
             return;
         }else {
-            visitedCountryList.set(country.getCountryValue(),true);
+            visitedCountryList.set(index,true);
         }
 
         if (country.getNeighbours().size()==0)
             return;
 
         for (int neighbourValue : country.getNeighbours()){
-            CountryModel neighbourCountry = countryList.get(neighbourValue);
-            dfs(neighbourCountry, visitedCountryList);
+            CountryModel neighbourCountry = this.countryList.get(neighbourValue);
+            dfs(neighbourCountry, visitedCountryList, countryList);
+        }
+
+        return;
+    }
+
+    /**
+     * A dfs method to help validate the map
+     * @param country
+     * @param visitedCountryList
+     */
+    public void ifAllCountryConnected(CountryModel country, ArrayList<CountryModel> visitedCountryList){
+
+        if (visitedCountryList.contains(country)){
+            return;
+        }else {
+            visitedCountryList.add(country);
+        }
+
+        if (country.getNeighbours().size()==0)
+            return;
+
+        for (int neighbourValue : country.getNeighbours()){
+            CountryModel neighbourCountry = this.countryList.get(neighbourValue);
+            ifAllCountryConnected(neighbourCountry, visitedCountryList);
         }
 
         return;
