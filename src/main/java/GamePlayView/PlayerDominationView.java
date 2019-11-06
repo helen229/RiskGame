@@ -4,11 +4,29 @@
  * and open the template in the editor.
  */
 package GamePlayView;
+import GamePlayModel.GameModel;
+import GamePlayModel.PlayerModel;
+import MapEditorModel.MapModel;
 
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 /**
  *
  * @author Ehsan
  */
-public class PlayerDominationView {
-    
+public class PlayerDominationView implements Observer {
+    public void update(Observable obs, Object arg) {
+        if (!"DominView".equals(arg))
+            return;
+        ArrayList<PlayerModel> playerList = ((GameModel)obs).getPlayerList();
+        MapModel mapModel = ((GameModel)obs).getMapModel();
+
+        String head = "\n*************** Domination View *******************";
+        String end = "*************** Domination View *******************\n";
+        System.out.println(head);
+        for (PlayerModel player:playerList) {
+            }
+        System.out.println(end);
+    };
 }
