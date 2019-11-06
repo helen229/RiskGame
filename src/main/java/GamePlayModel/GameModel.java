@@ -91,7 +91,7 @@ public class GameModel extends Observable {
     }
 
     /**
-     * This method assigns countries to the players
+     * This method assigns countries to the players. And first check inputs.
      */
     public void populateCountries() {
 
@@ -236,6 +236,9 @@ public class GameModel extends Observable {
         }
     }
 
+    /**
+     * This method reinforce armies after checking the input.
+     */
     public void startReinforcement() {
         currentPlayer.setTotalNumReinforceArmy(currentPlayer.getPlayerCountries().size()/3);
         currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getTotalNumReinforceArmy());
@@ -265,7 +268,7 @@ public class GameModel extends Observable {
     }
 
     /**
-     * This method allows a player to place armies
+     * This method allows a player to place armies after checking the status of the game
      */
 
     public void placeAllAmy() {
@@ -335,7 +338,10 @@ public class GameModel extends Observable {
         }
 
     }
-
+    
+    /**
+     * This method allows players to exchange their cards to armies.
+     */
     public void exchangeCards(int cardOne, int cardTwo, int cardThree){
         int firstCard=0;
         int secodnCard=0;
@@ -393,7 +399,9 @@ public class GameModel extends Observable {
         }
     }
 
-
+    /**
+     * This method allows to skipping the exchanging cards process if they are less than 5
+     */
     public void exchangeCardsNone(){
         if (currentPlayer.getCardList().size()>=5) {
             System.out.println(currentPlayer.getPlayerName()+" has "+ currentPlayer.getCardList().size() + " cards. Exchange cards is a must.");

@@ -19,6 +19,7 @@ public class ArmyModel {
 
     /**
      * Gets the player.
+     * @return the player
      */
     public PlayerModel getPlayer() {
         return player;
@@ -34,6 +35,7 @@ public class ArmyModel {
 
     /**
      * Gets the country.
+     * @return the country
      */
     public CountryModel getCountry() {
         return country;
