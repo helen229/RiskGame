@@ -77,6 +77,15 @@ public boolean existPath (CountryModel country1, CountryModel country2, ArrayLis
  */
 
 public void fortifyNone() {
+	
+	if (hasPlayerConquered){
+            System.out.println(getCurrentPlayer().getPlayerName()+" You have conquered at least one country!");
+            Card card = new Card(currentPlayer);
+            CardType cardType = card.getCardType();
+            currentPlayer.addCard(card);
+            System.out.println("You receives a "+cardType+"card");
+            hasPlayerConquered = false;
+        }
 
     System.out.println(getCurrentPlayer().getPlayerName()+" Your turn over!");
     if (this.currentPlayerNum+1<this.playerList.size()){
