@@ -50,10 +50,56 @@ public class RiskGame {
                 System.out.println("Phase> "+gameController.getGame().getPhase()+"> Please enter command");
             }
             if ( gameController.getGame().getPhase().equals("MapEditor")){
-                mapHandler.commandHandler(command.split(" "));
+
+                if(command.contains("-")){
+                    String[] splitArray = command.split(" ",2);
+                    String action = splitArray[0];
+                    String options = splitArray[1];
+                    String[] option = options.split("-");
+                    for (String commandArg:option) {
+                        if (commandArg.isEmpty())
+                            continue;
+                        String args = action+" "+commandArg;
+                        mapHandler.commandHandler(args.split(" "));
+                    }
+                }else {
+                    mapHandler.commandHandler(command.split(" "));
+                }
+
             }else {
+
                 System.out.println("Phase> "+gameController.getGame().getPhase());
-                gameController.commandHandler(command.split(" "),  gameController.getGame().getPhase());
+                String[] countrys = new String[2];
+                if(command.contains("-")){
+                    String[] splitArray = command.split(" ",2);
+                    String action = splitArray[0];
+                    String options = splitArray[1];
+                    if (action.equals("attack")){
+                        countrys[0] =options.split(" ")[0]+" ";
+                        countrys[1] =options.split(" ")[1]+" ";
+                        options = options.replace(countrys[0],"");
+                        options = options.replace(countrys[1],"");
+                        String[] option = options.split("-| ");
+                        for (String commandArg:option) {
+                            if (commandArg.isEmpty())
+                                continue;
+                            String args = action+" "+ countrys[0] + countrys[1]+ commandArg;
+                            gameController.commandHandler(args.split(" "),  gameController.getGame().getPhase());
+                        }
+                    }else {
+                        String[] option = options.split("-");
+                        for (String commandArg:option) {
+                            if (commandArg.isEmpty())
+                                continue;
+                            String args = action+" "+commandArg;
+                            gameController.commandHandler(args.split(" "),  gameController.getGame().getPhase());
+                        }
+                    }
+
+                }else {
+                    gameController.commandHandler(command.split(" "),  gameController.getGame().getPhase());
+                }
+
             }
         }
 

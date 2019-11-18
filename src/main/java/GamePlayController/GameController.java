@@ -22,7 +22,8 @@ public class GameController {
      * This method shows the map based on the phase selected.
      * @param phase
      */
-    public void commandHandler(String[] args, String phase) {
+    public void
+    commandHandler(String[] args, String phase) {
 
         if (args[0].equals("showmap")){
             showMap(phase);
@@ -33,6 +34,8 @@ public class GameController {
         {
             if (phase.equals("Startup")){
                 switch (args[0]) {
+                    case "start":
+                        break;
                     case "loadmap":
                         game.loadMap(args[1]);
                         break;
@@ -49,7 +52,7 @@ public class GameController {
                         game.placeAllAmy();
                         break;
                     default:
-//                        System.out.println("Invalid Command");
+                        System.out.println("Invalid Command for startup phase");
                         break;
                 }
 
@@ -80,9 +83,6 @@ public class GameController {
                         break;
                     case "attackmove":
                         game.winnerMove(Integer.parseInt(args[1]));
-                        break;
-                    case "noattack":
-                        game.stopAttack();
                         break;
                     default:
                         System.out.println("Invalid Command in Attack Phase");
@@ -134,7 +134,9 @@ public class GameController {
     private void parseAttackOption(String attackCountry, String defendCountry, String mode) {
 
         //TODO:Integer failed exception handle!
-        if (mode.equals("allout")){
+        if (mode.equals("noattack")){
+            game.stopAttack();
+        }else if (mode.equals("allout")){
             game.attackAllOut(attackCountry,defendCountry);
         }else if (Integer.parseInt(mode)>0 && Integer.parseInt(mode)<4){
             game.attackDiceNum(attackCountry,defendCountry,Integer.parseInt(mode),false);

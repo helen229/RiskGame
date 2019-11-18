@@ -117,7 +117,7 @@ public class MapHandler {
 
         try
         {
-            if (operation.equals("-add")){
+            if (operation.equals("add")){
                 switch (command){
                     case "editcontinent":
                         addContinent(args[2],Integer.parseInt(args[3]));
@@ -133,7 +133,7 @@ public class MapHandler {
                         break;
                 }
             }
-            else if(operation.equals("-remove")){
+            else if(operation.equals("remove")){
                 switch (command){
                     case "editcontinent":
                         removeContinent(args[2]);
@@ -154,8 +154,8 @@ public class MapHandler {
                 System.out.println("Invalid Option");
             }
 
-        }catch(ArrayIndexOutOfBoundsException e){
-            System.out.println("Arguments number invalid");
+        }catch(Exception e){
+            System.out.println(e);
         }
 
     }
