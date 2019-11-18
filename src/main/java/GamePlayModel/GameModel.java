@@ -60,12 +60,18 @@ public class GameModel extends Observable {
      */
     public void addPlayer(String playerName){
         ArrayList<String> playerNameList = getPlayerNameList();
-        if (playerNameList.contains(playerName)){
-            System.out.println("Add "+playerName+" Failed, it's already exist");
-        }else {
-            PlayerModel player= new PlayerModel(playerName);
-            playerList.add(player);
-            System.out.println("Add "+playerName+" Succeed");
+        if ((getNumOfPlayers()<=5) && (isNotPopulated())){
+            if (playerNameList.contains(playerName)){
+                System.out.println("Add "+playerName+" Failed, it's already exist");
+            }else {
+                PlayerModel player= new PlayerModel(playerName);
+                playerList.add(player);
+                System.out.println("Add "+playerName+" Succeed");
+            }
+        } else if (getNumOfPlayers()>5){
+            System.out.println("Add "+playerName+" Failed, the maximum number of players is 6.");
+        } else {
+            System.out.println("Add "+playerName+" Failed, The map is already populated. There is no more unowned country.");
         }
 
     }
@@ -98,7 +104,7 @@ public class GameModel extends Observable {
         int numOfPlayers= this.getNumOfPlayers();
         ArrayList<CountryModel> countries = mapModel.getCountryList();
         int countrySize = countries.size();
-        if ((isNotPopulated()) && (countrySize>0) && (numOfPlayers>0)) {
+        if ((isNotPopulated()) && (countrySize>0) && (numOfPlayers>=2) && (numOfPlayers<=6)) {
             int numberCountry = countrySize / numOfPlayers;
             if (numberCountry==0) {
                 System.out.println("Error: Number of Players > Number of Countries");
@@ -149,8 +155,10 @@ public class GameModel extends Observable {
             }
         } else if (countrySize==0) {
             System.out.println("Populate countries failed! First add some countries.");
-        } else if (numOfPlayers==0) {
+        } else if (numOfPlayers<2) {
             System.out.println("Populate countries failed! First add some players.");
+        } else if (numOfPlayers>6) {
+            System.out.println("Populate countries failed! First remove some players.");
         } else {
             System.out.println("Populate countries failed! The map has been populated before.");
         }
@@ -198,7 +206,7 @@ public class GameModel extends Observable {
         int numOfPlayers= this.getNumOfPlayers();
         ArrayList<CountryModel> countries = mapModel.getCountryList();
         int countrySize = countries.size();
-        if ((!(isNotPopulated())) && (countrySize>0) && (numOfPlayers>0)) {
+        if ((!(isNotPopulated())) && (countrySize>0) && (numOfPlayers>=2) && (numOfPlayers<=6)) {
             if (mapModel.indexOfCountry(countryName)!=-1) {
                 int numArmy=currentPlayer.getTotalNumArmy();
                 int armyLeft=currentPlayer.getNumArmyRemainPlace();
@@ -229,8 +237,10 @@ public class GameModel extends Observable {
             }
         } else if (countrySize==0) {
             System.out.println("Place army failed! First add some countries.");
-        } else if (numOfPlayers==0) {
+        } else if (numOfPlayers<2) {
             System.out.println("Place army failed! First add some players.");
+        } else if (numOfPlayers>6) {
+            System.out.println("Populate countries failed! First remove some players.");
         } else {
             System.out.println("Place army failed! First populate countries.");
         }
@@ -275,7 +285,7 @@ public class GameModel extends Observable {
         int numOfPlayers= this.getNumOfPlayers();
         ArrayList<CountryModel> countries = mapModel.getCountryList();
         int countrySize = countries.size();
-        if ((!(isNotPopulated())) && (countrySize>0) && (numOfPlayers>0)) {
+        if ((!(isNotPopulated())) && (countrySize>0) && (numOfPlayers>=2) && (numOfPlayers<=6)) {
             for (PlayerModel player:playerList) {
                 int armyLeft=player.getNumArmyRemainPlace();
                 while (armyLeft>0){
@@ -291,8 +301,10 @@ public class GameModel extends Observable {
             startReinforcement();
         } else if (countrySize==0) {
             System.out.println("Place all army failed! First add some countries.");
-        } else if (numOfPlayers==0) {
+        } else if (numOfPlayers<2) {
             System.out.println("Place all army failed! First add some players.");
+        } else if (numOfPlayers>6) {
+            System.out.println("Populate countries failed! First remove some players.");
         } else {
             System.out.println("Place all army failed! First populate countries.");
         }
