@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 public class PlayerModel {
     String PlayerName;
+    String PlayerStrategy;
     int totalNumArmy;
     int numArmyRemainPlace;
     int totalNumReinforceArmy;
@@ -23,8 +24,9 @@ public class PlayerModel {
     ArrayList<Card> cardList;
 
 
-    public PlayerModel(String playerName) {
+    public PlayerModel(String playerName, String playerStrategy) {
         PlayerName = playerName;
+        PlayerStrategy = playerStrategy;
         playerCountries = new ArrayList<>();
         playerContinents = new ArrayList<>();
         cardList = new ArrayList<>();
@@ -46,7 +48,22 @@ public class PlayerModel {
     public void setPlayerName(String playerName) {
         PlayerName = playerName;
     }
+/**
+     * This method  retrieves the strategy of the player
+     * @return playerStrategy
+     */
 
+    public String getPlayerStrategy() {
+        return PlayerStrategy;
+    }
+
+    /**
+     * This method sets Player's Strategy
+     * @param playerStrategy
+     */
+    public void setPlayerStrategy(String playerStrategy) {
+        PlayerStrategy = playerStrategy;
+    }
     /**
      * This method retrieves the list of countries associated to the player
      * @return

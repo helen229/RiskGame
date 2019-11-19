@@ -33,8 +33,8 @@ public class GameModelTest {
     public void setUp() {
         gameController = new GameController();
         gameController.getGame().loadMap("test.txt");
-        gameController.getGame().addPlayer("Player1");
-        gameController.getGame().addPlayer("Player2");
+        gameController.getGame().addPlayer("Player1","human");
+        gameController.getGame().addPlayer("Player2","random");
 
         gameController.getGame().populateCountries();
         gameController.getGame().placeAllAmy();
@@ -68,7 +68,7 @@ public class GameModelTest {
         PlayerModel defender= game.getPlayerList().get(1);
         attackCtry.setOwner(attacker);
         defendCtry.setOwner(defender);
-        PlayerModel thirdPlayer= new PlayerModel("player3");
+        PlayerModel thirdPlayer= new PlayerModel("player3","human");
         attackCtry.setOwner(thirdPlayer);
         assertFalse(thirdPlayer.equals(game.getCurrentPlayer()));
     }
@@ -79,7 +79,7 @@ public class GameModelTest {
      */
     @Test
     public void defenderValidationTest() {
-        PlayerModel forthPlayer= new PlayerModel("player4");
+        PlayerModel forthPlayer= new PlayerModel("player4", "random");
         defendCtry.setOwner(forthPlayer);
         assertFalse(forthPlayer.equals(game.getPlayerList().get(1)));
     }

@@ -43,7 +43,7 @@ public class GameController {
                         game.populateCountries();
                         break;
                     case "gameplayer":
-                        parsePlayerOption(args[1],args[2]);
+                        parsePlayerOption(args[1],args[2],args[3]);
                         break;
                     case "placearmy":
                         game.placeArmy(args[1]);
@@ -115,9 +115,9 @@ public class GameController {
      * @param operation
      * @param playerName
      */
-    private void parsePlayerOption(String operation, String playerName) {
+    private void parsePlayerOption(String operation, String playerName, String playerStrategy) {
         if (operation.equals("add")){
-            game.addPlayer(playerName);
+            game.addPlayer(playerName,playerStrategy);
         }else if (operation.equals("remove")){
             game.removePlayer(playerName);
         }else {

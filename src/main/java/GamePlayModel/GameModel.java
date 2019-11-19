@@ -58,15 +58,19 @@ public class GameModel extends Observable {
      * This method allows a player to be added.
      * @param playerName the parameter used to identify the player to be added.
      */
-    public void addPlayer(String playerName){
+    public void addPlayer(String playerName, String playerStrategy){
         ArrayList<String> playerNameList = getPlayerNameList();
         if ((getNumOfPlayers()<=5) && (isNotPopulated())){
             if (playerNameList.contains(playerName)){
                 System.out.println("Add "+playerName+" Failed, it's already exist");
             }else {
-                PlayerModel player= new PlayerModel(playerName);
-                playerList.add(player);
-                System.out.println("Add "+playerName+" Succeed");
+                if ((playerStrategy=="human")||(playerStrategy=="aggressive")||(playerStrategy=="benevolent")||(playerStrategy=="random")||(playerStrategy=="cheater")) {
+                    PlayerModel player= new PlayerModel(playerName,playerStrategy);
+                    playerList.add(player);
+                    System.out.println("Add "+playerName+" with "+ playerStrategy+" strategy Succeed");
+                }else {
+                    System.out.println("Add "+playerName+" Failed, "+ playerStrategy+" strategy is not valid.");
+                    }
             }
         } else if (getNumOfPlayers()>5){
             System.out.println("Add "+playerName+" Failed, the maximum number of players is 6.");
