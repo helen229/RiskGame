@@ -29,7 +29,7 @@ public class CountryModel {
         this.countryName = countryName;
         this.continentName = continentName;
         this.neighbours = new ArrayList<Integer>();
-        this.owner = new PlayerModel("","");
+        this.owner = new PlayerModel("","human");
     }
 
     /**
