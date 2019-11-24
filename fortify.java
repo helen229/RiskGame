@@ -4,6 +4,14 @@ import java.util.ArrayList;
 
 import MapEditorModel.CountryModel;
 
+/ **
+
+Second checking
+
+changes made to check git commit
+*/
+
+
 public class Fortification {
 
 	

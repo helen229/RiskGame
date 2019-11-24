@@ -1,8 +1,13 @@
 package GamePlayModel;
 
+import MapEditorModel.ContinentModel;
 import MapEditorModel.CountryModel;
+import MapEditorModel.MapModel;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 
 /**
  * This class  defines the characteristics of a class
@@ -10,16 +15,19 @@ import java.util.ArrayList;
 
 public class PlayerModel {
     String PlayerName;
-//    int id;
     int totalNumArmy;
     int numArmyRemainPlace;
     int totalNumReinforceArmy;
     int NumReinforceArmyRemainPlace;
     ArrayList<CountryModel> playerCountries;
-
+    ArrayList<ContinentModel> playerContinents;
+    ArrayList<Card> cardList;
+    
     public PlayerModel(String playerName) {
         PlayerName = playerName;
         playerCountries = new ArrayList<>();
+        playerContinents = new ArrayList<>();
+        cardList = new ArrayList<>();
     }
 
     /**
@@ -51,13 +59,37 @@ public class PlayerModel {
      * This method sets the list of countries that belong to the player.
      * @param playerCountries
      */
-    public void setPlayerCountries(ArrayList<CountryModel> playerCountries) {
-        this.playerCountries = playerCountries;
-    }
 
     public void addPlayerCountries(CountryModel country){
         playerCountries.add(country);
     } 
+    
+     public ArrayList<ContinentModel> getPlayerContinents() {
+        return playerContinents;
+    }
+     
+    public void checkPlayerContinents(ArrayList<ContinentModel> continentList) {
+        this.playerContinents.clear();
+        HashMap<String, Integer> counter = new  HashMap<String, Integer>();
+        for (CountryModel country:playerCountries) {
+            String continent = country.getContinentName();
+            if (counter.containsKey(continent)){
+                counter.replace(continent,counter.get(continent)+1);
+            }
+            else {
+                counter.put(continent,1);
+            }
+        }
+        for (ContinentModel continent:continentList ){
+            if (counter.containsKey(continent.getContinentName())){
+                if (counter.get(continent.getContinentName())==continent.getCountriesSize() &&
+                !this.playerContinents.contains(continent)){
+                    //The continent is controlled by this player
+                    this.playerContinents.add(continent);
+                }
+            }
+        }
+    }
      /**
      *  This method returns the total number of armies.
      *
@@ -137,5 +169,36 @@ public class PlayerModel {
 
     public void setNumReinforceArmyRemainPlace(int numReinforceArmyRemainPlace) {
         NumReinforceArmyRemainPlace = numReinforceArmyRemainPlace;
+    }
+    
+     public ArrayList<Card> getCardList() {
+        return cardList;
+    }
+
+    public void addCard(Card card) {
+        this.cardList.add(card);
+    }
+
+    public void removeCard(Card card) {
+        this.cardList.remove(card);
+    }
+
+    /**
+     * get the percentage of the map controlled by player
+     */
+    public String percentageOfmap(int totalCountriesNum) {
+        String percent = "";
+        NumberFormat numberFormat = NumberFormat.getInstance();
+        numberFormat.setMaximumFractionDigits(2);
+        int ownerCountryNum = this.playerCountries.size();
+        percent = numberFormat.format((float) ownerCountryNum / (float) totalCountriesNum * 100);
+        return percent;
+    }
+
+    public void reduceArmyNum(int num) {
+        this.totalNumArmy= this.totalNumArmy - num;
+    }
+    public void addArmyNum(int num) {
+        this.totalNumArmy= this.totalNumArmy + num;
     }
 }
