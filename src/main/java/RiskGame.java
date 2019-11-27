@@ -44,6 +44,12 @@ public class RiskGame {
     }
 
 }
+//Check Connection
+
+//Hasti
+
+
+
 //    start game play
 //        loadmap test.txt
 //        gameplayer -add playername1
