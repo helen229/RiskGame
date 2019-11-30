@@ -15,8 +15,27 @@ import static java.lang.System.exit;
 /**
    * This class defines the characteristics of the a Game in a particular phase
    */
-public class GameModel extends Observable {
+package GamePlayModel;
 
+import MapEditor.EditMap;
+import MapEditorModel.ContinentModel;
+import MapEditorModel.CountryModel;
+import MapEditorModel.MapModel;
+import Strategy.*;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Observable;
+import java.util.Random;
+
+import static java.lang.System.exit;
+import static java.lang.System.setOut;
+
+/**
+ * This class defines the characteristics of the a Game in a particular phase
+ */
+public class GameModel extends Observable {
 
     MapModel mapModel;
     ArrayList<PlayerModel> playerList;
@@ -24,16 +43,23 @@ public class GameModel extends Observable {
     int currentPlayerNum;
     int currentExchangeTry;
     String phase;
-    ArrayList<Integer> attackerDice;
+    public ArrayList<Integer> attackerDice;
     CountryModel defenderCountry;
-    CountryModel attackerCountry;
+    public CountryModel attackerCountry;
     //To make sure attack move command only can run when this flag is true
     boolean ifAttackerWin=false;
-//    //To prevent attack declare in the allout mode
+    boolean gameStopFlag = false;
+    //    //To prevent attack declare in the allout mode
 //    boolean ifAttackAllOut=false;
     //To check if the current player can get a card
     boolean hasPlayerConquered=false;
-
+    int NumofTurns = 1;
+    int maxNumberOfTurns = 0;
+    String gameMode = "Single";
+    boolean gameEnd = false;
+    String gameWinner = "";
+    public  ArrayList<ArrayList<String>> tournamentResult;
+    public  ArrayList<String> tournamentMaps;
 
     public GameModel() {
         this.mapModel = new MapModel();
@@ -41,9 +67,12 @@ public class GameModel extends Observable {
         this.attackerDice = new ArrayList<>();
         this.currentPlayerNum=0;
         this.currentExchangeTry=1;
+        this.tournamentResult = new ArrayList<>();
+        this.tournamentMaps = new ArrayList<>();
         defenderCountry = null;
         attackerCountry = null;
     }
+
 
 
     public ArrayList<String> getPlayerNameList(){
