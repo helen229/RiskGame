@@ -75,7 +75,7 @@ public class GameModel extends Observable {
 
 
 
-    public ArrayList<String> getPlayerNameList(){
+  public ArrayList<String> getPlayerNameList(){
         ArrayList<String> playerNameList = new ArrayList<>();
         for (PlayerModel player:playerList) {
             playerNameList.add(player.getPlayerName());
@@ -87,16 +87,61 @@ public class GameModel extends Observable {
      * This method allows a player to be added.
      * @param playerName the parameter used to identify the player to be added.
      */
-    public void addPlayer(String playerName){
+    public void addPlayer(String playerName, String strategy){
         ArrayList<String> playerNameList = getPlayerNameList();
-        if (playerNameList.contains(playerName)){
-            System.out.println("Add "+playerName+" Failed, it's already exist");
-        }else {
-            PlayerModel player= new PlayerModel(playerName);
-            playerList.add(player);
-            System.out.println("Add "+playerName+" Succeed");
+        if ((getNumOfPlayers()<=5) && (isNotPopulated())){
+            if (playerNameList.contains(playerName)){
+                System.out.println("Add "+playerName+" Failed, it's already exist");
+            }else {
+                PlayerModel player= new PlayerModel(playerName);
+                //if the Strategy not exist
+                if (!setPlayerStrategy(player, strategy)){
+                    removePlayer(playerName);
+                    return;
+                }
+                playerList.add(player);
+                System.out.println("Add "+playerName+" Succeed");
+            }
+        } else if (getNumOfPlayers()>5){
+            System.out.println("Add "+playerName+" Failed, the maximum number of players is 6.");
+        } else if (!isNotPopulated()) {
+            System.out.println("Add "+playerName+" Failed, The map is already populated. There is no more unowned country.");
+        } else {
+            System.out.println("Add "+playerName+" Failed!");
         }
 
+    }
+
+    public boolean setPlayerStrategy(PlayerModel player, String strategyName) {
+        Strategy strategy;
+        boolean res = true;
+        switch (strategyName) {
+            case "Cheater":
+                strategy = new CheaterStrategy(player,this);
+                player.setStrategy(strategy);
+                break;
+            case "Aggressive":
+                strategy = new AggressiveStrategy(player,this);
+                player.setStrategy(strategy);
+                break;
+            case "Benevolent":
+                strategy = new BenevolentStrategy(player,this);
+                player.setStrategy(strategy);
+                break;
+            case "Random":
+                strategy = new RandomStrategy(player, this);
+                player.setStrategy(strategy);
+                break;
+            case "Human":
+                strategy = new HumanStrategy(player);
+                player.setStrategy(strategy);
+                break;
+            default:
+                System.out.println("Invalid Strategy name");
+                res = false;
+                break;
+        }
+        return res;
     }
 
     /**
@@ -111,17 +156,13 @@ public class GameModel extends Observable {
         }else {
             System.out.println("Remove "+playerName+" Failed, it's not exist");
         }
-    } 
+    }
     /**
      * This method returns the number of players
      */
     public int getNumOfPlayers() {
         return playerList.size();
     }
-
-    /**
-     * This method assigns countries to the players. And first check inputs.
-     */
     public void populateCountries() {
 
         int numOfPlayers= this.getNumOfPlayers();
