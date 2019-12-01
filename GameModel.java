@@ -226,6 +226,76 @@ public class GameModel extends Observable {
         }
     }
 
+   /**
+     * This method assigns countries to the players. And first check inputs.
+     */
+    public void populateCountries() {
+
+        int numOfPlayers= this.getNumOfPlayers();
+        ArrayList<CountryModel> countries = mapModel.getCountryList();
+        int countrySize = countries.size();
+        if ((isNotPopulated()) && (countrySize>0) && (numOfPlayers>=2) && (numOfPlayers<=6)) {
+            int numberCountry = countrySize / numOfPlayers;
+            if (numberCountry==0) {
+                System.out.println("Error: Number of Players > Number of Countries");
+            } else {
+                int totalCountriesAssigned=0;
+                int selectedCountry=0;
+                int selectedOwner=-1;
+                for (int j=0; j<numberCountry; j++)
+                    for (int i=0; i<numOfPlayers;i++){
+                        do{
+                            selectedCountry=(int) Math.floor((Math.random() * countrySize));
+                        }
+                        while (!"".equals(countries.get(selectedCountry).getOwner().getPlayerName()));
+                        countries.get(selectedCountry).setOwner(playerList.get(i));
+                        countries.get(selectedCountry).setArmyNum(countries.get(selectedCountry).getArmyNum()+1);
+                        playerList.get(i).addPlayerCountries(countries.get(selectedCountry));
+                        totalCountriesAssigned++;
+                    }
+                while(totalCountriesAssigned<countrySize){
+                    selectedOwner++;
+                    do{
+                        selectedCountry=(int) Math.floor((Math.random() * countrySize));
+                    }
+                    while (!"".equals(countries.get(selectedCountry).getOwner().getPlayerName()));
+                    countries.get(selectedCountry).setOwner(playerList.get(selectedOwner));
+                    countries.get(selectedCountry).setArmyNum(countries.get(selectedCountry).getArmyNum()+1);
+                    playerList.get(selectedOwner).addPlayerCountries(countries.get(selectedCountry));
+                    totalCountriesAssigned++;
+                }
+                System.out.println("Populate countries succeed");
+                if (selectedOwner<0) selectedOwner=0;
+                else selectedOwner=1;
+                setCurrentPlayer(playerList.get(currentPlayerNum));
+                for (int i=0; i<numOfPlayers;i++) {
+                    playerList.get(i).setTotalNumArmy(this.playerList.size());
+                    playerList.get(i).setNumArmyRemainPlace(playerList.get(i).getTotalNumArmy()-playerList.get(i).playerCountries.size());
+                }
+                System.out.println("Assigned initial armies (Number of players):"+ currentPlayer.getTotalNumArmy());
+                System.out.println("Assigned initial countries (one army included)");
+                System.out.println("Total number of countries: "+countrySize);
+                System.out.println("Total number of players: "+numOfPlayers);
+                System.out.println("Minimum number of owned countries: " +numberCountry);
+                System.out.println("Maximum number of owned countries: " +(numberCountry+selectedOwner));
+
+
+                System.out.println("Start Placing army, Current Player is "+ getCurrentPlayer().getPlayerName());
+
+            }
+        } else if (countrySize==0) {
+            System.out.println("Populate countries failed! First add some countries.");
+        } else if (numOfPlayers<2) {
+            System.out.println("Populate countries failed! First add some players.");
+        } else if (numOfPlayers>6) {
+            System.out.println("Populate countries failed! First remove some players.");
+        } else if (!isNotPopulated()) {
+            System.out.println("Populate countries failed! The map has been populated before.");
+        } else {
+            System.out.println("Populate countries failed!");
+        }
+    }
+
     /**
      * @return true if there is a country without owner.
      * @return false if all countries have owner.
@@ -235,10 +305,11 @@ public class GameModel extends Observable {
         for (int i = 0; i < countries.size(); i++){
             if("".equals(countries.get(i).getOwner().getPlayerName())){
                 return true;
-            } 
+            }
         }
-       return false;
-   }
+        return false;
+    }
+
     
     /**
      * This method allows players load a map file, that was previously saved
