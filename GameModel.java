@@ -226,9 +226,6 @@ public class GameModel extends Observable {
         }
     }
 
-   /**
-     * This method assigns countries to the players. And first check inputs.
-     */
     public void populateCountries() {
 
         int numOfPlayers= this.getNumOfPlayers();
@@ -269,7 +266,7 @@ public class GameModel extends Observable {
                 else selectedOwner=1;
                 setCurrentPlayer(playerList.get(currentPlayerNum));
                 for (int i=0; i<numOfPlayers;i++) {
-                    playerList.get(i).setTotalNumArmy(this.playerList.size());
+                    playerList.get(i).distributeTotalNumArmy(this.playerList.size());
                     playerList.get(i).setNumArmyRemainPlace(playerList.get(i).getTotalNumArmy()-playerList.get(i).playerCountries.size());
                 }
                 System.out.println("Assigned initial armies (Number of players):"+ currentPlayer.getTotalNumArmy());
@@ -310,7 +307,6 @@ public class GameModel extends Observable {
         return false;
     }
 
-    
     /**
      * This method allows players load a map file, that was previously saved
      */
@@ -325,13 +321,14 @@ public class GameModel extends Observable {
         }
         if (mapModel.isValid()){
             System.out.println("Load Map Succeed");
+            mapModel.setMapName(fileName);
         }else {
             /** not validate so clear all the content */
             mapModel.getCountryList().clear();
             mapModel.getContinentList().clear();
         }
-    } 
-    
+    }
+
     /**
      * This method allows armies to be assigned to countries
      */
@@ -339,7 +336,7 @@ public class GameModel extends Observable {
         int numOfPlayers= this.getNumOfPlayers();
         ArrayList<CountryModel> countries = mapModel.getCountryList();
         int countrySize = countries.size();
-        if ((!(isNotPopulated())) && (countrySize>0) && (numOfPlayers>0)) {
+        if ((!(isNotPopulated())) && (countrySize>0) && (numOfPlayers>=2) && (numOfPlayers<=6)) {
             if (mapModel.indexOfCountry(countryName)!=-1) {
                 int numArmy=currentPlayer.getTotalNumArmy();
                 int armyLeft=currentPlayer.getNumArmyRemainPlace();
@@ -360,6 +357,7 @@ public class GameModel extends Observable {
                             setCurrentPlayer(playerList.get(currentPlayerNum));
                             startReinforcement();
                             System.out.println("Current player is "+currentPlayer.getPlayerName());
+                            gameStart();
                         }
                     }
                 }else {
@@ -370,13 +368,14 @@ public class GameModel extends Observable {
             }
         } else if (countrySize==0) {
             System.out.println("Place army failed! First add some countries.");
-        } else if (numOfPlayers==0) {
+        } else if (numOfPlayers<2) {
             System.out.println("Place army failed! First add some players.");
+        } else if (numOfPlayers>6) {
+            System.out.println("Populate countries failed! First remove some players.");
         } else {
             System.out.println("Place army failed! First populate countries.");
         }
     }
-
     /**
      * This method reinforce armies after checking the input.
      */
