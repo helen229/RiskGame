@@ -59,6 +59,37 @@ public class GameModel {
         }
 
     }
+public boolean setPlayerStrategy(PlayerModel player, String strategyName) {
+        Strategy strategy;
+        boolean res = true;
+        switch (strategyName) {
+            case "Cheater":
+                strategy = new CheaterStrategy(player,this);
+                player.setStrategy(strategy);
+                break;
+            case "Aggressive":
+                strategy = new AggressiveStrategy(player,this);
+                player.setStrategy(strategy);
+                break;
+            case "Benevolent":
+                strategy = new BenevolentStrategy(player,this);
+                player.setStrategy(strategy);
+                break;
+            case "Random":
+                strategy = new RandomStrategy(player, this);
+                player.setStrategy(strategy);
+                break;
+            case "Human":
+                strategy = new HumanStrategy(player);
+                player.setStrategy(strategy);
+                break;
+            default:
+                System.out.println("Invalid Strategy name");
+                res = false;
+                break;
+        }
+        return res;
+    }
 
     /**
      * This method allows a player to be removed
