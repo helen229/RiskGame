@@ -259,7 +259,7 @@ public boolean setPlayerStrategy(PlayerModel player, String strategyName) {
         int numOfPlayers= this.getNumOfPlayers();
         ArrayList<CountryModel> countries = mapModel.getCountryList();
         int countrySize = countries.size();
-        if ((!(isNotPopulated())) && (countrySize>0) && (numOfPlayers>0)) {
+        if ((!(isNotPopulated())) && (countrySize>0) && (numOfPlayers>=2) && (numOfPlayers<=6)) {
             if (mapModel.indexOfCountry(countryName)!=-1) {
                 int numArmy=currentPlayer.getTotalNumArmy();
                 int armyLeft=currentPlayer.getNumArmyRemainPlace();
@@ -271,20 +271,16 @@ public boolean setPlayerStrategy(PlayerModel player, String strategyName) {
                         country.addArmyNum();
                         System.out.println("Place Army Succeed! "+ currentPlayer.getPlayerName() + " left " + currentPlayer.getNumArmyRemainPlace() );
                     }else {
-                        currentPlayer.setTotalNumReinforceArmy(currentPlayer.getPlayerCountries().size()/3);
-                        currentPlayer.setNumReinforceArmyRemainPlace(currentPlayer.getTotalNumReinforceArmy());
-                        if(currentPlayer.getNumReinforceArmyRemainPlace()==0) {
-                            System.out.println("You already place All your army! please start Reinforcement phase");
-                            this.setPhase("Reinforcement");
-                            System.out.println("Phase> "+this.getPhase());
-                            System.out.println("You have 0 Reinforcement army! Please start Fortification phase");
-                            this.setPhase("Fortification");
-                            System.out.println("Phase> "+this.getPhase());
-                        } else {
-                            System.out.println("You already place All your army! Please start Reinforcement phase");
-                            System.out.println(currentPlayer.getPlayerName() + " has " + currentPlayer.getNumReinforceArmyRemainPlace()+" reinforcement.");
-                            this.setPhase("Reinforcement");
-                            System.out.println("Phase> "+this.getPhase());
+                        if (this.currentPlayerNum+1<this.playerList.size()){
+                            this.currentPlayerNum++;
+                            setCurrentPlayer(this.playerList.get(this.currentPlayerNum));
+                            System.out.println("Now is "+currentPlayer.getPlayerName()+" start to place army!");
+                        }else{
+                            this.currentPlayerNum = 0;
+                            setCurrentPlayer(playerList.get(currentPlayerNum));
+                            startReinforcement();
+                            System.out.println("Current player is "+currentPlayer.getPlayerName());
+                            gameStart();
                         }
                     }
                 }else {
@@ -295,8 +291,10 @@ public boolean setPlayerStrategy(PlayerModel player, String strategyName) {
             }
         } else if (countrySize==0) {
             System.out.println("Place army failed! First add some countries.");
-        } else if (numOfPlayers==0) {
+        } else if (numOfPlayers<2) {
             System.out.println("Place army failed! First add some players.");
+        } else if (numOfPlayers>6) {
+            System.out.println("Populate countries failed! First remove some players.");
         } else {
             System.out.println("Place army failed! First populate countries.");
         }
