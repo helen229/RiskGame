@@ -23,8 +23,8 @@ public class GameModelTest {
     public void setUp() {
         gameController = new GameController();
         gameController.getGame().loadMap("test.txt");
-        gameController.getGame().addPlayer("Player1");
-        gameController.getGame().addPlayer("Player2");
+        gameController.getGame().addPlayer("Player1","Human");
+        gameController.getGame().addPlayer("Player2","Cheater");
         gameController.getGame().populateCountries();
         gameController.getGame().placeAllAmy();
     }
