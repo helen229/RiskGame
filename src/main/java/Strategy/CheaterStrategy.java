@@ -1,19 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Strategy;
 
+package Strategy;
 import GamePlayModel.GameModel;
 import GamePlayModel.PlayerModel;
 import MapEditorModel.CountryModel;
-import static java.lang.System.exit;
 import java.util.ArrayList;
+import static java.lang.System.exit;
 
 /**
- *
- * @author User
+ * Cheater Strategy class
  */
 public class CheaterStrategy implements Strategy{
 
@@ -26,7 +20,7 @@ public class CheaterStrategy implements Strategy{
      * @param player player with this strategy
      */
     public CheaterStrategy(PlayerModel player, GameModel gameModel) {
-        name = "cheater";
+        name = "Cheater";
         this.player = player;
         this.gameModel = gameModel;
     }
@@ -155,4 +149,3 @@ public class CheaterStrategy implements Strategy{
         gameModel.fortifyNone();
     }
 }
-

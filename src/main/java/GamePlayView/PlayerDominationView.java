@@ -1,9 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GamePlayView;
+
 import GamePlayModel.GameModel;
 import GamePlayModel.PlayerModel;
 import MapEditorModel.MapModel;
@@ -11,10 +7,7 @@ import MapEditorModel.MapModel;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-/**
- *
- * @author Ehsan
- */
+
 public class PlayerDominationView implements Observer {
     public void update(Observable obs, Object arg) {
         if (!"DominView".equals(arg))
@@ -32,7 +25,7 @@ public class PlayerDominationView implements Observer {
             System.out.println("The Countries controlled: " + player.getPlayerCountries());
             System.out.println("The Continents controlled: " + player.getPlayerContinents());
             System.out.println("The total army number: "+player.getTotalNumArmy());
-            }
+        }
         System.out.println(end);
     };
 }

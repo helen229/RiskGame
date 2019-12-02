@@ -90,8 +90,8 @@ public class SaveMap {
         for (CountryModel country:mapModel.getCountryList()) {
             String countryValue= String.format("%d", country.getCountryValue());
             stringBuilder.append(countryValue);
-            for (int neighbour:country.getNeighbours()) {
-                String neighbourValue= String.format(" %d", neighbour);
+            for (CountryModel neighbour:country.getNeighbours()) {
+                String neighbourValue= String.format(" %d", neighbour.getCountryValue());
                 stringBuilder.append(neighbourValue);
             }
             stringBuilder.append(NEW_LINE_DELIMITER);
@@ -117,7 +117,6 @@ public class SaveMap {
             sb.append(i + " ");
             sb.append(Data);
             sb.append(" ");
-
 
         }
         String finalised = sb.toString();

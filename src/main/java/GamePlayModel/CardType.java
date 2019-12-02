@@ -1,5 +1,7 @@
 package GamePlayModel;
 
+import java.util.Random;
+
 /**
  * This is the class used to define the card type
  *
@@ -42,7 +44,8 @@ public enum CardType {
      */
     public int getCardTypeNumber() {
         return CardTypeNumber;
-
     }
+
+
 
 }

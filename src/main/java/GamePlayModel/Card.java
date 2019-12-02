@@ -2,7 +2,7 @@ package GamePlayModel;
 import java.util.Random;
 
 /**
- * This is the card class We use the class to define player's card
+ * This is the card class. We use this class to define player's cards.
  *
  */
 
@@ -44,7 +44,11 @@ public class Card {
     public CardType getCardType() {
         return cardType;
     }
-
+    
+    /**
+     * Gets the card type name.
+     * @return card Type name
+    */
     public String getCardTypeName() {
         return cardType.name();
     }
@@ -75,6 +79,23 @@ public class Card {
                 cardType = CardType.Cavalry;
                 break;
             case 2:
+                cardType = CardType.Artillery;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public Card(PlayerModel player, String CardTypeName) {
+        this.player = player;
+        switch (CardTypeName) {
+            case "Infantry":
+                cardType = CardType.Infantry;
+                break;
+            case "Cavalry":
+                cardType = CardType.Cavalry;
+                break;
+            case "Artillery":
                 cardType = CardType.Artillery;
                 break;
             default:

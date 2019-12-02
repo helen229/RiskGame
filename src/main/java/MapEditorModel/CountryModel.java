@@ -12,7 +12,9 @@ public class CountryModel {
 
     private String continentName;
 
-    private ArrayList<Integer> neighbours;
+    private ArrayList<CountryModel> neighbours;
+
+    private ArrayList<String> neighboursNames;
 
     private int armyNum;
 
@@ -28,7 +30,8 @@ public class CountryModel {
         this.countryValue = countryID;
         this.countryName = countryName;
         this.continentName = continentName;
-        this.neighbours = new ArrayList<Integer>();
+        this.neighbours = new ArrayList<CountryModel>();
+        this.neighboursNames = new ArrayList<String>();
         this.owner = new PlayerModel("");
     }
 
@@ -74,11 +77,11 @@ public class CountryModel {
 
     /**
      *
-     * @param countryValue
+     * @param country
      */
-    public void addNeighbour(int countryValue) {
+    public void addNeighbour(CountryModel country) {
 
-        this.neighbours.add(countryValue);
+        this.neighbours.add(country);
 
     }
 
@@ -98,11 +101,12 @@ public class CountryModel {
      *
      * @return
      */
-    public ArrayList<Integer> getNeighbours() {
+    public ArrayList<CountryModel> getNeighbours() {
         return neighbours;
     }
 
-    public void setNeighbours(ArrayList<Integer> neighbours) {
+
+    public void setNeighbours(ArrayList<CountryModel> neighbours) {
         this.neighbours = neighbours;
     }
 
@@ -119,6 +123,10 @@ public class CountryModel {
         this.armyNum++;
     }
 
+    public void addArmyNum(int num) {
+        this.armyNum= this.armyNum + num;
+    }
+
     public PlayerModel getOwner() {
         return owner;
     }
@@ -126,7 +134,7 @@ public class CountryModel {
     public void setOwner(PlayerModel owner) {
         this.owner = owner;
     }
-    
+
     public void reduceArmyNum() {
         this.armyNum--;
     }
@@ -137,6 +145,6 @@ public class CountryModel {
 
     @Override
     public String toString() {
-        return (this.getCountryName());
+        return this.getCountryName()+" "+this.getArmyNum()+" "+this.getOwner().getPlayerName();
     }
 }

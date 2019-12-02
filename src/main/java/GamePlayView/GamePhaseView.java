@@ -1,17 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GamePlayView;
+
 import GamePlayModel.GameModel;
 
 import java.util.Observable;
 import java.util.Observer;
-/**
- *
- * @author Ehsan
- */
+
 public class GamePhaseView implements Observer {
     public void update(Observable obs, Object arg) {
         if (!"PhaseView".equals(arg))

@@ -2,6 +2,7 @@ package GamePlayController;
 
 import GamePlayModel.GameModel;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +15,7 @@ public class GameController {
      * Constructor for game controller
      */
     public GameController(){
-        this.game = new GameModel();
+        this.game = new GameModel.Builder().currentExchangeTry(1).currentPlayerNum(0).build();
     }
 
 
@@ -26,18 +27,18 @@ public class GameController {
      * @param phase
      */
     public void
-    commandHandler(String[] args, String phase) {
+    commandHandler(String[] args, String phase) throws IOException {
 
         if (args[0].equals("showmap")){
             showMap(phase);
             return;
         }
         if (args[0].equals("savegame")){
-            game.saveGame("");
+            game.saveGame(args[1]);
             return;
         }
         if (args[0].equals("loadgame")){
-            game.loadGame("");
+            game.loadGame(args[1]);
             return;
         }
         try
@@ -53,7 +54,7 @@ public class GameController {
                         game.populateCountries();
                         break;
                     case "gameplayer":
-                        parsePlayerOption(args[1],args[2],args[3]);
+                        parsePlayerOption(args);
                         break;
                     case "placearmy":
                         game.placeArmy(args[1]);
@@ -125,14 +126,13 @@ public class GameController {
 
     /**
      * This method allows players to add or remove players.
-     * @param operation
-     * @param playerName
      */
-    private void parsePlayerOption(String operation, String playerName, String playerStrategy) {
+    private void parsePlayerOption(String[] args) {
+        String operation = args[1];
         if (operation.equals("add")){
-            game.addPlayer(playerName,playerStrategy);
+            game.addPlayer(args[2],args[3]);
         }else if (operation.equals("remove")){
-            game.removePlayer(playerName);
+            game.removePlayer(args[2]);
         }else {
             System.out.println("Invalid Command");
         }
@@ -166,6 +166,7 @@ public class GameController {
         int maxNumberOfTurns = 0;
         boolean mapFlag = false;
         boolean playerFlag = false;
+        boolean validateInput=true;
         for (int i = 0; i < args.length; i++) {
 
             if (args[i].equals("-M")){
@@ -180,27 +181,51 @@ public class GameController {
             else if (args[i].equals("-G")){
                 playerFlag = false;
                 numberOfGames = Integer.parseInt(args[i+1]);
+                if ((numberOfGames>5)||(numberOfGames<1)){
+                    System.out.println("The acceptable number of Games is 1 to 5.");
+                    validateInput=false;
+                }
                 continue;
             }
             else if (args[i].equals("-D")){
                 maxNumberOfTurns = Integer.parseInt(args[i+1]);
+                if ((maxNumberOfTurns>50)||(maxNumberOfTurns<10)){
+                    System.out.println("The acceptable number of Turns is 10 to 50.");
+                    validateInput=false;
+                }
                 continue;
             }
 
             if (mapFlag){
-                mapList.add(args[i]);
+                if (mapList.size()<5){
+                    mapList.add(args[i]);
+                } else {
+                    System.out.println("The acceptable number of Maps is 1 to 5.");
+                    validateInput=false;
+                }
             }
             if (playerFlag){
-                playerList.add(args[i]);
+                if (playerList.size()<4){
+                    playerList.add(args[i]);
+                } else {
+                    System.out.println("The acceptable number of Players is 2 to 4.");
+                    validateInput=false;
+                }
             }
 
         }
+        
+        if (mapList.size()<1){
+            System.out.println("The acceptable number of Maps is 1 to 5.");
+            validateInput=false;
+        }
+        if (playerList.size()<2){
+            System.out.println("The acceptable number of Players is 2 to 4.");
+            validateInput=false;
+        }
 
-        //TODO: add the validation for those four variable
-        // choosing M = 1 to 5 different maps, P = 2 to 4 different computer players strategies,
-        // G = 1 to 5 games to be played on each map, D = 10 to 50 maximum number of turns for each game.
-
-        game.tournament(mapList, playerList, numberOfGames, maxNumberOfTurns);
+        if (validateInput)
+            game.tournament(mapList, playerList, numberOfGames, maxNumberOfTurns);
 
     }
 

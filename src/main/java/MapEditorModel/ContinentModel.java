@@ -85,7 +85,10 @@ public class ContinentModel {
      */
     public void removeCountryFromList(String countryName) {
 
-        this.countriesList.remove(countryName);
+        if (countriesList.size()==1 && countriesList.contains(countryName))
+            countriesList.clear();
+        else
+            this.countriesList.remove(countryName);
     }
 
     /**
@@ -96,6 +99,7 @@ public class ContinentModel {
 
         this.countriesList = countriesList;
     }
+
     public int getCountriesSize() {
         return this.countriesList.size();
     }

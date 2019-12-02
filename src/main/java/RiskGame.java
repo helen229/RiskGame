@@ -5,6 +5,7 @@ import GamePlayView.GamePhaseView;
 import GamePlayView.PlayerDominationView;
 import MapEditor.MapHandler;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class RiskGame {
@@ -13,7 +14,7 @@ public class RiskGame {
      * Main Entry for the game
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         //uncomment those hardcode for Junit test
 //        if (args[0].equals("start")&&args[1].equals("new")&&args[2].equals("game")){
             RiskGame riskGame = new RiskGame();
@@ -26,7 +27,7 @@ public class RiskGame {
     /**
      * Game method for all the phase
      */
-    public void newGame(){
+    public void newGame() throws IOException {
 
         MapHandler mapHandler = new MapHandler();
         GameController gameController = new GameController();
