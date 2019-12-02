@@ -36,14 +36,26 @@ public class GameModel {
      * This method allows a player to be added.
      * @param playerName the parameter used to identify the player to be added.
      */
-    public void addPlayer(String playerName){
+    public void addPlayer(String playerName, String strategy){
         ArrayList<String> playerNameList = getPlayerNameList();
-        if (playerNameList.contains(playerName)){
-            System.out.println("Add "+playerName+" Failed, it's already exist");
-        }else {
-            PlayerModel player= new PlayerModel(playerName);
-            playerList.add(player);
-            System.out.println("Add "+playerName+" Succeed");
+        if ((getNumOfPlayers()<=5) && (isNotPopulated())){
+            if (playerNameList.contains(playerName)){
+                System.out.println("Add "+playerName+" Failed, it's already exist");
+            }else {
+                PlayerModel player= new PlayerModel(playerName);
+                //if the Strategy not exist
+                if (!setPlayerStrategy(player, strategy)){
+                    return;
+                }
+                playerList.add(player);
+                System.out.println("Add "+playerName+" Succeed");
+            }
+        } else if (getNumOfPlayers()>5){
+            System.out.println("Add "+playerName+" Failed, the maximum number of players is 6.");
+        } else if (!isNotPopulated()) {
+            System.out.println("Add "+playerName+" Failed, There is no more unowned country.");
+        } else {
+            System.out.println("Add "+playerName+" Failed!");
         }
 
     }
