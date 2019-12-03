@@ -7,7 +7,8 @@ import java.io.IOException;
 public class MapHandler {
 
     private MapModel mapModel;
-
+    private  static final String MAP_TAG= "[Map]";
+    private static final String MAP=" Map";
 
     /**
      * Constructor of the MapController Class
@@ -54,8 +55,8 @@ public class MapHandler {
                     break;
 
             }
-        }catch(ArrayIndexOutOfBoundsException e){
-            System.out.println("Arguments number invalid");
+        }catch(Exception e){
+            System.out.println(e);
         }
 
     }
@@ -82,26 +83,61 @@ public class MapHandler {
 
     }
 
+    public boolean selfMap(){
+        return true;
+    }
+
+    public boolean schoolMap(){
+        return true;
+    }
+
     /**
      * Load map from file
      * @param fileName
      */
     public void editMap(String fileName) {
+        ChooseAdapter adp = new ChooseAdapter(fileName);
 
-        EditMap readFile = new EditMap(fileName);
-        try {
-            this.mapModel = readFile.checkFile();
-        } catch (IOException e) {
-            System.out.println("Edit Map fail, this file not exist");
-            return;
+//        EditMap readFile = new EditMap(fileName);
+        try{
+            if (adp.isSchoolFile()){
+
+                MapAdapter readFile = new MapAdapter(fileName);
+                try {
+                    this.mapModel = readFile.checkFile();
+                } catch (IOException e) {
+                    System.out.println("Edit Map fail, this file not exist");
+                    return;
 //            e.printStackTrace();
-        }
-        if (mapModel.isValid()){
-            System.out.println("Edit Map Succeed");
-        }else {
-            /** not validate so clear all the content */
-            mapModel.getCountryList().clear();
-            mapModel.getContinentList().clear();
+                }
+                if (mapModel.isValid()){
+                    System.out.println("Edit Map Succeed");
+                }else {
+                    /** not validate so clear all the content */
+                    mapModel.getCountryList().clear();
+                    mapModel.getContinentList().clear();
+                }
+
+            }else {
+                EditMap readFile = new EditMap(fileName);
+                try {
+                    this.mapModel = readFile.checkFile();
+                } catch (IOException e) {
+                    System.out.println("Edit Map fail, this file not exist");
+                    return;
+//            e.printStackTrace();
+                }
+                if (mapModel.isValid()){
+                    System.out.println("Edit Map Succeed");
+                }else {
+                    /** not validate so clear all the content */
+                    mapModel.getCountryList().clear();
+                    mapModel.getContinentList().clear();
+                }
+            }
+        }catch(IOException ex){
+            System.out.println("invalid");
+
         }
 
 
@@ -117,7 +153,7 @@ public class MapHandler {
 
         try
         {
-            if (operation.equals("-add")){
+            if (operation.equals("add")){
                 switch (command){
                     case "editcontinent":
                         addContinent(args[2],Integer.parseInt(args[3]));
@@ -133,7 +169,7 @@ public class MapHandler {
                         break;
                 }
             }
-            else if(operation.equals("-remove")){
+            else if(operation.equals("remove")){
                 switch (command){
                     case "editcontinent":
                         removeContinent(args[2]);
@@ -154,8 +190,8 @@ public class MapHandler {
                 System.out.println("Invalid Option");
             }
 
-        }catch(ArrayIndexOutOfBoundsException e){
-            System.out.println("Arguments number invalid");
+        }catch(Exception e){
+            System.out.println(e);
         }
 
     }

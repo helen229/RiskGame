@@ -1,6 +1,10 @@
 package GamePlayController;
 
-import GamePlayModel.GameModel; 
+import GamePlayModel.GameModel;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
 /**
  * This class handles commands that are require while playing the game.
  */
@@ -11,7 +15,7 @@ public class GameController {
      * Constructor for game controller
      */
     public GameController(){
-        this.game = new GameModel();
+        this.game = new GameModel.Builder().currentExchangeTry(1).currentPlayerNum(0).build();
     }
 
 
@@ -22,17 +26,27 @@ public class GameController {
      * This method shows the map based on the phase selected.
      * @param phase
      */
-    public void commandHandler(String[] args, String phase) {
+    public void
+    commandHandler(String[] args, String phase) throws IOException {
 
         if (args[0].equals("showmap")){
             showMap(phase);
             return;
         }
-
+        if (args[0].equals("savegame")){
+            game.saveGame(args[1]);
+            return;
+        }
+        if (args[0].equals("loadgame")){
+            game.loadGame(args[1]);
+            return;
+        }
         try
         {
             if (phase.equals("Startup")){
                 switch (args[0]) {
+                    case "start":
+                        break;
                     case "loadmap":
                         game.loadMap(args[1]);
                         break;
@@ -40,7 +54,7 @@ public class GameController {
                         game.populateCountries();
                         break;
                     case "gameplayer":
-                        parsePlayerOption(args[1],args[2]);
+                        parsePlayerOption(args);
                         break;
                     case "placearmy":
                         game.placeArmy(args[1]);
@@ -48,15 +62,26 @@ public class GameController {
                     case "placeall":
                         game.placeAllAmy();
                         break;
+                    case "tournament":
+                        parseTournamentOption(args);
+                        break;
                     default:
-//                        System.out.println("Invalid Command");
+                        System.out.println("Invalid Command for startup phase");
                         break;
                 }
 
             }else if (phase.equals("Reinforcement")){
                 //reinforce countryname num
-                if (args[0].equals("reinforce"))
+                if (args[0].equals("reinforce")){
                     game.reinforce(args[1], Integer.parseInt(args[2]));
+                }
+                else if(args[0].equals("exchangecards")){
+                    if (args[1].equals("none")){
+                        game.exchangeCardsNone();
+                    }else{
+                        game.exchangeCards( Integer.parseInt(args[1]),  Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+                    }
+                }
                 else{
                     System.out.println("Wrong command, The command is not valid in this phase");
                     return;
@@ -65,16 +90,13 @@ public class GameController {
             }else if (phase.equals("Attack")){
                 switch (args[0]) {
                     case "attack":
-                        parseAttackOption(args[0],args[1],args[3]);
+                        parseAttackOption(args[1],args[2],args[3]);
                         break;
                     case "defend":
                         game.defendDiceNum(Integer.parseInt(args[1]));
                         break;
                     case "attackmove":
                         game.winnerMove(Integer.parseInt(args[1]));
-                        break;
-                    case "noattack":
-                        game.stopAttack();
                         break;
                     default:
                         System.out.println("Invalid Command in Attack Phase");
@@ -97,21 +119,20 @@ public class GameController {
             }else {
                 System.out.println("The command is not valid in this phase");
             }
-        }catch(ArrayIndexOutOfBoundsException e){
-            System.out.println("Arguments number invalid");
+        }catch(Exception e){
+            System.out.println(e);
         }
     }
 
     /**
      * This method allows players to add or remove players.
-     * @param operation
-     * @param playerName
      */
-    private void parsePlayerOption(String operation, String playerName) {
+    private void parsePlayerOption(String[] args) {
+        String operation = args[1];
         if (operation.equals("add")){
-            game.addPlayer(playerName);
+            game.addPlayer(args[2],args[3]);
         }else if (operation.equals("remove")){
-            game.removePlayer(playerName);
+            game.removePlayer(args[2]);
         }else {
             System.out.println("Invalid Command");
         }
@@ -126,13 +147,86 @@ public class GameController {
     private void parseAttackOption(String attackCountry, String defendCountry, String mode) {
 
         //TODO:Integer failed exception handle!
-        if (mode.equals("allout")){
+        if (mode.equals("noattack")){
+            game.stopAttack();
+        }else if (mode.equals("allout")){
             game.attackAllOut(attackCountry,defendCountry);
         }else if (Integer.parseInt(mode)>0 && Integer.parseInt(mode)<4){
-            game.attackDiceNum(attackCountry,defendCountry,Integer.parseInt(mode));
+            game.attackDiceNum(attackCountry,defendCountry,Integer.parseInt(mode),false);
         }else {
             System.out.println("Invalid Command");
         }
+    }
+
+    private void parseTournamentOption(String[] args) {
+
+        ArrayList<String> mapList = new ArrayList<String>();
+        ArrayList<String> playerList = new ArrayList<String>();
+        int numberOfGames = 0;
+        int maxNumberOfTurns = 0;
+        boolean mapFlag = false;
+        boolean playerFlag = false;
+        boolean validateInput=true;
+        for (int i = 0; i < args.length; i++) {
+
+            if (args[i].equals("-M")){
+                mapFlag = true;
+                continue;
+            }
+            else if (args[i].equals("-P")){
+                playerFlag = true;
+                mapFlag = false;
+                continue;
+            }
+            else if (args[i].equals("-G")){
+                playerFlag = false;
+                numberOfGames = Integer.parseInt(args[i+1]);
+                if ((numberOfGames>5)||(numberOfGames<1)){
+                    System.out.println("The acceptable number of Games is 1 to 5.");
+                    validateInput=false;
+                }
+                continue;
+            }
+            else if (args[i].equals("-D")){
+                maxNumberOfTurns = Integer.parseInt(args[i+1]);
+                if ((maxNumberOfTurns>50)||(maxNumberOfTurns<10)){
+                    System.out.println("The acceptable number of Turns is 10 to 50.");
+                    validateInput=false;
+                }
+                continue;
+            }
+
+            if (mapFlag){
+                if (mapList.size()<5){
+                    mapList.add(args[i]);
+                } else {
+                    System.out.println("The acceptable number of Maps is 1 to 5.");
+                    validateInput=false;
+                }
+            }
+            if (playerFlag){
+                if (playerList.size()<4){
+                    playerList.add(args[i]);
+                } else {
+                    System.out.println("The acceptable number of Players is 2 to 4.");
+                    validateInput=false;
+                }
+            }
+
+        }
+        
+        if (mapList.size()<1){
+            System.out.println("The acceptable number of Maps is 1 to 5.");
+            validateInput=false;
+        }
+        if (playerList.size()<2){
+            System.out.println("The acceptable number of Players is 2 to 4.");
+            validateInput=false;
+        }
+
+        if (validateInput)
+            game.tournament(mapList, playerList, numberOfGames, maxNumberOfTurns);
+
     }
 
     /**

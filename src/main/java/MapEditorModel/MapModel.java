@@ -1,6 +1,7 @@
 package MapEditorModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class MapModel {
@@ -17,8 +18,8 @@ public class MapModel {
     /** The country list. */
     private ArrayList<CountryModel> countryList;
 
-    /** The map valid or not */
-    private boolean isValid = true;
+//    /** The map valid or not */
+//    private boolean isValid = true;
 
     /**
      * Constructor for the MapModel
@@ -50,34 +51,80 @@ public class MapModel {
      * @return is valid or not
      */
     public boolean isValid(){
-        ArrayList<String> invalidContinent = new ArrayList<String>();
+        boolean isValid = true;
+        String invalidContinent ="";
+        if (continentList.isEmpty()||countryList.isEmpty()||countryList.size()==1){
+            System.out.println("Map not validate");
+            isValid = false;
+            return isValid;
+        }
+        //validate the continent
         for (ContinentModel continent:this.continentList) {
 
             if (continent.getCountriesList().size()>0){
                 String countryName = continent.getCountriesList().get(0);
                 CountryModel country= countryList.get(indexOfCountry(countryName));
                 ArrayList<Boolean> visitedCountryList=new ArrayList<Boolean>();
-                for (int i = 0; i < countryList.size(); i++) {
+                for (String temp: continent.getCountriesList()) {
                     visitedCountryList.add(false);
                 }
-                dfs(country,visitedCountryList);
-                for (int i = 0; i < continent.getCountriesList().size(); i++) {
-                    int index = indexOfCountry(continent.getCountriesList().get(i));
-                    if (!visitedCountryList.get(index)){
-                        if (!invalidContinent.contains(continent.getContinentName()))
-                            invalidContinent.add(continent.getContinentName());
+                dfs(country,visitedCountryList, continent.getCountriesList());
+                for (Boolean res:visitedCountryList) {
+                    if (!res){
                         isValid=false;
+                        invalidContinent = continent.getContinentName();
+                        break;
                     }
                 }
 
+            }else{
+                System.out.println("Continent can't be empty");
+                isValid=false;
             }
 
         }
-        if (!isValid)
-            System.out.println(invalidContinent+" is not valid");
-        else
+        //validate the map
+        ArrayList<CountryModel> visited=new ArrayList<>();
+        ifAllCountryConnected(this.countryList.get(0),visited);
+        if (visited.size() != this.countryList.size()){
+            isValid = false;
+            invalidContinent = "not all countries connected,";
+        }
+
+        if (isValid)
             System.out.println("Map is valid");
+        else
+            System.out.println(invalidContinent+" is not valid");
+
        return isValid;
+    }
+
+    /**
+     * A dfs method to help validate the map if Continent Country Connected
+     * @param country
+     * @param visitedCountryList
+     */
+    public void dfs(CountryModel country, ArrayList<Boolean> visitedCountryList, ArrayList<String> countryList){
+
+        if (!countryList.contains(country.getCountryName()))
+            return;
+
+        int index = countryList.indexOf(country.getCountryName());
+
+        if (visitedCountryList.get(index)){
+            return;
+        }else {
+            visitedCountryList.set(index,true);
+        }
+
+        if (country.getNeighbours().size()==0)
+            return;
+
+        for (CountryModel neighbourCountry : country.getNeighbours()){
+            dfs(neighbourCountry, visitedCountryList, countryList);
+        }
+
+        return;
     }
 
     /**
@@ -85,20 +132,19 @@ public class MapModel {
      * @param country
      * @param visitedCountryList
      */
-    public void dfs(CountryModel country, ArrayList<Boolean> visitedCountryList){
+    public void ifAllCountryConnected(CountryModel country, ArrayList<CountryModel> visitedCountryList){
 
-        if (visitedCountryList.get(country.getCountryValue())){
+        if (visitedCountryList.contains(country)){
             return;
         }else {
-            visitedCountryList.set(country.getCountryValue(),true);
+            visitedCountryList.add(country);
         }
 
         if (country.getNeighbours().size()==0)
             return;
 
-        for (int neighbourValue : country.getNeighbours()){
-            CountryModel neighbourCountry = countryList.get(neighbourValue);
-            dfs(neighbourCountry, visitedCountryList);
+        for (CountryModel neighbourCountry : country.getNeighbours()){
+            ifAllCountryConnected(neighbourCountry, visitedCountryList);
         }
 
         return;
@@ -143,16 +189,18 @@ public class MapModel {
                 "Country Value:" +
                 country.getCountryValue() + "\n" +
                 "Neighbor Country List: ");
-
+        if (country.getNeighbours().isEmpty()){
+            System.out.print("[]\n\n");
+        }
         for (int i = 0; i < country.getNeighbours().size(); i++){
-            int neighbourValue= country.getNeighbours().get(i);
+            CountryModel neighbour= country.getNeighbours().get(i);
             if (i==0)
                 System.out.print("[");
             if (i==country.getNeighbours().size()-1){
-                System.out.println(this.countryList.get(indexOfCountry(neighbourValue)).getCountryName()+"]\n");
+                System.out.println(neighbour.getCountryName()+"]\n");
                 break;
             }
-            System.out.print(this.countryList.get(indexOfCountry(neighbourValue)).getCountryName()+", ");
+            System.out.print(neighbour.getCountryName()+", ");
         }
 
     }
@@ -231,15 +279,18 @@ public class MapModel {
 
         if(isRemoveContinentValid(continentName)){
             ContinentModel continent = this.continentList.get(indexOfContinent(continentName));
+            ArrayList<String> temp = new  ArrayList<String>();
+            //copy the arraylist otherwise the list is changing
+            for (String countryName:continent.getCountriesList()) {
+               temp.add(countryName);
+            }
             //remove the country of the continent first
-            for (int i = 0; i < continent.getCountriesList().size(); i++){
-                String countryName= continent.getCountriesList().get(i);
+            for (String countryName:temp) {
                 removeCountry(countryName);
             }
             this.continentList.remove(indexOfContinent(continentName));
             return true;
         }
-
         return false;
 
     }
@@ -279,6 +330,28 @@ public class MapModel {
         return false;
     }
 
+    HashMap<String,Integer> countryNumberNamePair = new HashMap<>();
+    public HashMap addCountryNumberNamePair(String countryName, int countryNumber){
+        countryNumberNamePair.put(countryName,countryNumber);
+        return countryNumberNamePair;
+    }
+
+    public int getCountryNumberFromName(String countryName){
+        int countryNumber;
+        if (countryNumberNamePair.containsKey(countryName)){
+            countryNumber = countryNumberNamePair.get(countryName);
+
+        }else {
+            //System.out.println(countryNumberNamePair.size());
+            countryNumberNamePair.put(countryName,countryNumberNamePair.size());
+            //System.out.println(countryNumberNamePair.size());
+            countryNumber = countryNumberNamePair.get(countryName);
+        }
+        return countryNumber;
+
+
+    }
+
     /**
      * remove country to the countryList
      * @param countryName
@@ -290,17 +363,15 @@ public class MapModel {
         if (indexOfCountry(countryName)!=-1){
             String continentName = this.countryList.get(indexOfCountry(countryName)).getContinentName();
             CountryModel country = this.countryList.get(indexOfCountry(countryName));
-            this.continentList.get(indexOfContinent(continentName)).removeCountryFromList(countryName);
 
             //remove the country from its neighbours list
             for (int i = 0; i < country.getNeighbours().size(); i++){
-                int neighbourValue = country.getNeighbours().get(i);
-                String neighbourName = this.countryList.get(indexOfCountry(neighbourValue)).getCountryName();
+                CountryModel neighbour = country.getNeighbours().get(i);
+                String neighbourName = neighbour.getCountryName();
                 removeNeighbor(countryName, neighbourName);
             }
-
             this.countryList.remove(indexOfCountry(countryName));
-
+            this.continentList.get(indexOfContinent(continentName)).removeCountryFromList(countryName);
             return true;
         }
 
@@ -324,8 +395,8 @@ public class MapModel {
                 System.out.println("This Neighbor Country already exist");
                 return false;
             }
-            country.addNeighbour(neighborCountry.getCountryValue());
-            neighborCountry.addNeighbour(country.getCountryValue());
+            country.addNeighbour(neighborCountry);
+            neighborCountry.addNeighbour(country);
             return true;
         }
         System.out.println("The country or the neighbor country not exists ");
@@ -417,14 +488,6 @@ public class MapModel {
     }
 
     /**
-     * flag for the map validation
-     * @return
-     */
-    public boolean isMapValid() {
-        return isValid;
-    }
-
-    /**
      * is the add validate
      * @param continentName
      * @param continentValue
@@ -463,11 +526,7 @@ public class MapModel {
 
     }
 
-    /**
-     * set the valid flag
-     * @param valid
-     */
-    public void setValid(boolean valid) {
-        isValid = valid;
-    }
+
+
+
 }

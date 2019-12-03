@@ -1,6 +1,5 @@
-package MapValidate;
+package MapEditor;
 
-import MapEditor.MapHandler;
 import MapEditorModel.ContinentModel;
 import MapEditorModel.CountryModel;
 import MapEditorModel.MapModel;
@@ -13,10 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class MapValidatorTest {
     public MapModel map;
     public MapHandler mapHandler;
-    private ContinentModel Asia;
-    public CountryModel China;
-    public CountryModel Japan;
-    public CountryModel Singapore;
+
 
     /**
      * Each time invoke a method, set up this context
