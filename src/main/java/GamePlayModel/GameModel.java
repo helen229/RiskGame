@@ -402,6 +402,7 @@ public class GameModel extends Observable {
         setMaxNumberOfTurns(maxNumberOfTurns);
         this.tournamentMaps = mapList;
         for (String map: mapList) {
+            gameWinner = " ";
             ArrayList<String> gameResultList = new ArrayList<String>();
             int gameNum = numberOfGames;
             while(gameNum>0){
