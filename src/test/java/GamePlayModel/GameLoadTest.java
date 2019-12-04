@@ -9,5 +9,6 @@ class GameLoadTest {
 
     @Test
     void loading() {
+        
     }
 }

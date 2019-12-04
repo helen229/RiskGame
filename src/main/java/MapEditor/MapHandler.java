@@ -4,6 +4,9 @@ import MapEditorModel.MapModel;
 
 import java.io.IOException;
 
+/**
+ * This Map saves the Map
+ */
 public class MapHandler {
 
     private MapModel mapModel;

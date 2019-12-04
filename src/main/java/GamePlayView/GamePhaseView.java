@@ -5,7 +5,15 @@ import GamePlayModel.GameModel;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * This method updates the Game Phase View using the Observer design pattern
+ */
 public class GamePhaseView implements Observer {
+    /**
+     * This method updates the GamePhase View
+     * @param obs
+     * @param arg
+     */
     public void update(Observable obs, Object arg) {
         if (!"PhaseView".equals(arg))
             return;

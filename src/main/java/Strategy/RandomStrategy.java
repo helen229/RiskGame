@@ -118,7 +118,7 @@ public class RandomStrategy implements Strategy{
             }
             player.setNumArmyRemainPlace(0);
         } else {
-            //System.out.println(player.getPlayerName()+" dosent have any countries or Reinforcement armies. Reinforcement skipped.");
+
         }
         System.out.println(player.getPlayerName()+" placed all Reinforcement armies successfully! ");
     }

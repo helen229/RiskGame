@@ -13,7 +13,7 @@ public class GameLoad {
     public GameModel game;
 
     public GameLoad(GameModel gameM) {
-        //gameM =  new GameModel.Builder().currentExchangeTry(1).currentPlayerNum(0).build();
+
         this.game = gameM;
     }
 

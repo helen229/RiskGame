@@ -10,6 +10,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * This  class changes the interface of the Map
+ */
 
 
 public class MapAdapter extends EditPreparedMap implements EditMapInterface {
@@ -17,6 +20,10 @@ public class MapAdapter extends EditPreparedMap implements EditMapInterface {
     private EditMap map;
 
     private MapModel mapModel;
+    /**
+     * This method change the interface of the class
+
+     */
     public MapAdapter(String fileDirectory) {
 
         super(fileDirectory);

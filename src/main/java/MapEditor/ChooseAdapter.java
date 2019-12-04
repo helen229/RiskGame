@@ -8,6 +8,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * This is an adapter class for changing the interface
+ */
 
 public class ChooseAdapter {
     private boolean isSchoolFile = false;
@@ -18,7 +21,10 @@ public class ChooseAdapter {
 
     private final String fileDirectory;
 
-
+    /**
+     * This is the actual method  that chooses the adapter
+     * @param fileDirectory
+     */
     public ChooseAdapter (String fileDirectory) {
         this.fileDirectory = fileDirectory;
     }
