@@ -90,16 +90,7 @@ public class EditMap {
                             ArrayList<Integer> neigbour = new ArrayList<>();
                             if (size > 0) {
                                 String[] countryData = line.split(" ");
-                                mapModel.addCountry(countryData[1], countryData[2]);
-//                                CountryModel country = new CountryModel(Integer.parseInt(countryData[0]), countryData[1], countryData[2]);
-//
-//                                countries.add(country);
-//
-//                                neigbour = country.getNeighbours();
-//                                for (int neighbourCountry : neigbour) {
-//                                    country.addNeighbour(neighbourCountry);
-//                                }
-
+                                mapModel.addCountryFromFile(Integer.parseInt(countryData[0]), countryData[1], countryData[2]);
                             } else {
                                 continue;
                             }
@@ -112,7 +103,7 @@ public class EditMap {
                                 int id = Integer.parseInt(borderData[0]);
                                 ArrayList<CountryModel> adjacent = new ArrayList<>();
                                 for (int i = 1; i < borderData.length; i++) {
-                                    adjacent.add(mapModel.getCountryList().get(Integer.valueOf(borderData[i])));
+                                    adjacent.add(mapModel.getCountryList().get(mapModel.indexOfCountry(Integer.valueOf(borderData[i]))));
                                 }
                                 int index= mapModel.indexOfCountry(id);
                                 countries.get(index).setNeighbours(adjacent);

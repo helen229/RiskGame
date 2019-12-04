@@ -1,0 +1,23 @@
+ 
+[continents]
+Asia 0
+Europe 2
+NorthAmerica 3
+
+[countries]
+0 China Asia
+1 Japan Asia
+3 France Europe
+4 Italy Europe
+6 US NorthAmerica
+7 Canada NorthAmerica
+8 Mexico NorthAmerica
+
+[borders]
+0 1 6 3
+1 0
+3 0 7 4
+4 3
+6 0 8 7
+7 3 6
+8 6

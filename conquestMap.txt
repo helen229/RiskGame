@@ -1,0 +1,22 @@
+
+[Map]
+author=Iceworm72
+image=001_I72_Ghtroc ,720.bmp
+wrap=no
+scroll=vertical
+warn=no
+
+[Continents]
+Asia=0
+Europe=2
+NorthAmerica=3
+
+[Territories]
+China,658,355,Asia,Japan,US,France
+Japan,658,355,Asia,China
+France,658,355,Europe,China,Canada,Italy
+Italy,658,355,Europe,France
+US,658,355,NorthAmerica,China,Mexico,Canada
+Canada,658,355,NorthAmerica,France,US
+Mexico,658,355,NorthAmerica,US
+
