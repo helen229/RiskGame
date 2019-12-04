@@ -116,11 +116,12 @@ public class RandomStrategy implements Strategy{
                         reinforcementNumber+" army/armies to "+ 
                         playerCountries.get(selectedCountry).getCountryName());
             }
-            player.setNumArmyRemainPlace(0);
+            player.setNumReinforceArmyRemainPlace(0);
         } else {
 
         }
         System.out.println(player.getPlayerName()+" placed all Reinforcement armies successfully! ");
+        player.setTotalNumReinforceArmy(0);
     }
 
 

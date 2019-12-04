@@ -482,6 +482,7 @@ public class GameModel extends Observable {
                 }
                 if(armyLeft==0) {
                     System.out.println("You already place All your Reinforcement army!");
+                    currentPlayer.setTotalNumReinforceArmy(0);
                     if (currentPlayer.getCardList().size()<3){
                         System.out.println("You have "+currentPlayer.getCardList().size()+" Card(s)! Please start Attack phase");
                         this.setPhase("Attack");
@@ -1036,6 +1037,10 @@ public class GameModel extends Observable {
      * @throws IOException
      */
     public void saveGame(String fileName) throws IOException {
+        if (ifAttackerWin){
+            System.out.println("Please move the army first then save the game");
+            return;
+        }
         File file = new File(fileName);
 
         if (file.createNewFile())
@@ -1072,6 +1077,8 @@ public class GameModel extends Observable {
                 "gameMode "+this.gameMode+"\n";
         writer.write(content);
         writer.close();
+        System.out.println("Game Saved Succeed!");
+
     }
 
     /**

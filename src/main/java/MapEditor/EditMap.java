@@ -23,12 +23,6 @@ public class EditMap {
     private static final String COUNTRY= "country";
     private static final String BORDERS = "borders";
     private static final String BORDERS_TAG = "[borders]";
-
-
-//    private ArrayList<ContinentModel> continents = new ArrayList<ContinentModel>();
-//    private ArrayList<CountryModel> countries = new ArrayList<CountryModel>();
-
-
     private final String fileDirectory;
 
 
