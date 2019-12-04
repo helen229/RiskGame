@@ -15,13 +15,8 @@ public class RiskGame {
      * @param args
      */
     public static void main(String[] args) throws IOException {
-        //uncomment those hardcode for Junit test
-//        if (args[0].equals("start")&&args[1].equals("new")&&args[2].equals("game")){
             RiskGame riskGame = new RiskGame();
             riskGame.newGame();
-//        }else{
-//            throw new IllegalArgumentException("Wrong Args");
-//        }
     }
 
     /**
