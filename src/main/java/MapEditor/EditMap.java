@@ -25,8 +25,8 @@ public class EditMap {
     private static final String BORDERS_TAG = "[borders]";
 
 
-//    private ArrayList<ContinentModel> continents = new ArrayList<ContinentModel>();
-//    private ArrayList<CountryModel> countries = new ArrayList<CountryModel>();
+
+
 
 
     private final String fileDirectory;
@@ -91,14 +91,10 @@ public class EditMap {
                             if (size > 0) {
                                 String[] countryData = line.split(" ");
                                 mapModel.addCountry(countryData[1], countryData[2]);
-//                                CountryModel country = new CountryModel(Integer.parseInt(countryData[0]), countryData[1], countryData[2]);
-//
-//                                countries.add(country);
-//
-//                                neigbour = country.getNeighbours();
-//                                for (int neighbourCountry : neigbour) {
-//                                    country.addNeighbour(neighbourCountry);
-//                                }
+
+
+
+
 
                             } else {
                                 continue;

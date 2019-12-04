@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This Class   edits the prepared map
+ */
 public class EditPreparedMap {
 
 
@@ -25,8 +28,8 @@ public class EditPreparedMap {
     MapHandler m = new MapHandler();
 
 
-//    private ArrayList<ContinentModel> continents = new ArrayList<ContinentModel>();
-//    private ArrayList<CountryModel> countries = new ArrayList<CountryModel>();
+
+
 
 
         private final String fileDirectory;
@@ -35,6 +38,10 @@ public class EditPreparedMap {
         private ArrayList<ArrayList<Integer>> neighbourRelationNumberList = new ArrayList<ArrayList<Integer>>();
         private HashMap<Integer,ArrayList<Integer>> neighbourRelationNumberMap = new HashMap<>();
 
+    /**
+     *  This class edits an existing Map
+     * @param fileDirectory
+     */
 
         public EditPreparedMap(String fileDirectory) {
             this.fileDirectory = fileDirectory;
@@ -56,7 +63,7 @@ public class EditPreparedMap {
             String line = br.readLine();
             String[] splitLine = line.split(" ");
             String checker = " ";
-//            MapModel mapModel = new MapModel();
+
             ArrayList<ContinentModel> continents = mapModel.getContinentList();
             ArrayList<CountryModel> countries = mapModel.getCountryList();
 
@@ -87,12 +94,7 @@ public class EditPreparedMap {
                                 if (size > 0) {
                                     String[] continentData = line.split("=");
                                     mapModel.addContinent(continentData[0], continentValue++);
-//                                ContinentModel c1 = new ContinentModel(continentData[0], Integer.parseInt(continentData[1]));
-//                                continents.add(c1);
-//                                CountryList = c1.getCountriesList();
-//                                for (String country : CountryList) {
-//                                    c1.addCountryToList(country);
-//                                }
+
 
                                 } else {
                                     continue;
@@ -138,14 +140,14 @@ public class EditPreparedMap {
                 ArrayList<Integer> neighbourNumbers = new ArrayList<>();
                 for (int j=0; j<neighbourRelationList.get(i).size();j++){
 
-                    //System.out.println(neighbourRelationList.get(i).get(j));
+
                     int m = mapModel.getCountryNumberFromName(neighbourRelationList.get(i).get(j));
-                    //System.out.println(m);
+
 
                     neighbourNumbers.add(m);
-                    //System.out.println(neighbourNumbers.size());
 
-                    //neighbourRelationNumberMap.put()
+
+
 
 
                 }

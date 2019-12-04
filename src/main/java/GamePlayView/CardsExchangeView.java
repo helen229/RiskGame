@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * This class has one method that updates the  card exchange view automatically
+ */
+
 public class CardsExchangeView implements Observer {
     public void update(Observable obs, Object arg) {
         if (!"CardsView".equals(arg))
