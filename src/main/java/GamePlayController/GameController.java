@@ -71,7 +71,7 @@ public class GameController {
                 }
 
             }else if (phase.equals("Reinforcement")){
-                //reinforce countryname num
+
                 if (args[0].equals("reinforce")){
                     game.reinforce(args[1], Integer.parseInt(args[2]));
                 }
@@ -104,8 +104,8 @@ public class GameController {
                 }
 
             }else if (phase.equals("Fortification")){
-                //fortify fromcountry tocountry num
-                //fortify none (choose to not do a move)
+
+
                 if  (args[0].equals("fortify")){
                     if (args[1].equals("none")){
                         game.fortifyNone();
@@ -139,7 +139,7 @@ public class GameController {
     }
 
     /**
-     *
+     * This method specifies the attack options
      * @param attackCountry
      * @param defendCountry
      * @param mode
@@ -157,6 +157,11 @@ public class GameController {
             System.out.println("Invalid Command");
         }
     }
+
+    /**
+     * This method specifies the  tournament options like the turns, map and acceptable number of Games.
+     * @param args
+     */
 
     private void parseTournamentOption(String[] args) {
 

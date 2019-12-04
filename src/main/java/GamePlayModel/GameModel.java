@@ -43,12 +43,16 @@ public class GameModel extends Observable {
     public  ArrayList<ArrayList<String>> tournamentResult;
     public  ArrayList<String> tournamentMaps;
 
+    /**
+     * This method defines a game Model
+     * @param builder
+     */
     public GameModel(Builder builder) {
         this.mapModel = new MapModel();
         this.playerList = new ArrayList<>();
         this.attackerDice = new ArrayList<>();
-//        this.currentPlayerNum=0;
-//        this.currentExchangeTry=1;
+
+
         this.currentPlayerNum=builder.currentPlayerNum;
         this.currentExchangeTry=builder.currentExchangeTry;
         this.tournamentResult = new ArrayList<>();
@@ -57,6 +61,10 @@ public class GameModel extends Observable {
         attackerCountry = null;
     }
 
+    /**
+     * This method returns the list of the Gameplayers
+     * @return
+     */
 
     public ArrayList<String> getPlayerNameList(){
         ArrayList<String> playerNameList = new ArrayList<>();
@@ -93,6 +101,14 @@ public class GameModel extends Observable {
         }
 
     }
+
+    /**
+     * This method sets the players Strategy for playing the Game
+     * @param player
+     * @param strategyName
+     * @return
+     */
+
 
     public boolean setPlayerStrategy(PlayerModel player, String strategyName) {
         Strategy strategy;
@@ -300,7 +316,9 @@ public class GameModel extends Observable {
         }
     }
 
-    //for single mode
+    /**
+     * This method alllows for autoplay
+     */
     public void singleAutoPlay() {
 
         if (phase.equals("Reinforcement") && gameStopFlag == false) {
@@ -320,7 +338,9 @@ public class GameModel extends Observable {
 
     }
 
-
+    /**
+     * This method allows for the game to start
+     */
     public void gameStart() {
         if (getCurrentPlayer().getStrategy().getName().equals("Human")) {
             return;
@@ -395,6 +415,14 @@ public class GameModel extends Observable {
             System.out.println("Place all army failed! First populate countries.");
         }
     }
+
+    /**
+     * This method handles the tournament mode.
+     * @param mapList
+     * @param playerStrategyList
+     * @param numberOfGames
+     * @param maxNumberOfTurns
+     */
 
     public void tournament(ArrayList<String> mapList, ArrayList<String> playerStrategyList, int numberOfGames, int maxNumberOfTurns) {
 
@@ -555,6 +583,11 @@ public class GameModel extends Observable {
 
     }
 
+    /**
+     * This method checks the chance for attack
+     * @return
+     */
+
     public boolean checkAttackChance() {
         boolean ifAttackContinue = false;
         for (CountryModel playerCountry : currentPlayer.getPlayerCountries()) {
@@ -567,6 +600,11 @@ public class GameModel extends Observable {
         return ifAttackContinue;
     }
 
+    /**
+     * This method checks if country belongs to a player
+     * @param countryList
+     * @return
+     */
 
     public boolean ifCountriesBelongPlayer(ArrayList<CountryModel> countryList) {
         for (CountryModel country:countryList) {
@@ -577,6 +615,14 @@ public class GameModel extends Observable {
         return true;
     }
 
+    /**
+     * This method specifies Dice number
+     * @param attackCountryName
+     * @param defendCountryName
+     * @param diceNum
+     * @param fromAllOut
+     * @return
+     */
     public boolean attackDiceNum(String attackCountryName, String defendCountryName, int diceNum, boolean fromAllOut) {
         if ((mapModel.indexOfCountry(attackCountryName)!=-1)&&(mapModel.indexOfCountry(defendCountryName)!=-1)) {
             CountryModel defendCountry= mapModel.getCountryList().get(mapModel.indexOfCountry(defendCountryName));
@@ -633,6 +679,11 @@ public class GameModel extends Observable {
         }
     }
 
+    /**
+     * This method ensures the winner move command will run after player conquered one country
+     * @param diceNum
+     */
+
     public void defendDiceNum(int diceNum) {
 
         //make sure only the winner move command will be run after player conquered one country
@@ -650,6 +701,12 @@ public class GameModel extends Observable {
         }
 
     }
+
+    /**
+     * This method handles all out attack
+     * @param attackCountryName
+     * @param defendCountryName
+     */
 
     public void attackAllOut(String attackCountryName, String defendCountryName) {
         if ((mapModel.indexOfCountry(attackCountryName)!=-1)&&(mapModel.indexOfCountry(defendCountryName)!=-1)) {
@@ -677,6 +734,10 @@ public class GameModel extends Observable {
 
     }
 
+    /**
+     * The  method handles the attack process
+     * @param defenderDice
+     */
     public void attackProcess(ArrayList<Integer> defenderDice) {
 
         System.out.println("Attacker Dice: "+attackerDice);
@@ -734,6 +795,10 @@ public class GameModel extends Observable {
 
     }
 
+    /**
+     * This method handles attack results
+     * @return
+     */
     public boolean attackResult() {
         boolean attackerWin = false;
         PlayerModel attacker = attackerCountry.getOwner();
@@ -770,6 +835,10 @@ public class GameModel extends Observable {
         return attackerWin;
     }
 
+    /**
+     * This method handles winners  move of armies
+     * @param num
+     */
     public void winnerMove(int num) {
 
         if (!ifAttackerWin){
@@ -794,7 +863,9 @@ public class GameModel extends Observable {
         notifyObservers("DominView");
     }
 
-
+    /**
+     * This method stops the attack phase and moves to the fortification phase
+     */
     public void stopAttack(){
         //make sure only the winner move command will be run after player conquered one country
         if (ifAttackerWin){
@@ -960,7 +1031,11 @@ public class GameModel extends Observable {
         }
     }
 
-
+    /**
+     * This method saves a game
+     * @param fileName
+     * @throws IOException
+     */
     public void saveGame(String fileName) throws IOException {
         File file = new File(fileName);
 
@@ -999,6 +1074,12 @@ public class GameModel extends Observable {
         writer.write(content);
         writer.close();
     }
+
+    /**
+     * This methos loads and existing Game
+     * @param fileName
+     * @throws IOException
+     */
 
     public void loadGame(String fileName) throws IOException {
         GameLoad gameLoad = new GameLoad(this);
@@ -1062,6 +1143,9 @@ public class GameModel extends Observable {
 
     }
 
+    /**
+     * This method prints tournament results
+     */
 
     private void printTournmentResult(){
         ArrayList<ArrayList<String>> tournamentResult= this.tournamentResult;

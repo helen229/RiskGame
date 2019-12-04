@@ -5,6 +5,10 @@ import MapEditorModel.CountryModel;
 
 import java.io.*;
 
+/**
+ * This class handles Game Loading
+ */
+
 public class GameLoad {
     public GameModel game;
 
@@ -13,6 +17,11 @@ public class GameLoad {
         this.game = gameM;
     }
 
+    /**
+     * This method loads a GameModel
+     * @param fileName
+     * @return
+     */
     public GameModel Loading(String fileName) {
         String result = "";
         BufferedReader br = null;

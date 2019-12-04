@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * This class  defines the characteristics of a class
+ * This class  defines the characteristics of a player
  */
 
 public class PlayerModel {
@@ -23,6 +23,10 @@ public class PlayerModel {
     ArrayList<ContinentModel> playerContinents;
     ArrayList<Card> cardList;
 
+    /**
+     * THis method constructs a player object and assigns name to it
+     * @param playerName
+     */
 
     public PlayerModel(String playerName) {
         PlayerName = playerName;
@@ -65,6 +69,11 @@ public class PlayerModel {
         return playerContinents;
     }
 
+    /**
+     * This method checks the players continent
+     * @param continentList
+     */
+
     public void checkPlayerContinents(ArrayList<ContinentModel> continentList) {
         this.playerContinents.clear();
         HashMap<String, Integer> counter = new  HashMap<String, Integer>();
@@ -97,12 +106,17 @@ public class PlayerModel {
         return totalNumArmy;
     }
     /**
-     * This methos assigns armies to players based on their size.
+     * This method assigns armies to players based on their size.
      *
      */
     public void setTotalNumArmy(int num) {
         this.totalNumArmy = num;
     }
+
+    /**
+     * This method assigns armies to the players in the game
+     * @param playerSize
+     */
 
     public void distributeTotalNumArmy(int playerSize) {
         switch(playerSize){
