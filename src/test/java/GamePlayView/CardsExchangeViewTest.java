@@ -3,16 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GamePlayModel;
-
-import GamePlayModel.Card;
-import GamePlayModel.CardType;
-import GamePlayModel.PlayerModel;
+package GamePlayView;
+import GamePlayView.CardsExchangeView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -20,22 +14,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  * @author Ehsan
  */
-public class CardTest {
-private CardType cardType;
-private PlayerModel player;
-public Card card;
-
-/**
+public class CardsExchangeViewTest {
+    private CardsExchangeView cardsExchangeView;
+    
+    
+    /**
      * Each time invoke a method, set up this context
      */
     @BeforeEach
     public void setUp() {
-        card = new Card(player);
+        cardsExchangeView = new CardsExchangeView();
     }
-    
+ 
     @Test
-    public void testCard() {
-        
-        assertTrue(card.getCardType().equals("Infantry") || card.getCardType().equals("Cavalry") || card.getCardType().equals("Artillery"));
-    }  
+    public void testCardsExchangeView() {        
+    }
 }
