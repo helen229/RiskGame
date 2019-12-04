@@ -330,6 +330,25 @@ public class MapModel {
         return false;
     }
 
+    /**
+     * add country to the countryList
+     * @param countryName
+     * @param continentName
+     * @return add succeed or not
+     */
+    public boolean addCountryFromFile(int countryValue, String countryName, String continentName){
+
+        //to check if the continentName exist or not and the countryName, also return the continent index
+        if (indexOfContinent(continentName)!=-1 && indexOfCountry(countryName)==-1){
+            CountryModel country = new CountryModel(countryValue, countryName, continentName);
+            this.continentList.get(indexOfContinent(continentName)).addCountryToList(countryName);
+            this.countryList.add(country);
+            return true;
+        }
+
+        return false;
+    }
+
     HashMap<String,Integer> countryNumberNamePair = new HashMap<>();
     public HashMap addCountryNumberNamePair(String countryName, int countryNumber){
         countryNumberNamePair.put(countryName,countryNumber);
@@ -417,8 +436,8 @@ public class MapModel {
             && !countryName.equals(neighborCountryName)){
             CountryModel country = this.countryList.get(indexOfCountry(countryName));
             CountryModel neighborCountry = this.countryList.get(indexOfCountry(neighborCountryName));
-            country.removeNeighbour(neighborCountry.getCountryValue());
-            neighborCountry.removeNeighbour(country.getCountryValue());
+            country.removeNeighbour(neighborCountry);
+            neighborCountry.removeNeighbour(country);
             return true;
         }
         System.out.println("The country or the neighbor country not exists ");

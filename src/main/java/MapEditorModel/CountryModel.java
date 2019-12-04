@@ -87,14 +87,14 @@ public class CountryModel {
 
     /**
      *
-     * @param countryValue
+     * @param country
      */
-    public void removeNeighbour(int countryValue) {
+    public void removeNeighbour(CountryModel country) {
 
-        if (neighbours.size()==1 && neighbours.contains(countryValue))
+        if (neighbours.size()==1 && neighbours.contains(country))
             neighbours.clear();
         else
-            this.neighbours.remove(neighbours.indexOf(countryValue));
+            this.neighbours.remove(neighbours.indexOf(country));
     }
 
     /**
